@@ -19,7 +19,13 @@ runs:
   using: 'docker'
   image: "docker://ghcr.io/ketch-com/ketch-cli:latest"
   args:
-    - '${{ inputs.command }} -f ${{ inputs.filename }} --org ${{ inputs.org }} --id ${{ inputs.appid }}'
+    - ${{ inputs.command }}
+    - "-f"
+    - ${{ inputs.filename }}
+    - "--org"
+    - ${{ inputs.org }}
+    - "--id"
+    - ${{ inputs.appid }}
 branding:
   icon: 'share-2'
   color: 'purple'
