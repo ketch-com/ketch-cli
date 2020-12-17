@@ -1,0 +1,777 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "title": "Marketplace app schema",
+  "required": [
+    "name",
+    "version"
+  ],
+  "dependencies": {
+    "request_user_auth": ["user_auth_callback_url"]
+  },
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "App name"
+    },
+    "version": {
+      "type": "string",
+      "title": "App semantic version",
+      "pattern": "^([0-9]+)\\.([0-9]+)\\.([0-9]+)$"
+    },
+    "primary_category": {
+      "type": "string",
+      "title": "Marketplace App primary category",
+      "enum": [
+        "privacy",
+        "asset"
+      ]
+    },
+    "secondary_category": {
+      "type": "string",
+      "title": "Marketplace App secondary category",
+      "enum": [
+        "privacy",
+        "asset"
+      ]
+    },
+    "rules": {
+      "type": "object",
+      "title": "App rules",
+      "additionalProperties": false,
+      "properties": {
+        "view": {
+          "type": "string",
+          "title": "rule expressing when the app is visible"
+        },
+        "install": {
+          "type": "string",
+          "title": "rule expression when the app can be installed"
+        }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "title": "App capabilities",
+      "items": {
+        "type": "string",
+        "title": "App capability",
+        "enum": [
+          "permit_propagation",
+          "permit_ingestion",
+          "rights_propagation",
+          "rights_ingestion"
+        ]
+      }
+    },
+    "supported_languages": {
+      "type": "array",
+      "title": "App supported languages",
+      "items": {
+        "type": "string",
+        "enum": [
+          "en"
+        ]
+      }
+    },
+    "purposes": {
+      "type": "array",
+      "title": "App purposes",
+      "items": {
+        "type": "string",
+        "enum": [
+          "essential_services",
+          "prod_enhancement",
+          "analytics",
+          "behavioral_advertising",
+          "personalization",
+          "tele_mktg",
+          "sms_mktg",
+          "email_mktg",
+          "mail_mktg",
+          "data_broking"
+        ]
+      }
+    },
+    "rights": {
+      "type": "array",
+      "title": "App rights",
+      "items": {
+        "type": "string",
+        "enum": [
+          "delete",
+          "access",
+          "correction",
+          "portability"
+        ]
+      }
+    },
+    "identity_spaces": {
+      "type": "array",
+      "title": "App identity spaces",
+      "items": {
+        "type": "object",
+        "title": "App identity space",
+        "oneOf": [
+          {
+            "required": [
+              "code",
+              "name",
+              "filters"
+            ],
+            "properties": {
+              "managed": {
+                "type": "boolean",
+                "title": "Whether this identity space is managed or mapped",
+                "pattern": "false"
+              },
+              "code": {
+                "type": "string",
+                "title": "App identity space code"
+              },
+              "name": {
+                "type": "string",
+                "title": "App identity space name"
+              },
+              "description": {
+                "type": "string",
+                "title": "App identity space description"
+              },
+              "filters": {
+                "type": "array",
+                "title": "App identity space filters",
+                "items": {
+                  "type": "object",
+                  "title": "A filter",
+                  "required": [
+                    "type",
+                    "format"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "title": "App identity space filter type",
+                      "enum": [
+                        "email",
+                        "controller_customer_id",
+                        "android_advertising_id",
+                        "android_id",
+                        "fire_advertising_id",
+                        "ios_advertising_id",
+                        "ios_vendor_id",
+                        "microsoft_advertising_id",
+                        "microsoft_publisher_id",
+                        "roku_publisher_id",
+                        "roku_advertising_id",
+                        "unique_browser",
+                        "telephone"
+                      ]
+                    },
+                    "format": {
+                      "type": "string",
+                      "title": "App identity space filter format",
+                      "enum": [
+                        "raw",
+                        "sha1",
+                        "sha256",
+                        "sha512"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "required": [
+              "code",
+              "name",
+              "type",
+              "variable"
+            ],
+            "properties": {
+              "managed": {
+                "type": "boolean",
+                "title": "Whether this identity space is managed or mapped",
+                "pattern": "true"
+              },
+              "code": {
+                "type": "string",
+                "title": "App identity space code"
+              },
+              "name": {
+                "type": "string",
+                "title": "App identity space name"
+              },
+              "description": {
+                "type": "string",
+                "title": "App identity space description"
+              },
+              "type": {
+                "type": "string",
+                "title": "App identity space filter type",
+                "enum": [
+                  "email",
+                  "controller_customer_id",
+                  "android_advertising_id",
+                  "android_id",
+                  "fire_advertising_id",
+                  "ios_advertising_id",
+                  "ios_vendor_id",
+                  "microsoft_advertising_id",
+                  "microsoft_publisher_id",
+                  "roku_publisher_id",
+                  "roku_advertising_id",
+                  "unique_browser",
+                  "telephone"
+                ]
+              },
+              "format": {
+                "type": "string",
+                "title": "App identity space filter format",
+                "default": "raw",
+                "enum": [
+                  "raw",
+                  "sha1",
+                  "sha256",
+                  "sha512"
+                ]
+              },
+              "variable": {
+                "type": "object",
+                "title": "Variable definition",
+                "required": [
+                  "location",
+                  "name"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "title": "Name of the variable"
+                  },
+                  "location": {
+                    "type": "string",
+                    "title": "Location of the variable",
+                    "enum": [
+                      "window",
+                      "cookie",
+                      "dataLayer"
+                    ]
+                  },
+                  "jwt": {
+                    "type": "object",
+                    "title": "JWT details",
+                    "required": [
+                      "location",
+                      "key"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "location": {
+                        "type": "string",
+                        "title": "location to find the variable within the JWT",
+                        "enum": [
+                          "header",
+                          "claims"
+                        ]
+                      },
+                      "key": {
+                        "type": "string",
+                        "title": "key of the variable within the JWT"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "short_description": {
+      "type": "string",
+      "title": "short description that appears in search results and galleries"
+    },
+    "detailed_description": {
+      "type": "string",
+      "title": "detailed description that appears on the app details screen"
+    },
+    "permission_note": {
+      "type": "string",
+      "title": "App permission note shown to the user when asking for authorization"
+    },
+    "permissions": {
+      "type": "array",
+      "title": "App permissions",
+      "items": {
+        "type": "string",
+        "title": "Permission"
+      }
+    },
+    "setup_url": {
+      "type": "string",
+      "format": "uri",
+      "title": "App setup URL"
+    },
+    "homepage_url": {
+      "type": "string",
+      "format": "uri",
+      "title": "App homepage URL"
+    },
+    "customer_support_url": {
+      "type": "string",
+      "format": "uri",
+      "title": "App customer support URL"
+    },
+    "privacy_policy_url": {
+      "type": "string",
+      "format": "uri",
+      "title": "App privacy policy URL"
+    },
+    "status_url": {
+      "type": "string",
+      "format": "uri",
+      "title": "App status URL"
+    },
+    "tos_url": {
+      "type": "string",
+      "format": "uri",
+      "title": "App terms of service URL"
+    },
+    "doc_url": {
+      "type": "string",
+      "format": "uri",
+      "title": "App documentation URL"
+    },
+    "logo": {
+      "type": "object",
+      "title": "Marketplace App logo",
+      "required": [
+        "link"
+      ],
+      "additionalProperties": false,
+      "dependentRequired": {
+        "width": ["height"],
+        "height": ["width"]
+      },
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "logo title"
+        },
+        "link": {
+          "type": "string",
+          "title": "filename"
+        },
+        "width": {
+          "type": "integer",
+          "title": "logo width"
+        },
+        "height": {
+          "type": "integer",
+          "title": "logo height"
+        }
+      }
+    },
+    "previews": {
+      "type": "array",
+      "title": "Marketplace App previews",
+      "items": {
+        "type": "object",
+        "title": "Image",
+        "required": [
+          "link"
+        ],
+        "additionalProperties": false,
+        "dependentRequired": {
+          "width": ["height"],
+          "height": ["width"]
+        },
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Image title"
+          },
+          "link": {
+            "type": "string",
+            "title": "Image filename"
+          },
+          "width": {
+            "type": "integer",
+            "title": "Image width"
+          },
+          "height": {
+            "type": "integer",
+            "title": "Image height"
+          }
+        }
+      }
+    },
+    "contacts": {
+      "type": "array",
+      "title": "App contacts",
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "email"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "title": "App contact type",
+            "enum": [
+              "technical",
+              "marketing",
+              "finance",
+              "security"
+            ]
+          },
+          "email": {
+            "type": "string",
+            "title": "App contact email",
+            "format": "email"
+          }
+        }
+      }
+    },
+    "expire_user_tokens": {
+      "type": "boolean",
+      "title": "Expire user tokens",
+      "default": false
+    },
+    "refresh_interval": {
+      "type": "string",
+      "title": "App refresh interval",
+      "pattern": "([1-9][0-9]*)h"
+    },
+    "request_user_auth": {
+      "type": "boolean",
+      "title": "Request user auth",
+      "default": false
+    },
+    "user_auth_callback_url": {
+      "type": "string",
+      "format": "uri",
+      "title": "App OAuth callback URL"
+    },
+    "redirect_on_update": {
+      "type": "boolean",
+      "title": "Redirect on update",
+      "default": false
+    },
+    "webhook": {
+      "type": "object",
+      "title": "App webhook",
+      "required": [
+        "url",
+        "secret",
+        "events"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "title": "Webhook URI"
+        },
+        "secret": {
+          "type": "string",
+          "title": "Base64-encoded webhook secret used to sign events",
+          "contentEncoding": "base64"
+        },
+        "authorization": {
+          "type": "string",
+          "title": "Webhook authorization header used to authenticate to the webhook"
+        },
+        "events": {
+          "type": "array",
+          "title": "Webhook events",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ping",
+              "rightInvocation.created",
+              "rightInvocation.fulfilled",
+              "app.installed",
+              "app.refresh",
+              "app.uninstalled",
+              "permit.created",
+              "permit.deleted"
+            ]
+          }
+        }
+      }
+    },
+    "workflow": {
+      "type": "array",
+      "title": "definition of workflow objects",
+      "items": {
+        "type": "object",
+        "required": [
+          "code",
+          "name",
+          "icon",
+          "fn"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "human-readable identifier for the object"
+          },
+          "name": {
+            "type": "string",
+            "title": "name of the Activity as shown to the user"
+          },
+          "icon": {
+            "type": "string",
+            "title": "filename of the icon to show"
+          },
+          "type": {
+            "type": "string",
+            "title": "type of the object",
+            "default": "activity",
+            "enum": [
+              "activity",
+              "workflow"
+            ]
+          },
+          "fn": {
+            "type": "string",
+            "title": "the function to be executed"
+          },
+          "options": {
+            "type": "object",
+            "title": "the options for the workflow object",
+            "additionalProperties": false,
+            "properties": {
+              "task_queue": {
+                "type": "string"
+              },
+              "workflow_execution_timeout": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "workflow_run_timeout": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "workflow_task_timeout": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "wait_for_cancellation": {
+                "type": "boolean"
+              },
+              "schedule_to_close_timeout": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "schedule_to_start_timeout": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "start_to_close_timeout": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "heartbeat_timeout": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          },
+          "params": {
+            "type": "array",
+            "title": "parameters",
+            "items": {
+              "type": "object",
+              "required": [
+                "code",
+                "name",
+                "type"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "title": "human-readable unique identifier of the parameter"
+                },
+                "name": {
+                  "type": "string",
+                  "title": "user-friendly name of the parameter"
+                },
+                "type": {
+                  "type": "string",
+                  "title": "type of the parameter"
+                },
+                "default": {
+                  "type": "string",
+                  "title": "default value of the parameter"
+                }
+              }
+            }
+          },
+          "outputs": {
+            "type": "array",
+            "title": "output values",
+            "items": {
+              "type": "object",
+              "required": [
+                "code",
+                "name",
+                "type"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "title": "human-readable unique identifier of the output"
+                },
+                "name": {
+                  "type": "string",
+                  "title": "user-friendly name of the output"
+                },
+                "type": {
+                  "type": "string",
+                  "title": "type of the output"
+                },
+                "default": {
+                  "type": "string",
+                  "title": "default value of the output"
+                }
+              }
+            }
+          },
+          "config": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "form": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "type"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "The key field is where the data will be saved to. This must be unique per field.\n For example, if key = 'customers' then the value of the field will be saved in data.customers"
+          },
+          "label": {
+            "type": "string",
+            "description": "The name or title for this component"
+          },
+          "type": {
+            "type": "string",
+            "description": "The type property will be used to select which component to render on the frontend. It cannot be an existing field type",
+            "enum": [
+              "select",
+              "text_field"
+            ]
+          },
+          "required": {
+            "type": "boolean",
+            "description": "If true, the field will be required to have a value"
+          },
+          "minLength": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "maxLength": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pattern": {
+            "type": "string"
+          },
+          "text_field": {
+            "type": "object",
+            "description": "properties related to text fields",
+            "additionalProperties": false,
+            "properties": {
+              "placeholder": {
+                "type": "string",
+                "description": "The placeholder text that will appear when this field is empty"
+              },
+              "default": {
+                "type": "string",
+                "description": "Default value will be the value for this field, before user interaction. Having a default value will override the placeholder text"
+              },
+              "spellcheck": {
+                "type": "boolean",
+                "description": "This setting will enable spell check on the field."
+              }
+            }
+          },
+          "select": {
+            "type": "object",
+            "description": "properties related to select dropdowns",
+            "additionalProperties": false,
+            "properties": {
+              "placeholder": {
+                "type": "string",
+                "description": "The placeholder text that will appear before an option is selected"
+              },
+              "default": {
+                "type": "string",
+                "description": "Default value will be the value for this field, before user interaction. Having a default value will override the placeholder text"
+              },
+              "multiple": {
+                "type": "boolean",
+                "description": "If true, multiple values can be added in this field.\n The values will appear as an array in the API and an “Add Another” button will be visible on the field allowing the creation of additional fields for this component"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "oneOf": {
+                    "values": {
+                      "type": "array",
+                      "description": "These are the values that will be selected on this field",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "label",
+                          "value"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "value": {
+                            "type": "string"
+                          },
+                          "label": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "json": {
+                      "type": "string",
+                      "description": "Enter a JSON Array to use. It should be formatted as an array of objects with named properties"
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "Enter a url with a data source in JSON Array format. This can be used to populate a Select list with external JSON values",
+                      "format": "uri"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,107 @@
+# ___________________________________________________________________________________________________________________________________________________________________________
+# Basic Details
+name: Amplitude
+version: 0.0.0
+primary_category: privacy
+rules:
+  view: "test_access OR real_access"
+  install: "test_access AND some_access"
+capabilities:
+  - rights_propagation
+supported_languages:
+  - en
+purposes:
+  - data_broking
+  - email_mktg
+  - personalization
+  - behavioral_advertising
+  - analytics
+rights:
+  - delete
+  - portability
+identity_spaces:
+  - code: device_id
+    name: Device ID
+    description: Amplitude defined device identifier.
+    managed: true
+    type: unique_browser
+    format: raw
+    variable:
+      location: cookie
+      name: "amplitude_id*"
+      jwt:
+        location: header
+        key: deviceId
+  - code: user_id
+    name: User ID
+    description: Amplitude identifier as specified by customer in the Amplitude setup process. Usually a pseudonymous account identifier.
+    managed: false
+    filters:
+      - type: email
+        format: raw
+
+# ___________________________________________________________________________________________________________________________________________________________________________
+# Branding
+short_description: |
+  Manage all your website tags without editing code. Google Tag Manager delivers simple, reliable, easily integrated tag management solutions for free.
+detailed_description: |
+  Manage all your website tags without editing code. Google Tag Manager delivers simple,
+  reliable, easily integrated tag management solutions for free.
+homepage_url: http://https://amplitude.com/
+customer_support_url: https://help.amplitude.com/hc/en-us/requests/new
+privacy_policy_url: https://amplitude.com/privacy
+status_url: "https://ketch.com"
+tos_url: https://support.google.com/tagmanager/answer/7157428?hl=en
+doc_url: https://docs.ketch.com/
+logo:
+  title: "Amplitude Logo"
+  link: "assets/amplitude.svg"
+previews:
+  - title: "Amplitude Screenshot1"
+    link: "assets/screenshot1.png"
+    width: 123
+    height: 456
+  - title: "Amplitude Screenshot2"
+    link: "assets/screenshot2.png"
+    width: 123
+    height: 456
+contacts:
+  - type: technical
+    email: dev@email.com
+  - type: marketing
+    email: marketing@email.com
+  - type: finance
+    email: billing@email.com
+  - type: security
+    email: security@email.com
+
+# ___________________________________________________________________________________________________________________________________________________________________________
+# Developer Information
+expire_user_tokens: false
+request_user_auth: false
+redirect_on_update: false
+refresh_interval: 5h
+user_auth_callback_url: "https://ketchapp.com/callback"
+setup_url: "https://ketchapp.com/setup"
+webhook:
+  url: "https://ketch.com"
+  secret: "test123"
+  events:
+    - "rightInvocation.created"
+  authorization: "Bearer token"
+permission_note: "This app needs access to your marketplace"
+permissions:
+  - "marketplace:read"
+
+# ___________________________________________________________________________________________________________________________________________________________________________
+# Setup Form
+form:
+- key: organization_id
+  label: "Organization ID"
+  type: text_field
+  required: true
+  minLength: 5
+  maxLength: 100
+  text_field:
+    placeholder: Please input an Organization ID
+    spellcheck: false

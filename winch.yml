@@ -1,0 +1,51 @@
+name: ketch
+description: Ketch CLI is the command-line interface to ketch
+repository: https://github.com/ketch-com/ketch-cli
+assets:
+  - filename: assets/assets_gen.go
+    directory: assets
+    package: assets
+    variable: Assets
+    except:
+      - "/*.go"
+build:
+  command: |
+    export GOOS=linux
+    mkdir -p bin/$GOOS-$GOARCH
+    go build -o bin/$GOOS-$GOARCH/ketch ./cmd/ketch/main.go
+
+    export GOOS=darwin
+    mkdir -p bin/$GOOS-$GOARCH
+    go build -o bin/$GOOS-$GOARCH/ketch ./cmd/ketch/main.go
+release:
+  branches:
+    only: main
+  artifacts:
+    - ./bin/darwin-amd64/
+    - ./bin/linux-amd64/
+dockers:
+  - dockerfile: Dockerfile
+    server: ghcr.io
+    organization: ketch-com
+    repository: ketch-cli
+    username: ${DOCKERHUB_USERNAME}
+    password: ${DOCKERHUB_PASSWORD}
+    branches:
+      only: main
+#homebrew:
+#  enabled: true
+#  organization: ketch-com
+#  repository: homebrew-ketch-cli
+#  asset: darwin-amd64.tgz
+#  install: |
+#    bin.install "winch"
+#  test: |
+#    system "#{bin}/winch --version"
+#  branches:
+#    only: main
+environment:
+  GO111MODULE: on
+  CGO_ENABLED: "0"
+  GOOS: linux
+  GOARCH: amd64
+  GOPRIVATE: "go.ketch.com"

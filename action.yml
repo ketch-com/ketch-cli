@@ -1,0 +1,25 @@
+name: 'Ketch Publish'
+description: 'Publish app to Ketch Marketplace'
+inputs:
+  command:
+    description: 'Command'
+    required: false
+    default: 'publish'
+  filename:
+    description: 'Configuration filename'
+    required: false
+    default: 'ketch-manifest.yml'
+  org:
+    description: 'Organization Code'
+    required: true
+  appid:
+    description: 'App ID'
+    required: true
+runs:
+  using: 'docker'
+  image: "docker://ghcr.io/ketch-com/ketch-cli:latest"
+  args:
+    - '${{ inputs.command }} -f ${{ inputs.filename }} --org ${{ inputs.org }} --id ${{ inputs.appid }}'
+branding:
+  icon: 'share-2'
+  color: 'purple'
