@@ -6,7 +6,10 @@ import (
 )
 
 type Config struct {
-	Rest  orlop.ClientConfig
+	URL   string
+	Host  string
+	Port  int32
+	TLS   orlop.TLSConfig
 	Vault orlop.VaultConfig
 }
 

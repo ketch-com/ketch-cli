@@ -9,7 +9,7 @@ import (
 func init() {
 	var webhookCmd = &cobra.Command{
 		Use:   "webhook",
-		Short: "Commands related to WebHooks",
+		Short: "commands related to WebHooks",
 	}
 
 	webhookCmd.PersistentFlags().Uint64(flags.QPS, 10, "maximum QPS")

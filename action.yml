@@ -9,23 +9,18 @@ inputs:
     description: 'Configuration filename'
     required: false
     default: 'ketch-manifest.yml'
-  org:
-    description: 'Organization Code'
-    required: true
-  appid:
-    description: 'App ID'
+  token:
+    description: 'Ketch token'
     required: true
 runs:
   using: 'docker'
   image: "docker://ghcr.io/ketch-com/ketch-cli:latest"
+  env:
+    KETCH_TOKEN: ${{ inputs.token }}
   args:
     - ${{ inputs.command }}
     - "-f"
     - ${{ inputs.filename }}
-    - "--org"
-    - ${{ inputs.org }}
-    - "--id"
-    - ${{ inputs.appid }}
 branding:
   icon: 'share-2'
   color: 'purple'

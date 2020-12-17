@@ -3,7 +3,6 @@ package apps
 import (
 	"bytes"
 	"context"
-	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"github.com/spf13/cobra"
@@ -11,36 +10,31 @@ import (
 	"go.ketch.com/cli/ketch-cli/assets"
 	"go.ketch.com/cli/ketch-cli/config"
 	"go.ketch.com/cli/ketch-cli/flags"
+	"go.ketch.com/lib/orlop"
 	"go.ketch.com/lib/orlop/errors"
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"path"
 	"path/filepath"
 )
 
 func Publish(cmd *cobra.Command, args []string) error {
-	var err error
-
 	ctx := cmd.Context()
-
-	orgCode, err := cmd.Flags().GetString(flags.Org)
-	if err != nil {
-		return err
-	}
-
-	root, err := cmd.Flags().GetString(flags.Root)
-	if err != nil {
-		return err
-	}
 
 	appConfig, err := cmd.Flags().GetString(flags.File)
 	if err != nil {
 		return err
 	}
 
-	appID, err := cmd.Flags().GetString(flags.ID)
+	version, err := cmd.Flags().GetString(flags.Version)
+	if err != nil {
+		return err
+	}
+
+	create, err := cmd.Flags().GetBool(flags.Create)
 	if err != nil {
 		return err
 	}
@@ -50,7 +44,27 @@ func Publish(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	b, err := ioutil.ReadFile(path.Join(root, appConfig))
+	rootUrl, err := cmd.Flags().GetString(flags.URL)
+	if err != nil {
+		return err
+	}
+
+	t, err := config.GetTLSConfig(cmd)
+	if err != nil {
+		return err
+	}
+
+	appConfig, err = filepath.Abs(appConfig)
+	if err != nil {
+		return err
+	}
+
+	basePath := filepath.Dir(appConfig)
+	if err = os.Chdir(basePath); err != nil {
+		return err
+	}
+
+	b, err := ioutil.ReadFile(appConfig)
 	if err != nil {
 		return err
 	}
@@ -66,20 +80,26 @@ func Publish(cmd *cobra.Command, args []string) error {
 
 	cfg := config.GetFromContext(ctx)
 
+	cfg.URL = rootUrl
+	cfg.TLS = *t
+
 	app, err := NewApp(publishAppConfig)
 	if err != nil {
 		return err
 	}
 
-	if len(appID) > 0 {
-		app.ID = appID
+	if len(version) > 0 {
+		app.Version = version
 	}
-	app.OrgCode = orgCode
 
 	if len(app.ID) == 0 {
-		app.ID, err = createApp(ctx, cfg, token, app)
-		if err != nil {
-			return err
+		if create {
+			app.ID, err = createApp(ctx, cfg, token, app)
+			if err != nil {
+				return err
+			}
+		} else {
+			return errors.New("app ID must be specified unless creating")
 		}
 	} else {
 		err = updateApp(ctx, cfg, token, app)
@@ -98,7 +118,7 @@ func Publish(cmd *cobra.Command, args []string) error {
 			Height: publishAppConfig.Logo.Height,
 		}
 
-		if marketplaceEntry.Logo.Data, err = getFileData(root, publishAppConfig.Logo.Link); err != nil {
+		if marketplaceEntry.Logo.Data, err = getFileData(publishAppConfig.Logo.Link); err != nil {
 			return err
 		}
 	}
@@ -113,7 +133,7 @@ func Publish(cmd *cobra.Command, args []string) error {
 				Height: preview.Height,
 			}
 
-			if previewImage.Data, err = getFileData(root, preview.Link); err != nil {
+			if previewImage.Data, err = getFileData(preview.Link); err != nil {
 				return err
 			}
 
@@ -144,7 +164,7 @@ func handleRestResponseError(resp *http.Response) (*Error, error) {
 }
 
 func callRest(ctx context.Context, cfg *config.Config, method, urlPath, token string, body []byte) (*http.Response, error) {
-	u, err := url.Parse(cfg.Rest.URL)
+	u, err := url.Parse(cfg.URL)
 	if err != nil {
 		return nil, err
 	}
@@ -161,8 +181,9 @@ func callRest(ctx context.Context, cfg *config.Config, method, urlPath, token st
 	req.Header.Add("Content-Type", "application/json")
 
 	tp := http.DefaultTransport.(*http.Transport).Clone()
-	tp.TLSClientConfig = &tls.Config{
-		InsecureSkipVerify: cfg.Rest.TLS.GetInsecure(),
+	tp.TLSClientConfig, err = orlop.NewClientTLSConfigContext(ctx, cfg.TLS, cfg.Vault)
+	if err != nil {
+		return nil, err
 	}
 
 	cli := &http.Client{
@@ -172,58 +193,6 @@ func callRest(ctx context.Context, cfg *config.Config, method, urlPath, token st
 	return cli.Do(req)
 }
 
-/*
-func createWebhook(ctx context.Context, cfg *config.Config, token string, webhook *WebHook) (string, error) {
-	body, err := json.Marshal(webhook)
-	if err != nil {
-		return "", err
-	}
-
-	resp, err := callRest(ctx, cfg, http.MethodPost, "webhooks", token, body)
-	if err != nil {
-		return "", err
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		respErr, err := handleRestResponseError(resp)
-		if err != nil {
-			return "", err
-		}
-
-		return "", errors.New(respErr.Message)
-	}
-
-	var webhookResp WebhookResponse
-	err = json.NewDecoder(resp.Body).Decode(&webhookResp)
-	if err != nil {
-		return "", err
-	}
-
-	return webhookResp.Webhook.ID, nil
-}
-
-func updateWebhook(ctx context.Context, cfg *config.Config, token string, webhook *WebHook) (string, error) {
-	updateWebhookURL := fmt.Sprintf("webhooks/%s", webhook.ID)
-
-	body, err := json.Marshal(webhook)
-	if err != nil {
-		return "", err
-	}
-
-	resp, err := callRest(ctx, cfg, http.MethodPut, updateWebhookURL, token, body)
-	if err != nil {
-		return "", err
-	}
-
-	var webhookResp WebhookResponse
-	err = json.NewDecoder(resp.Body).Decode(&webhookResp)
-	if err != nil {
-		return "", err
-	}
-
-	return webhookResp.Webhook.ID, nil
-}
-*/
 func createApp(ctx context.Context, cfg *config.Config, token string, app *App) (string, error) {
 	createAppURL := fmt.Sprintf("organizations/%s/apps", app.OrgCode)
 
@@ -342,12 +311,12 @@ func isRemoteLink(link string) bool {
 	return true
 }
 
-func getFileData(root, link string) ([]byte, error) {
+func getFileData(link string) ([]byte, error) {
 	if isRemoteLink(link) {
 		return getRemoteFileData(link)
 	}
 
-	return getLocalFileData(root, link)
+	return getLocalFileData(link)
 }
 
 func getRemoteFileData(url string) ([]byte, error) {
@@ -360,10 +329,10 @@ func getRemoteFileData(url string) ([]byte, error) {
 	return ioutil.ReadAll(resp.Body)
 }
 
-func getLocalFileData(root, link string) ([]byte, error) {
+func getLocalFileData(link string) ([]byte, error) {
 	if filepath.IsAbs(link) {
 		return ioutil.ReadFile(link)
 	}
 
-	return ioutil.ReadFile(path.Join(root, link))
+	return ioutil.ReadFile(link)
 }

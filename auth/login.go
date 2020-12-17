@@ -68,7 +68,7 @@ func Login(cmd *cobra.Command, args []string) error {
 	buf := bytes.NewReader([]byte(codeRequest.Encode()))
 
 	tp := http.DefaultTransport.(*http.Transport).Clone()
-	if tp.TLSClientConfig, err = orlop.NewClientTLSConfigContext(ctx, cfg.Rest.TLS, cfg.Vault); err != nil {
+	if tp.TLSClientConfig, err = orlop.NewClientTLSConfigContext(ctx, cfg.TLS, cfg.Vault); err != nil {
 		return err
 	}
 
@@ -76,7 +76,7 @@ func Login(cmd *cobra.Command, args []string) error {
 		Transport: tp,
 	}
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, cfg.Rest.URL+"/device/code", buf)
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, cfg.URL+"/device/code", buf)
 	if err != nil {
 		return err
 	}
@@ -118,7 +118,7 @@ func Login(cmd *cobra.Command, args []string) error {
 				buf := bytes.NewReader([]byte(codeRequest.Encode()))
 
 				tp := http.DefaultTransport.(*http.Transport).Clone()
-				if tp.TLSClientConfig, err = orlop.NewClientTLSConfigContext(ctx, cfg.Rest.TLS, cfg.Vault); err != nil {
+				if tp.TLSClientConfig, err = orlop.NewClientTLSConfigContext(ctx, cfg.TLS, cfg.Vault); err != nil {
 					return err
 				}
 
@@ -126,7 +126,7 @@ func Login(cmd *cobra.Command, args []string) error {
 					Transport: tp,
 				}
 
-				req, err := http.NewRequestWithContext(ctx, http.MethodPost, cfg.Rest.URL+"/token", buf)
+				req, err := http.NewRequestWithContext(ctx, http.MethodPost, cfg.URL+"/token", buf)
 				if err != nil {
 					return err
 				}

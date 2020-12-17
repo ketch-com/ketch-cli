@@ -1,13 +1,13 @@
 package flags
 
 const (
-	Root          = "root"
 	File          = "file"
-	ID            = "id"
 	Token         = "token"
 	Org           = "org"
 	AppID         = "app-id"
-	Url           = "url"
+	URL           = "url"
+	Version       = "version"
+	Create        = "create"
 	TLSInsecure   = "insecure"
 	TLSCert       = "tls-cert"
 	TLSKey        = "tls-key"

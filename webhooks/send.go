@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	cloudevents "github.com/cloudevents/sdk-go/v2"
 	"github.com/spf13/cobra"
+	"go.ketch.com/cli/ketch-cli/config"
 	"go.ketch.com/cli/ketch-cli/flags"
 	"go.ketch.com/lib/oid"
 	"go.ketch.com/lib/orlop"
@@ -78,7 +79,7 @@ func SendWebhookEvent(cmd *cobra.Command, args []string) error {
 		Secret: secretToken,
 	}
 
-	tls, err := getTLSConfig(cmd)
+	tls, err := config.GetTLSConfig(cmd)
 	if err != nil {
 		return err
 	}

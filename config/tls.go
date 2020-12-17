@@ -1,4 +1,4 @@
-package webhooks
+package config
 
 import (
 	"github.com/spf13/cobra"
@@ -6,7 +6,7 @@ import (
 	"go.ketch.com/lib/orlop"
 )
 
-func getTLSConfig(cmd *cobra.Command) (*orlop.TLSConfig, error) {
+func GetTLSConfig(cmd *cobra.Command) (*orlop.TLSConfig, error) {
 	var err error
 	tls := &orlop.TLSConfig{}
 	if tls.Insecure, err = cmd.Flags().GetBool(flags.TLSInsecure); err != nil {

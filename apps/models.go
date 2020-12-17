@@ -127,13 +127,13 @@ type IdentitySpace struct {
 }
 
 type AppContact struct {
-	ContactType string `yaml:"type" json:"type,omitempty"`
-	Email       string `yaml:"email" json:"email,omitempty"`
+	ContactType string `yaml:"type,omitempty" json:"type,omitempty"`
+	Email       string `yaml:"email,omitempty" json:"email,omitempty"`
 }
 
 type AppConfigContact struct {
-	ContactType string `yaml:"type" json:"type,omitempty"`
-	Email       string `yaml:"email" json:"email,omitempty"`
+	ContactType string `yaml:"type,omitempty" json:"type,omitempty"`
+	Email       string `yaml:"email,omitempty" json:"email,omitempty"`
 }
 
 type AppConfigImage struct {
@@ -144,15 +144,15 @@ type AppConfigImage struct {
 }
 
 type WorkflowOptions struct {
-	TaskQueue                string `yaml:"task_queue" json:"task_queue"`
-	WorkflowExecutionTimeout int64  `yaml:"workflow_execution_timeout" json:"workflow_execution_timeout"`
-	WorkflowRunTimeout       int64  `yaml:"workflow_run_timeout" json:"workflow_run_timeout"`
-	WorkflowTaskTimeout      int64  `yaml:"workflow_task_timeout" json:"workflow_task_timeout"`
-	WaitForCancellation      bool   `yaml:"wait_for_cancellation" json:"wait_for_cancellation"`
-	ScheduleToCloseTimeout   int64  `yaml:"schedule_to_close_timeout" json:"schedule_to_close_timeout"`
-	ScheduleToStartTimeout   int64  `yaml:"schedule_to_start_timeout" json:"schedule_to_start_timeout"`
-	StartToCloseTimeout      int64  `yaml:"start_to_close_timeout" json:"start_to_close_timeout"`
-	HeartbeatTimeout         int64  `yaml:"heartbeat_timeout" json:"heartbeat_timeout"`
+	TaskQueue                string `yaml:"task_queue,omitempty" json:"task_queue,omitempty"`
+	WorkflowExecutionTimeout int64  `yaml:"workflow_execution_timeout,omitempty" json:"workflow_execution_timeout,omitempty"`
+	WorkflowRunTimeout       int64  `yaml:"workflow_run_timeout,omitempty" json:"workflow_run_timeout,omitempty"`
+	WorkflowTaskTimeout      int64  `yaml:"workflow_task_timeout,omitempty" json:"workflow_task_timeout,omitempty"`
+	WaitForCancellation      bool   `yaml:"wait_for_cancellation,omitempty" json:"wait_for_cancellation,omitempty"`
+	ScheduleToCloseTimeout   int64  `yaml:"schedule_to_close_timeout,omitempty" json:"schedule_to_close_timeout,omitempty"`
+	ScheduleToStartTimeout   int64  `yaml:"schedule_to_start_timeout,omitempty" json:"schedule_to_start_timeout,omitempty"`
+	StartToCloseTimeout      int64  `yaml:"start_to_close_timeout,omitempty" json:"start_to_close_timeout,omitempty"`
+	HeartbeatTimeout         int64  `yaml:"heartbeat_timeout,omitempty" json:"heartbeat_timeout,omitempty"`
 }
 
 type WorkflowConfig struct {
@@ -165,38 +165,40 @@ type WorkflowConfig struct {
 }
 
 type PublishAppConfig struct {
-	Name                string              `yaml:"name" json:"name"`
-	Version             string              `yaml:"version" json:"version"`
-	PrimaryCategory     string              `yaml:"primary_category" json:"primary_category"`
+	ID                  string              `yaml:"id,omitempty" json:"id,omitempty"`
+	Name                string              `yaml:"name,omitempty" json:"name,omitempty"`
+	OrgCode             string              `yaml:"org,omitempty" json:"org,omitempty"`
+	Version             string              `yaml:"version,omitempty" json:"version,omitempty"`
+	PrimaryCategory     string              `yaml:"primary_category,omitempty" json:"primary_category,omitempty"`
 	SecondaryCategory   string              `yaml:"secondary_category,omitempty" json:"secondary_category,omitempty"`
 	Rules               map[string]string   `yaml:"rules" json:"rules,omitempty"`
-	Capabilities        []string            `yaml:"capabilities" json:"capabilities"`
-	SupportedLanguages  []string            `yaml:"supported_languages" json:"supported_languages"`
-	Purposes            []string            `yaml:"purposes" json:"purposes"`
-	Rights              []string            `yaml:"rights" json:"rights"`
-	IdentitySpaces      []*IdentitySpace    `yaml:"identity_spaces" json:"identity_spaces"`
-	ShortDescription    string              `yaml:"short_description" json:"short_description"`
-	DetailedDescription string              `yaml:"detailed_description" json:"detailed_description"`
-	PermissionNote      string              `yaml:"permission_note" json:"permission_note"`
-	Permissions         []string            `yaml:"permissions" json:"permissions"`
-	SetupUrl            string              `yaml:"setup_url" json:"setup_url"`
-	HomepageUrl         string              `yaml:"homepage_url" json:"homepage_url"`
-	CustomerSupportUrl  string              `yaml:"customer_support_url" json:"customer_support_url"`
-	PrivacyPolicyUrl    string              `yaml:"privacy_policy_url" json:"privacy_policy_url"`
-	StatusUrl           string              `yaml:"status_url" json:"status_url"`
-	TosUrl              string              `yaml:"tos_url" json:"tos_url"`
-	DocUrl              string              `yaml:"doc_url" json:"doc_url"`
-	Logo                *AppConfigImage     `yaml:"logo" json:"logo"`
-	Previews            []*AppConfigImage   `yaml:"previews" json:"previews,omitempty"`
-	Contacts            []*AppConfigContact `yaml:"contacts" json:"contacts"`
-	ExpireUserTokens    bool                `yaml:"expire_user_tokens" json:"expire_user_tokens"`
-	RefreshInterval     string              `yaml:"refresh_interval" json:"refresh_interval,omitempty"`
-	RequestUserAuth     bool                `yaml:"request_user_auth" json:"request_user_auth"`
-	UserAuthCallbackUrl string              `yaml:"user_auth_callback_url" json:"user_auth_callback_url"`
-	RedirectOnUpdate    bool                `yaml:"redirect_on_update" json:"redirect_on_update"`
-	Webhook             *WebHook            `yaml:"webhook" json:"webhook"`
+	Capabilities        []string            `yaml:"capabilities,omitempty" json:"capabilities,omitempty"`
+	SupportedLanguages  []string            `yaml:"supported_languages,omitempty" json:"supported_languages,omitempty"`
+	Purposes            []string            `yaml:"purposes,omitempty" json:"purposes,omitempty"`
+	Rights              []string            `yaml:"rights,omitempty" json:"rights,omitempty"`
+	IdentitySpaces      []*IdentitySpace    `yaml:"identity_spaces,omitempty" json:"identity_spaces,omitempty"`
+	ShortDescription    string              `yaml:"short_description,omitempty" json:"short_description,omitempty"`
+	DetailedDescription string              `yaml:"detailed_description,omitempty" json:"detailed_description,omitempty"`
+	PermissionNote      string              `yaml:"permission_note,omitempty" json:"permission_note,omitempty"`
+	Permissions         []string            `yaml:"permissions,omitempty" json:"permissions,omitempty"`
+	SetupUrl            string              `yaml:"setup_url,omitempty" json:"setup_url,omitempty"`
+	HomepageUrl         string              `yaml:"homepage_url,omitempty" json:"homepage_url,omitempty"`
+	CustomerSupportUrl  string              `yaml:"customer_support_url,omitempty" json:"customer_support_url,omitempty"`
+	PrivacyPolicyUrl    string              `yaml:"privacy_policy_url,omitempty" json:"privacy_policy_url,omitempty"`
+	StatusUrl           string              `yaml:"status_url,omitempty" json:"status_url,omitempty"`
+	TosUrl              string              `yaml:"tos_url,omitempty" json:"tos_url,omitempty"`
+	DocUrl              string              `yaml:"doc_url,omitempty" json:"doc_url,omitempty"`
+	Logo                *AppConfigImage     `yaml:"logo,omitempty" json:"logo,omitempty"`
+	Previews            []*AppConfigImage   `yaml:"previews,omitempty" json:"previews,omitempty"`
+	Contacts            []*AppConfigContact `yaml:"contacts,omitempty" json:"contacts,omitempty"`
+	ExpireUserTokens    bool                `yaml:"expire_user_tokens,omitempty" json:"expire_user_tokens,omitempty"`
+	RefreshInterval     string              `yaml:"refresh_interval,omitempty" json:"refresh_interval,omitempty"`
+	RequestUserAuth     bool                `yaml:"request_user_auth,omitempty" json:"request_user_auth,omitempty"`
+	UserAuthCallbackUrl string              `yaml:"user_auth_callback_url,omitempty" json:"user_auth_callback_url,omitempty"`
+	RedirectOnUpdate    bool                `yaml:"redirect_on_update,omitempty" json:"redirect_on_update,omitempty"`
+	Webhook             *WebHook            `yaml:"webhook,omitempty" json:"webhook,omitempty"`
 	Workflow            []*WorkflowConfig   `yaml:"workflow,flow,omitempty" json:"workflow,omitempty"`
-	Form                []*FormComponent    `yaml:"form" json:"form"`
+	Form                []*FormComponent    `yaml:"form,omitempty" json:"form,omitempty"`
 }
 
 type App struct {
@@ -273,6 +275,7 @@ func NewApp(p PublishAppConfig) (*App, error) {
 	}
 
 	return &App{
+		ID:                  p.ID,
 		Name:                p.Name,
 		Version:             p.Version,
 		HomepageUrl:         p.HomepageUrl,

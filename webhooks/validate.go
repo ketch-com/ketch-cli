@@ -2,6 +2,7 @@ package webhooks
 
 import (
 	"github.com/spf13/cobra"
+	"go.ketch.com/cli/ketch-cli/config"
 	"go.ketch.com/cli/ketch-cli/flags"
 	"go.ketch.com/lib/orlop"
 	"go.ketch.com/lib/webhook-client/webhook"
@@ -35,7 +36,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 		Secret: secretToken,
 	}
 
-	tls, err := getTLSConfig(cmd)
+	tls, err := config.GetTLSConfig(cmd)
 	if err != nil {
 		return err
 	}

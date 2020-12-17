@@ -11,6 +11,11 @@
   },
   "additionalProperties": false,
   "properties": {
+    "id": {
+      "type": "string",
+      "title": "App ID",
+      "default": ""
+    },
     "name": {
       "type": "string",
       "title": "App name"
