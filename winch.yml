@@ -1,5 +1,4 @@
-name: ketch
-description: Ketch CLI is the command-line interface to ketch
+name: ketch description: Ketch CLI is the command-line interface to ketch
 repository: https://github.com/ketch-com/ketch-cli
 assets:
   - filename: assets/assets_gen.go
@@ -28,8 +27,8 @@ dockers:
     server: ghcr.io
     organization: ketch-com
     repository: ketch-cli
-    username: ${DOCKERHUB_USERNAME}
-    password: ${DOCKERHUB_PASSWORD}
+    username: ketch-com
+    password: ${GITHUB_TOKEN}
     branches:
       only: main
 #homebrew:
