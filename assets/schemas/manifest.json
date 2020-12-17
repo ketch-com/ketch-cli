@@ -21,7 +21,7 @@
       "pattern": "^([0-9]+)\\.([0-9]+)\\.([0-9]+)$"
     },
     "primary_category": {
-      "type": "string",
+      "type": ["string", "null"],
       "title": "Marketplace App primary category",
       "enum": [
         "privacy",
@@ -29,7 +29,7 @@
       ]
     },
     "secondary_category": {
-      "type": "string",
+      "type": ["string", "null"],
       "title": "Marketplace App secondary category",
       "enum": [
         "privacy",
@@ -37,17 +37,19 @@
       ]
     },
     "rules": {
-      "type": "object",
+      "type": ["object", "null"],
       "title": "App rules",
       "additionalProperties": false,
       "properties": {
         "view": {
           "type": "string",
-          "title": "rule expressing when the app is visible"
+          "title": "rule expressing when the app is visible",
+          "default": ""
         },
         "install": {
           "type": "string",
-          "title": "rule expression when the app can be installed"
+          "title": "rule expression when the app can be installed",
+          "default": ""
         }
       }
     },
@@ -66,7 +68,7 @@
       }
     },
     "supported_languages": {
-      "type": "array",
+      "type": ["array", "null"],
       "title": "App supported languages",
       "items": {
         "type": "string",
@@ -76,7 +78,7 @@
       }
     },
     "purposes": {
-      "type": "array",
+      "type": ["array", "null"],
       "title": "App purposes",
       "items": {
         "type": "string",
@@ -95,7 +97,7 @@
       }
     },
     "rights": {
-      "type": "array",
+      "type": ["array", "null"],
       "title": "App rights",
       "items": {
         "type": "string",
@@ -108,7 +110,7 @@
       }
     },
     "identity_spaces": {
-      "type": "array",
+      "type": ["array", "null"],
       "title": "App identity spaces",
       "items": {
         "type": "object",
@@ -136,7 +138,8 @@
               },
               "description": {
                 "type": "string",
-                "title": "App identity space description"
+                "title": "App identity space description",
+                "default": ""
               },
               "filters": {
                 "type": "array",
@@ -207,7 +210,8 @@
               },
               "description": {
                 "type": "string",
-                "title": "App identity space description"
+                "title": "App identity space description",
+                "default": ""
               },
               "type": {
                 "type": "string",
@@ -262,7 +266,7 @@
                     ]
                   },
                   "jwt": {
-                    "type": "object",
+                    "type": ["object", "null"],
                     "title": "JWT details",
                     "required": [
                       "location",
@@ -293,18 +297,21 @@
     },
     "short_description": {
       "type": "string",
-      "title": "short description that appears in search results and galleries"
+      "title": "short description that appears in search results and galleries",
+      "default": ""
     },
     "detailed_description": {
       "type": "string",
-      "title": "detailed description that appears on the app details screen"
+      "title": "detailed description that appears on the app details screen",
+      "default": ""
     },
     "permission_note": {
       "type": "string",
-      "title": "App permission note shown to the user when asking for authorization"
+      "title": "App permission note shown to the user when asking for authorization",
+      "default": ""
     },
     "permissions": {
-      "type": "array",
+      "type": ["array", "null"],
       "title": "App permissions",
       "items": {
         "type": "string",
@@ -313,41 +320,34 @@
     },
     "setup_url": {
       "type": "string",
-      "format": "uri",
       "title": "App setup URL"
     },
     "homepage_url": {
       "type": "string",
-      "format": "uri",
       "title": "App homepage URL"
     },
     "customer_support_url": {
       "type": "string",
-      "format": "uri",
       "title": "App customer support URL"
     },
     "privacy_policy_url": {
       "type": "string",
-      "format": "uri",
       "title": "App privacy policy URL"
     },
     "status_url": {
       "type": "string",
-      "format": "uri",
       "title": "App status URL"
     },
     "tos_url": {
       "type": "string",
-      "format": "uri",
       "title": "App terms of service URL"
     },
     "doc_url": {
       "type": "string",
-      "format": "uri",
       "title": "App documentation URL"
     },
     "logo": {
-      "type": "object",
+      "type": ["object", "null"],
       "title": "Marketplace App logo",
       "required": [
         "link"
@@ -360,7 +360,8 @@
       "properties": {
         "title": {
           "type": "string",
-          "title": "logo title"
+          "title": "logo title",
+          "default": ""
         },
         "link": {
           "type": "string",
@@ -368,16 +369,18 @@
         },
         "width": {
           "type": "integer",
-          "title": "logo width"
+          "title": "logo width",
+          "default": 0
         },
         "height": {
           "type": "integer",
-          "title": "logo height"
+          "title": "logo height",
+          "default": 0
         }
       }
     },
     "previews": {
-      "type": "array",
+      "type": ["array", "null"],
       "title": "Marketplace App previews",
       "items": {
         "type": "object",
@@ -393,7 +396,8 @@
         "properties": {
           "title": {
             "type": "string",
-            "title": "Image title"
+            "title": "Image title",
+            "default": ""
           },
           "link": {
             "type": "string",
@@ -401,17 +405,19 @@
           },
           "width": {
             "type": "integer",
-            "title": "Image width"
+            "title": "Image width",
+            "default": 0
           },
           "height": {
             "type": "integer",
-            "title": "Image height"
+            "title": "Image height",
+            "default": 0
           }
         }
       }
     },
     "contacts": {
-      "type": "array",
+      "type": ["array", "null"],
       "title": "App contacts",
       "items": {
         "type": "object",
@@ -447,7 +453,8 @@
     "refresh_interval": {
       "type": "string",
       "title": "App refresh interval",
-      "pattern": "([1-9][0-9]*)h"
+      "pattern": "([1-9][0-9]*)h",
+      "default": ""
     },
     "request_user_auth": {
       "type": "boolean",
@@ -457,7 +464,8 @@
     "user_auth_callback_url": {
       "type": "string",
       "format": "uri",
-      "title": "App OAuth callback URL"
+      "title": "App OAuth callback URL",
+      "default": ""
     },
     "redirect_on_update": {
       "type": "boolean",
@@ -465,7 +473,7 @@
       "default": false
     },
     "webhook": {
-      "type": "object",
+      "type": ["object", "null"],
       "title": "App webhook",
       "required": [
         "url",
@@ -482,14 +490,16 @@
         "secret": {
           "type": "string",
           "title": "Base64-encoded webhook secret used to sign events",
-          "contentEncoding": "base64"
+          "contentEncoding": "base64",
+          "default": ""
         },
         "authorization": {
           "type": "string",
-          "title": "Webhook authorization header used to authenticate to the webhook"
+          "title": "Webhook authorization header used to authenticate to the webhook",
+          "default": ""
         },
         "events": {
-          "type": "array",
+          "type": ["array", "null"],
           "title": "Webhook events",
           "items": {
             "type": "string",
@@ -508,7 +518,7 @@
       }
     },
     "workflow": {
-      "type": "array",
+      "type": ["array", "null"],
       "title": "definition of workflow objects",
       "items": {
         "type": "object",
@@ -546,48 +556,57 @@
             "title": "the function to be executed"
           },
           "options": {
-            "type": "object",
+            "type": ["object", "null"],
             "title": "the options for the workflow object",
             "additionalProperties": false,
             "properties": {
               "task_queue": {
-                "type": "string"
+                "type": "string",
+                "default": ""
               },
               "workflow_execution_timeout": {
                 "type": "integer",
-                "format": "int64"
+                "format": "int64",
+                "default": 0
               },
               "workflow_run_timeout": {
                 "type": "integer",
-                "format": "int64"
+                "format": "int64",
+                "default": 0
               },
               "workflow_task_timeout": {
                 "type": "integer",
-                "format": "int64"
+                "format": "int64",
+                "default": 0
               },
               "wait_for_cancellation": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": false
               },
               "schedule_to_close_timeout": {
                 "type": "integer",
-                "format": "int64"
+                "format": "int64",
+                "default": 0
               },
               "schedule_to_start_timeout": {
                 "type": "integer",
-                "format": "int64"
+                "format": "int64",
+                "default": 0
               },
               "start_to_close_timeout": {
                 "type": "integer",
-                "format": "int64"
+                "format": "int64",
+                "default": 0
               },
               "heartbeat_timeout": {
                 "type": "integer",
-                "format": "int64"
+                "format": "int64",
+                "default": 0
               }
             }
           },
           "params": {
-            "type": "array",
+            "type": ["array", "null"],
             "title": "parameters",
             "items": {
               "type": "object",
@@ -618,7 +637,7 @@
             }
           },
           "outputs": {
-            "type": "array",
+            "type": ["array", "null"],
             "title": "output values",
             "items": {
               "type": "object",
@@ -656,7 +675,7 @@
       }
     },
     "form": {
-      "type": "array",
+      "type": ["array", "null"],
       "items": {
         "type": "object",
         "required": [
@@ -687,57 +706,64 @@
           },
           "minLength": {
             "type": "integer",
-            "format": "int64"
+            "format": "int64",
+            "default": 0
           },
           "maxLength": {
             "type": "integer",
-            "format": "int64"
+            "format": "int64",
+            "default": 0
           },
           "pattern": {
-            "type": "string"
+            "type": "string",
+            "default": ""
           },
           "text_field": {
-            "type": "object",
+            "type": ["object", "null"],
             "description": "properties related to text fields",
             "additionalProperties": false,
             "properties": {
               "placeholder": {
                 "type": "string",
-                "description": "The placeholder text that will appear when this field is empty"
+                "description": "The placeholder text that will appear when this field is empty",
+                "default": ""
               },
               "default": {
-                "type": "string",
+                "type": ["string", "null"],
                 "description": "Default value will be the value for this field, before user interaction. Having a default value will override the placeholder text"
               },
               "spellcheck": {
                 "type": "boolean",
-                "description": "This setting will enable spell check on the field."
+                "description": "This setting will enable spell check on the field.",
+                "default": true
               }
             }
           },
           "select": {
-            "type": "object",
+            "type": ["object", "null"],
             "description": "properties related to select dropdowns",
             "additionalProperties": false,
             "properties": {
               "placeholder": {
                 "type": "string",
-                "description": "The placeholder text that will appear before an option is selected"
+                "description": "The placeholder text that will appear before an option is selected",
+                "default": ""
               },
               "default": {
-                "type": "string",
+                "type": ["string", "null"],
                 "description": "Default value will be the value for this field, before user interaction. Having a default value will override the placeholder text"
               },
               "multiple": {
                 "type": "boolean",
-                "description": "If true, multiple values can be added in this field.\n The values will appear as an array in the API and an “Add Another” button will be visible on the field allowing the creation of additional fields for this component"
+                "description": "If true, multiple values can be added in this field.\n The values will appear as an array in the API and an “Add Another” button will be visible on the field allowing the creation of additional fields for this component",
+                "default": false
               },
               "data": {
                 "type": "object",
                 "properties": {
                   "oneOf": {
                     "values": {
-                      "type": "array",
+                      "type": ["array", "null"],
                       "description": "These are the values that will be selected on this field",
                       "items": {
                         "type": "object",
@@ -758,12 +784,14 @@
                     },
                     "json": {
                       "type": "string",
-                      "description": "Enter a JSON Array to use. It should be formatted as an array of objects with named properties"
+                      "description": "Enter a JSON Array to use. It should be formatted as an array of objects with named properties",
+                      "default": ""
                     },
                     "url": {
                       "type": "string",
                       "description": "Enter a url with a data source in JSON Array format. This can be used to populate a Select list with external JSON values",
-                      "format": "uri"
+                      "format": "uri",
+                      "default": ""
                     }
                   }
                 }
