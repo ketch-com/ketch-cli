@@ -1,4 +1,5 @@
-name: ketch description: Ketch CLI is the command-line interface to ketch
+name: ketch
+description: Ketch CLI is the command-line interface to ketch
 repository: https://github.com/ketch-com/ketch-cli
 assets:
   - filename: assets/assets_gen.go
