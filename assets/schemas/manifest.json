@@ -16,6 +16,11 @@
       "title": "App ID",
       "default": ""
     },
+    "org": {
+      "type": "string",
+      "title": "Organization",
+      "default": ""
+    },
     "name": {
       "type": "string",
       "title": "App name"
