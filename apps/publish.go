@@ -169,7 +169,7 @@ func callRest(ctx context.Context, cfg *config.Config, method, urlPath, token st
 		return nil, err
 	}
 
-	u.Path = path.Join(u.Path, urlPath)
+	u.Path = path.Join(u.Path, "rest", "v1", urlPath)
 
 	req, err := http.NewRequestWithContext(ctx, method, u.String(), bytes.NewReader(body))
 	if err != nil {
