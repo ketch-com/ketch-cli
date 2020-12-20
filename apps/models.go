@@ -15,11 +15,11 @@ type ErrorResponse struct {
 }
 
 var AppCapabilityValues = map[string]int32{
-	"UNSPECIFIED_APP_CAPABILITY":        0,
-	"PERMIT_PROPAGATION_APP_CAPABILITY": 1,
-	"PERMIT_INGESTION_APP_CAPABILITY":   2,
-	"RIGHTS_PROPAGATION_APP_CAPABILITY": 3,
-	"RIGHTS_INGESTION_APP_CAPABILITY":   4,
+	"UNSPECIFIED_APP_CAPABILITY": 0,
+	"permit_propagation":         1,
+	"permit_ingestion":           2,
+	"rights_propagation":         3,
+	"rights_ingestion":           4,
 }
 
 var AppContactTypeValues = map[string]int32{
@@ -32,9 +32,8 @@ var AppContactTypeValues = map[string]int32{
 
 var AppMarketplaceCategoryValues = map[string]int32{
 	"UNSPECIFIED_APP_MARKETPLACE_CATEGORY": 0,
-	"CAT1_APP_MARKETPLACE_CATEGORY":        1,
-	"CAT2_APP_MARKETPLACE_CATEGORY":        2,
-	"CAT3_APP_MARKETPLACE_CATEGORY":        3,
+	"privacy":                              1,
+	"asset":                                2,
 }
 
 type TextField struct {
