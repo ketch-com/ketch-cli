@@ -710,6 +710,21 @@
               "text_field"
             ]
           },
+          "show_on_view": {
+            "type": "boolean",
+            "description": "If true, the field will appear on the connection overview",
+            "default": false
+          },
+          "show_value_on_edit": {
+            "type": "boolean",
+            "description": "If false, the field value will not be shown on the edit screen",
+            "default": true
+          },
+          "editable": {
+            "type": "boolean",
+            "description": "If false, the field cannot be changed",
+            "default": true
+          },
           "required": {
             "type": "boolean",
             "description": "If true, the field will be required to have a value"
