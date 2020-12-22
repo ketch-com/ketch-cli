@@ -743,7 +743,7 @@
             "type": "string",
             "default": ""
           },
-          "text_field": {
+          "textField": {
             "type": ["object", "null"],
             "description": "properties related to text fields",
             "additionalProperties": false,
@@ -753,7 +753,7 @@
                 "description": "The placeholder text that will appear when this field is empty",
                 "default": ""
               },
-              "default": {
+              "defaultValue": {
                 "type": ["string", "null"],
                 "description": "Default value will be the value for this field, before user interaction. Having a default value will override the placeholder text"
               },
@@ -774,7 +774,7 @@
                 "description": "The placeholder text that will appear before an option is selected",
                 "default": ""
               },
-              "default": {
+              "defaultValue": {
                 "type": ["string", "null"],
                 "description": "Default value will be the value for this field, before user interaction. Having a default value will override the placeholder text"
               },

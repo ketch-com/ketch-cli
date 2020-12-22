@@ -50,7 +50,7 @@ type Select struct {
 	Placeholder string `yaml:"placeholder,omitempty" json:"placeholder,omitempty"`
 
 	// Default value will be the value for this field, before user interaction. Having a default value will override the placeholder text
-	DefaultValue string `yaml:"default,omitempty" json:"default,omitempty"`
+	DefaultValue string `yaml:"default_value,omitempty" json:"defaultValue,omitempty"`
 
 	// If true, multiple values can be added in this field.
 	// The values will appear as an array in the API and an “Add Another” button will be visible on the field allowing the creation of additional fields for this component
@@ -87,7 +87,7 @@ type FormComponent struct {
 	MinLength int64      `yaml:"minLength,omitempty" json:"minLength,omitempty"`
 	MaxLength int64      `yaml:"maxLength,omitempty" json:"maxLength,omitempty"`
 	Pattern   string     `yaml:"pattern,omitempty" json:"pattern,omitempty"`
-	TextField *TextField `yaml:"text_field,omitempty" json:"text_field,omitempty"`
+	TextField *TextField `yaml:"text_field,omitempty" json:"textField,omitempty"`
 	Select    *Select    `yaml:"select,omitempty" json:"select,omitempty"`
 }
 
@@ -276,6 +276,7 @@ func NewApp(p PublishAppConfig) (*App, error) {
 	return &App{
 		ID:                  p.ID,
 		Name:                p.Name,
+		OrgCode:             p.OrgCode,
 		Version:             p.Version,
 		HomepageUrl:         p.HomepageUrl,
 		UserAuthCallbackUrl: p.UserAuthCallbackUrl,
