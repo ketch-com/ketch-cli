@@ -89,8 +89,8 @@ type FormComponent struct {
 	Pattern         string     `yaml:"pattern,omitempty" json:"pattern,omitempty"`
 	TextField       *TextField `yaml:"text_field,omitempty" json:"textField,omitempty"`
 	Select          *Select    `yaml:"select,omitempty" json:"select,omitempty"`
-	ShowOnView      bool       `yaml:"show_on_view,omitempty" json:"show_on_view,omitempty"`
-	ShowValueOnEdit bool       `yaml:"show_value_on_edit,omitempty" json:"show_value_on_edit,omitempty"`
+	ShowOnView      bool       `yaml:"show_on_view,omitempty" json:"showOnView,omitempty"`
+	ShowValueOnEdit bool       `yaml:"show_value_on_edit,omitempty" json:"showValueOnEdit,omitempty"`
 	Editable        bool       `yaml:"editable,omitempty" json:"editable,omitempty"`
 }
 

@@ -710,12 +710,12 @@
               "text_field"
             ]
           },
-          "show_on_view": {
+          "showOnView": {
             "type": "boolean",
             "description": "If true, the field will appear on the connection overview",
             "default": false
           },
-          "show_value_on_edit": {
+          "showValueOnEdit": {
             "type": "boolean",
             "description": "If false, the field value will not be shown on the edit screen",
             "default": true
