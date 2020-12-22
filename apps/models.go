@@ -83,12 +83,15 @@ type FormComponent struct {
 	// The type property will be used to select which component to render on the frontend. It cannot be an existing field type
 	Type string `yaml:"type,omitempty" json:"type,omitempty"`
 	// If true, the field will be required to have a value
-	Required  bool       `yaml:"required,omitempty" json:"required,omitempty"`
-	MinLength int64      `yaml:"minLength,omitempty" json:"minLength,omitempty"`
-	MaxLength int64      `yaml:"maxLength,omitempty" json:"maxLength,omitempty"`
-	Pattern   string     `yaml:"pattern,omitempty" json:"pattern,omitempty"`
-	TextField *TextField `yaml:"text_field,omitempty" json:"textField,omitempty"`
-	Select    *Select    `yaml:"select,omitempty" json:"select,omitempty"`
+	Required        bool       `yaml:"required,omitempty" json:"required,omitempty"`
+	MinLength       int64      `yaml:"minLength,omitempty" json:"minLength,omitempty"`
+	MaxLength       int64      `yaml:"maxLength,omitempty" json:"maxLength,omitempty"`
+	Pattern         string     `yaml:"pattern,omitempty" json:"pattern,omitempty"`
+	TextField       *TextField `yaml:"text_field,omitempty" json:"textField,omitempty"`
+	Select          *Select    `yaml:"select,omitempty" json:"select,omitempty"`
+	ShowOnView      bool       `yaml:"show_on_view,omitempty" json:"show_on_view,omitempty"`
+	ShowValueOnEdit bool       `yaml:"show_value_on_edit,omitempty" json:"show_value_on_edit,omitempty"`
+	Editable        bool       `yaml:"editable,omitempty" json:"editable,omitempty"`
 }
 
 type WebHook struct {
