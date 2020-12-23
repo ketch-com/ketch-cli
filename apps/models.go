@@ -38,7 +38,7 @@ var AppMarketplaceCategoryValues = map[string]int32{
 
 type TextField struct {
 	// Default value will be the value for this field, before user interaction. Having a default value will override the placeholder text
-	DefaultValue string `yaml:"default_value,omitempty" json:"defaultValue,omitempty"`
+	DefaultValue string `yaml:"default,omitempty" json:"defaultValue,omitempty"`
 	// The placeholder text that will appear when this field is empty
 	Placeholder string `yaml:"placeholder,omitempty" json:"placeholder,omitempty"`
 	// This setting will enable spell check on the field.
@@ -50,7 +50,7 @@ type Select struct {
 	Placeholder string `yaml:"placeholder,omitempty" json:"placeholder,omitempty"`
 
 	// Default value will be the value for this field, before user interaction. Having a default value will override the placeholder text
-	DefaultValue string `yaml:"default_value,omitempty" json:"defaultValue,omitempty"`
+	DefaultValue string `yaml:"default,omitempty" json:"defaultValue,omitempty"`
 
 	// If true, multiple values can be added in this field.
 	// The values will appear as an array in the API and an “Add Another” button will be visible on the field allowing the creation of additional fields for this component
