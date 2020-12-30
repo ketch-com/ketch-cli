@@ -16,10 +16,10 @@ type ErrorResponse struct {
 
 var AppCapabilityValues = map[string]int32{
 	"UNSPECIFIED_APP_CAPABILITY": 0,
-	"permit_propagation":         1,
-	"permit_ingestion":           2,
-	"rights_propagation":         3,
-	"rights_ingestion":           4,
+	"permitPropagation":         1,
+	"permitIngestion":           2,
+	"rightPropagation":         3,
+	"rightIngestion":           4,
 }
 
 var AppContactTypeValues = map[string]int32{
@@ -34,30 +34,6 @@ var AppMarketplaceCategoryValues = map[string]int32{
 	"UNSPECIFIED_APP_MARKETPLACE_CATEGORY": 0,
 	"privacy":                              1,
 	"asset":                                2,
-}
-
-type TextField struct {
-	// Default value will be the value for this field, before user interaction. Having a default value will override the placeholder text
-	DefaultValue string `yaml:"default_value,omitempty" json:"defaultValue,omitempty"`
-	// The placeholder text that will appear when this field is empty
-	Placeholder string `yaml:"placeholder,omitempty" json:"placeholder,omitempty"`
-	// This setting will enable spell check on the field.
-	Spellcheck bool `yaml:"spellcheck,omitempty" json:"spellcheck,omitempty"`
-}
-
-type Select struct {
-	// The placeholder text that will appear before an option is selected
-	Placeholder string `yaml:"placeholder,omitempty" json:"placeholder,omitempty"`
-
-	// Default value will be the value for this field, before user interaction. Having a default value will override the placeholder text
-	DefaultValue string `yaml:"default,omitempty" json:"default,omitempty"`
-
-	// If true, multiple values can be added in this field.
-	// The values will appear as an array in the API and an “Add Another” button will be visible on the field allowing the creation of additional fields for this component
-	Multiple bool `yaml:"multiple,omitempty" json:"multiple,omitempty"`
-
-	// Data is the definition of how data is provided for the dropdown
-	Data *SelectData `yaml:"data,omitempty" json:"data,omitempty"`
 }
 
 type SelectData struct {
@@ -77,9 +53,9 @@ type SelectDataValue struct {
 type FormComponent struct {
 	// The key field is where the data will be saved to. This must be unique per field.
 	// For example, if key = 'customers' then the value of the field will be saved in data.customers
-	Key string `yaml:"key,omitempty" json:"key,omitempty"`
+	Name string `yaml:"name,omitempty" json:"name,omitempty"`
 	// The name or title for this component
-	Label string `yaml:"label,omitempty" json:"label,omitempty"`
+	Title string `yaml:"title,omitempty" json:"title,omitempty"`
 	// The type property will be used to select which component to render on the frontend. It cannot be an existing field type
 	Type string `yaml:"type,omitempty" json:"type,omitempty"`
 	// If true, the field will be required to have a value
@@ -87,8 +63,20 @@ type FormComponent struct {
 	MinLength int64      `yaml:"minLength,omitempty" json:"minLength,omitempty"`
 	MaxLength int64      `yaml:"maxLength,omitempty" json:"maxLength,omitempty"`
 	Pattern   string     `yaml:"pattern,omitempty" json:"pattern,omitempty"`
-	TextField *TextField `yaml:"text_field,omitempty" json:"text_field,omitempty"`
-	Select    *Select    `yaml:"select,omitempty" json:"select,omitempty"`
+	// Default will be the default value for this field, before user interaction. Having a default value will override the placeholder text
+	Default string `yaml:"default,omitempty" json:"default,omitempty"`
+	// The placeholder text that will appear when this field is empty
+	Placeholder string `yaml:"placeholder,omitempty" json:"placeholder,omitempty"`
+	// type == "string"
+	// This setting will enable spell check on the field if
+	Spellcheck bool `yaml:"spellcheck,omitempty" json:"spellcheck,omitempty"`
+	// type == "array"
+	// If true, multiple values can be added in this field.
+	// The values will appear as an array in the API and an “Add Another” button will be visible on the field allowing the creation of additional fields for this component
+	Multiple bool `yaml:"multiple,omitempty" json:"multiple,omitempty"`
+	// type == "array"
+	// Data is the definition of how data is provided for the dropdown
+	Data *SelectData `yaml:"data,omitempty" json:"data,omitempty"`
 }
 
 type WebHook struct {
@@ -143,15 +131,15 @@ type AppConfigImage struct {
 }
 
 type WorkflowOptions struct {
-	TaskQueue                string `yaml:"task_queue,omitempty" json:"task_queue,omitempty"`
-	WorkflowExecutionTimeout int64  `yaml:"workflow_execution_timeout,omitempty" json:"workflow_execution_timeout,omitempty"`
-	WorkflowRunTimeout       int64  `yaml:"workflow_run_timeout,omitempty" json:"workflow_run_timeout,omitempty"`
-	WorkflowTaskTimeout      int64  `yaml:"workflow_task_timeout,omitempty" json:"workflow_task_timeout,omitempty"`
-	WaitForCancellation      bool   `yaml:"wait_for_cancellation,omitempty" json:"wait_for_cancellation,omitempty"`
-	ScheduleToCloseTimeout   int64  `yaml:"schedule_to_close_timeout,omitempty" json:"schedule_to_close_timeout,omitempty"`
-	ScheduleToStartTimeout   int64  `yaml:"schedule_to_start_timeout,omitempty" json:"schedule_to_start_timeout,omitempty"`
-	StartToCloseTimeout      int64  `yaml:"start_to_close_timeout,omitempty" json:"start_to_close_timeout,omitempty"`
-	HeartbeatTimeout         int64  `yaml:"heartbeat_timeout,omitempty" json:"heartbeat_timeout,omitempty"`
+	TaskQueue                string `yaml:"taskQueue,omitempty" json:"taskQueue,omitempty"`
+	WorkflowExecutionTimeout int64  `yaml:"workflowExecutionTimeout,omitempty" json:"workflowExecutionTimeout,omitempty"`
+	WorkflowRunTimeout       int64  `yaml:"workflowRunTimeout,omitempty" json:"workflowRunTimeout,omitempty"`
+	WorkflowTaskTimeout      int64  `yaml:"workflowTaskTimeout,omitempty" json:"workflowTaskTimeout,omitempty"`
+	WaitForCancellation      bool   `yaml:"waitForCancellation,omitempty" json:"waitForCancellation,omitempty"`
+	ScheduleToCloseTimeout   int64  `yaml:"scheduleToCloseTimeout,omitempty" json:"scheduleToCloseTimeout,omitempty"`
+	ScheduleToStartTimeout   int64  `yaml:"scheduleToStartTimeout,omitempty" json:"scheduleToStartTimeout,omitempty"`
+	StartToCloseTimeout      int64  `yaml:"startToCloseTimeout,omitempty" json:"startToCloseTimeout,omitempty"`
+	HeartbeatTimeout         int64  `yaml:"heartbeatTimeout,omitempty" json:"heartbeatTimeout,omitempty"`
 }
 
 type WorkflowConfig struct {
@@ -168,79 +156,79 @@ type PublishAppConfig struct {
 	Name                string              `yaml:"name,omitempty" json:"name,omitempty"`
 	OrgCode             string              `yaml:"org,omitempty" json:"org,omitempty"`
 	Version             string              `yaml:"version,omitempty" json:"version,omitempty"`
-	PrimaryCategory     string              `yaml:"primary_category,omitempty" json:"primary_category,omitempty"`
-	SecondaryCategory   string              `yaml:"secondary_category,omitempty" json:"secondary_category,omitempty"`
+	PrimaryCategory     string              `yaml:"primaryCategory,omitempty" json:"primaryCategory,omitempty"`
+	SecondaryCategory   string              `yaml:"secondaryCategory,omitempty" json:"secondaryCategory,omitempty"`
 	Rules               map[string]string   `yaml:"rules" json:"rules,omitempty"`
 	Capabilities        []string            `yaml:"capabilities,omitempty" json:"capabilities,omitempty"`
-	SupportedLanguages  []string            `yaml:"supported_languages,omitempty" json:"supported_languages,omitempty"`
+	SupportedLanguages  []string            `yaml:"supportedLanguages,omitempty" json:"supportedLanguages,omitempty"`
 	Purposes            []string            `yaml:"purposes,omitempty" json:"purposes,omitempty"`
 	Rights              []string            `yaml:"rights,omitempty" json:"rights,omitempty"`
-	IdentitySpaces      []*IdentitySpace    `yaml:"identity_spaces,omitempty" json:"identity_spaces,omitempty"`
-	ShortDescription    string              `yaml:"short_description,omitempty" json:"short_description,omitempty"`
-	DetailedDescription string              `yaml:"detailed_description,omitempty" json:"detailed_description,omitempty"`
-	PermissionNote      string              `yaml:"permission_note,omitempty" json:"permission_note,omitempty"`
+	IdentitySpaces      []*IdentitySpace    `yaml:"identitySpaces,omitempty" json:"identitySpaces,omitempty"`
+	ShortDescription    string              `yaml:"shortDescription,omitempty" json:"shortDescription,omitempty"`
+	DetailedDescription string              `yaml:"detailedDescription,omitempty" json:"detailedDescription,omitempty"`
+	PermissionNote      string              `yaml:"permissionNote,omitempty" json:"permissionNote,omitempty"`
 	Permissions         []string            `yaml:"permissions,omitempty" json:"permissions,omitempty"`
-	SetupUrl            string              `yaml:"setup_url,omitempty" json:"setup_url,omitempty"`
-	HomepageUrl         string              `yaml:"homepage_url,omitempty" json:"homepage_url,omitempty"`
-	CustomerSupportUrl  string              `yaml:"customer_support_url,omitempty" json:"customer_support_url,omitempty"`
-	PrivacyPolicyUrl    string              `yaml:"privacy_policy_url,omitempty" json:"privacy_policy_url,omitempty"`
-	StatusUrl           string              `yaml:"status_url,omitempty" json:"status_url,omitempty"`
-	TosUrl              string              `yaml:"tos_url,omitempty" json:"tos_url,omitempty"`
-	DocUrl              string              `yaml:"doc_url,omitempty" json:"doc_url,omitempty"`
+	SetupUrl            string              `yaml:"setupURL,omitempty" json:"setupURL,omitempty"`
+	HomepageUrl         string              `yaml:"homepageURL,omitempty" json:"homepageURL,omitempty"`
+	CustomerSupportUrl  string              `yaml:"customerSupportURL,omitempty" json:"customerSupportURL,omitempty"`
+	PrivacyPolicyUrl    string              `yaml:"privacyPolicyURL,omitempty" json:"privacyPolicyURL,omitempty"`
+	StatusUrl           string              `yaml:"statusURL,omitempty" json:"statusURL,omitempty"`
+	TosUrl              string              `yaml:"tosURL,omitempty" json:"tosURL,omitempty"`
+	DocUrl              string              `yaml:"docURL,omitempty" json:"docURL,omitempty"`
 	Logo                *AppConfigImage     `yaml:"logo,omitempty" json:"logo,omitempty"`
 	Previews            []*AppConfigImage   `yaml:"previews,omitempty" json:"previews,omitempty"`
 	Contacts            []*AppConfigContact `yaml:"contacts,omitempty" json:"contacts,omitempty"`
-	ExpireUserTokens    bool                `yaml:"expire_user_tokens,omitempty" json:"expire_user_tokens,omitempty"`
-	RefreshInterval     string              `yaml:"refresh_interval,omitempty" json:"refresh_interval,omitempty"`
-	RequestUserAuth     bool                `yaml:"request_user_auth,omitempty" json:"request_user_auth,omitempty"`
-	UserAuthCallbackUrl string              `yaml:"user_auth_callback_url,omitempty" json:"user_auth_callback_url,omitempty"`
-	RedirectOnUpdate    bool                `yaml:"redirect_on_update,omitempty" json:"redirect_on_update,omitempty"`
+	ExpireUserTokens    bool                `yaml:"expireUserTokens,omitempty" json:"expireUserTokens,omitempty"`
+	RefreshInterval     string              `yaml:"refreshInterval,omitempty" json:"refreshInterval,omitempty"`
+	RequestUserAuth     bool                `yaml:"requestUserAuth,omitempty" json:"requestUserAuth,omitempty"`
+	UserAuthCallbackUrl string              `yaml:"userAuthCallbackURL,omitempty" json:"userAuthCallbackURL,omitempty"`
+	RedirectOnUpdate    bool                `yaml:"redirectOnUpdate,omitempty" json:"redirectOnUpdate,omitempty"`
 	Webhook             *WebHook            `yaml:"webhook,omitempty" json:"webhook,omitempty"`
 	Workflow            []*WorkflowConfig   `yaml:"workflow,flow,omitempty" json:"workflow,omitempty"`
 	Form                []*FormComponent    `yaml:"form,omitempty" json:"form,omitempty"`
 }
 
 type App struct {
-	ID                  string            `json:"ID,omitempty"`
+	ID                  string            `json:"id,omitempty"`
 	OrgCode             string            `yaml:"orgCode" json:"orgCode,omitempty"`
 	Code                string            `json:"code,omitempty"`
 	Name                string            `json:"name,omitempty"`
 	Version             string            `json:"version,omitempty"`
 	Readme              string            `json:"readme,omitempty"`
-	HomepageUrl         string            `json:"homepage_url,omitempty"`
-	UserAuthCallbackUrl string            `json:"user_auth_callback_url,omitempty"`
-	ExpireUserTokens    bool              `json:"expire_user_tokens,omitempty"`
-	RequestUserAuth     bool              `json:"request_user_auth,omitempty"`
-	SetupUrl            string            `json:"setup_url,omitempty"`
-	RedirectOnUpdate    bool              `json:"redirect_on_update,omitempty"`
-	WebhookId           string            `json:"webhook_id,omitempty"`
+	HomepageUrl         string            `json:"homepageURL,omitempty"`
+	UserAuthCallbackUrl string            `json:"userAuthCallbackURL,omitempty"`
+	ExpireUserTokens    bool              `json:"expireUserTokens,omitempty"`
+	RequestUserAuth     bool              `json:"requestUserAuth,omitempty"`
+	SetupUrl            string            `json:"setupURL,omitempty"`
+	RedirectOnUpdate    bool              `json:"redirectOnUpdate,omitempty"`
+	WebhookId           string            `json:"webhookID,omitempty"`
 	Capabilities        []int32           `yaml:",flow"`
 	Permissions         []string          `yaml:",flow"`
-	PermissionNote      string            `json:"permission_node,omitempty"`
+	PermissionNote      string            `json:"permissionNode,omitempty"`
 	Purposes            []string          `yaml:",flow"`
 	Form                []*FormComponent  `yaml:",flow"`
-	IdentitySpaces      []*IdentitySpace  `yaml:",flow" json:"identity_spaces,omitempty"`
+	IdentitySpaces      []*IdentitySpace  `yaml:",flow" json:"identitySpaces,omitempty"`
 	Rights              []string          `yaml:",flow" json:"rights,omitempty"`
 	Rules               map[string]string `yaml:",flow" json:"rules,omitempty"`
-	RefreshInterval     time.Duration     `yaml:"refresh_interval" json:"refresh_interval,omitempty"`
+	RefreshInterval     time.Duration     `yaml:"refreshInterval" json:"refreshInterval,omitempty"`
 }
 
 type AppMarketplaceEntry struct {
 	AppID               string `json:"appID,omitempty"`
 	Version             string
 	Contacts            []*AppContact `yaml:",flow"`
-	ShortDescription    string        `json:"short_description,omitempty"`
-	PrimaryCategory     int32         `yaml:",inline" json:"primary_category,omitempty"`
-	SecondaryCategory   int32         `yaml:",inline" json:"secondary_category,omitempty"`
-	SupportedLanguages  []string      `yaml:",flow" json:"supported_languages,omitempty"`
-	CustomerSupportUrl  string        `json:"customer_support_url,omitempty"`
-	PrivacyPolicyUrl    string        `json:"privacy_policy_url,omitempty"`
-	StatusUrl           string        `json:"status_url,omitempty"`
-	TosUrl              string        `json:"tos_url,omitempty"`
-	DocUrl              string        `json:"doc_url,omitempty"`
+	ShortDescription    string        `json:"shortDescription,omitempty"`
+	PrimaryCategory     int32         `yaml:",inline" json:"primaryCategory,omitempty"`
+	SecondaryCategory   int32         `yaml:",inline" json:"secondaryCategory,omitempty"`
+	SupportedLanguages  []string      `yaml:",flow" json:"supportedLanguages,omitempty"`
+	CustomerSupportUrl  string        `json:"customerSupportURL,omitempty"`
+	PrivacyPolicyUrl    string        `json:"privacyPolicyURL,omitempty"`
+	StatusUrl           string        `json:"statusURL,omitempty"`
+	TosUrl              string        `json:"tosURL,omitempty"`
+	DocUrl              string        `json:"docURL,omitempty"`
 	Logo                Image         `yaml:",flow"`
-	IntroDescription    string        `json:"intro_description,omitempty"`
-	DetailedDescription string        `json:"detailed_description,omitempty"`
+	IntroDescription    string        `json:"introDescription,omitempty"`
+	DetailedDescription string        `json:"detailedDescription,omitempty"`
 	Previews            []*Image      `yaml:",flow" json:"previews,omitempty"`
 }
 
