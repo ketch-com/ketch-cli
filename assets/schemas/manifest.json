@@ -7,7 +7,7 @@
     "version"
   ],
   "dependencies": {
-    "request_user_auth": ["user_auth_callback_url"]
+    "requestUserAuth": ["user_auth_callback_url"]
   },
   "additionalProperties": false,
   "properties": {
@@ -30,7 +30,7 @@
       "title": "App semantic version",
       "pattern": "^([0-9]+)\\.([0-9]+)\\.([0-9]+)$"
     },
-    "primary_category": {
+    "primaryCategory": {
       "type": ["string", "null"],
       "title": "Marketplace App primary category",
       "enum": [
@@ -38,7 +38,7 @@
         "asset"
       ]
     },
-    "secondary_category": {
+    "secondaryCategory": {
       "type": ["string", "null"],
       "title": "Marketplace App secondary category",
       "enum": [
@@ -70,14 +70,14 @@
         "type": "string",
         "title": "App capability",
         "enum": [
-          "permit_propagation",
-          "permit_ingestion",
-          "rights_propagation",
-          "rights_ingestion"
+          "permitPropagation",
+          "permitIngestion",
+          "rightsPropagation",
+          "rightsIngestion"
         ]
       }
     },
-    "supported_languages": {
+    "supportedLanguages": {
       "type": ["array", "null"],
       "title": "App supported languages",
       "items": {
@@ -119,7 +119,7 @@
         ]
       }
     },
-    "identity_spaces": {
+    "identitySpaces": {
       "type": ["array", "null"],
       "title": "App identity spaces",
       "items": {
@@ -305,17 +305,17 @@
         ]
       }
     },
-    "short_description": {
+    "shortDescription": {
       "type": "string",
       "title": "short description that appears in search results and galleries",
       "default": ""
     },
-    "detailed_description": {
+    "detailedDescription": {
       "type": "string",
       "title": "detailed description that appears on the app details screen",
       "default": ""
     },
-    "permission_note": {
+    "permissionNote": {
       "type": "string",
       "title": "App permission note shown to the user when asking for authorization",
       "default": ""
@@ -328,31 +328,31 @@
         "title": "Permission"
       }
     },
-    "setup_url": {
+    "setupURL": {
       "type": "string",
       "title": "App setup URL"
     },
-    "homepage_url": {
+    "homepageURL": {
       "type": "string",
       "title": "App homepage URL"
     },
-    "customer_support_url": {
+    "customerSupportURL": {
       "type": "string",
       "title": "App customer support URL"
     },
-    "privacy_policy_url": {
+    "privacyPolicyURL": {
       "type": "string",
       "title": "App privacy policy URL"
     },
-    "status_url": {
+    "statusURL": {
       "type": "string",
       "title": "App status URL"
     },
-    "tos_url": {
+    "tosURL": {
       "type": "string",
       "title": "App terms of service URL"
     },
-    "doc_url": {
+    "docURL": {
       "type": "string",
       "title": "App documentation URL"
     },
@@ -455,29 +455,29 @@
         }
       }
     },
-    "expire_user_tokens": {
+    "expireUserTokens": {
       "type": "boolean",
       "title": "Expire user tokens",
       "default": false
     },
-    "refresh_interval": {
+    "refreshInterval": {
       "type": "string",
       "title": "App refresh interval",
       "pattern": "([1-9][0-9]*)h",
       "default": ""
     },
-    "request_user_auth": {
+    "requestUserAuth": {
       "type": "boolean",
       "title": "Request user auth",
       "default": false
     },
-    "user_auth_callback_url": {
+    "userAuthCallbackURL": {
       "type": "string",
       "format": "uri",
       "title": "App OAuth callback URL",
       "default": ""
     },
-    "redirect_on_update": {
+    "redirectOnUpdate": {
       "type": "boolean",
       "title": "Redirect on update",
       "default": false
@@ -689,16 +689,16 @@
       "items": {
         "type": "object",
         "required": [
-          "key",
+          "name",
           "type"
         ],
         "additionalProperties": false,
         "properties": {
-          "key": {
+          "name": {
             "type": "string",
             "description": "The key field is where the data will be saved to. This must be unique per field.\n For example, if key = 'customers' then the value of the field will be saved in data.customers"
           },
-          "label": {
+          "title": {
             "type": "string",
             "description": "The name or title for this component"
           },
@@ -706,16 +706,16 @@
             "type": "string",
             "description": "The type property will be used to select which component to render on the frontend. It cannot be an existing field type",
             "enum": [
-              "select",
-              "text_field"
+              "array",
+              "string"
             ]
           },
-          "show_on_view": {
+          "showOnView": {
             "type": "boolean",
             "description": "If true, the field will appear on the connection overview",
             "default": false
           },
-          "show_value_on_edit": {
+          "showValueOnEdit": {
             "type": "boolean",
             "description": "If false, the field value will not be shown on the edit screen",
             "default": true
@@ -743,82 +743,59 @@
             "type": "string",
             "default": ""
           },
-          "text_field": {
-            "type": ["object", "null"],
-            "description": "properties related to text fields",
-            "additionalProperties": false,
-            "properties": {
-              "placeholder": {
-                "type": "string",
-                "description": "The placeholder text that will appear when this field is empty",
-                "default": ""
-              },
-              "default": {
-                "type": ["string", "null"],
-                "description": "Default value will be the value for this field, before user interaction. Having a default value will override the placeholder text"
-              },
-              "spellcheck": {
-                "type": "boolean",
-                "description": "This setting will enable spell check on the field.",
-                "default": true
-              }
-            }
+          "placeholder": {
+            "type": "string",
+            "description": "The placeholder text that will appear when this field is empty",
+            "default": ""
           },
-          "select": {
-            "type": ["object", "null"],
-            "description": "properties related to select dropdowns",
-            "additionalProperties": false,
+          "default": {
+            "type": ["string", "null"],
+            "description": "Default value will be the value for this field, before user interaction. Having a default value will override the placeholder text"
+          },
+          "spellcheck": {
+            "type": "boolean",
+            "description": "This setting will enable spell check on the field.",
+            "default": true
+          },
+          "multiple": {
+            "type": "boolean",
+            "description": "If true, multiple values can be added in this field.\n The values will appear as an array in the API and an “Add Another” button will be visible on the field allowing the creation of additional fields for this component",
+            "default": false
+          },
+          "data": {
+            "type": "object",
             "properties": {
-              "placeholder": {
-                "type": "string",
-                "description": "The placeholder text that will appear before an option is selected",
-                "default": ""
-              },
-              "default": {
-                "type": ["string", "null"],
-                "description": "Default value will be the value for this field, before user interaction. Having a default value will override the placeholder text"
-              },
-              "multiple": {
-                "type": "boolean",
-                "description": "If true, multiple values can be added in this field.\n The values will appear as an array in the API and an “Add Another” button will be visible on the field allowing the creation of additional fields for this component",
-                "default": false
-              },
-              "data": {
-                "type": "object",
-                "properties": {
-                  "oneOf": {
-                    "values": {
-                      "type": ["array", "null"],
-                      "description": "These are the values that will be selected on this field",
-                      "items": {
-                        "type": "object",
-                        "required": [
-                          "label",
-                          "value"
-                        ],
-                        "additionalProperties": false,
-                        "properties": {
-                          "value": {
-                            "type": "string"
-                          },
-                          "label": {
-                            "type": "string"
-                          }
-                        }
+              "oneOf": {
+                "values": {
+                  "type": ["array", "null"],
+                  "description": "These are the values that will be selected on this field",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "label",
+                      "value"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      },
+                      "label": {
+                        "type": "string"
                       }
-                    },
-                    "json": {
-                      "type": "string",
-                      "description": "Enter a JSON Array to use. It should be formatted as an array of objects with named properties",
-                      "default": ""
-                    },
-                    "url": {
-                      "type": "string",
-                      "description": "Enter a url with a data source in JSON Array format. This can be used to populate a Select list with external JSON values",
-                      "format": "uri",
-                      "default": ""
                     }
                   }
+                },
+                "json": {
+                  "type": "string",
+                  "description": "Enter a JSON Array to use. It should be formatted as an array of objects with named properties",
+                  "default": ""
+                },
+                "url": {
+                  "type": "string",
+                  "description": "Enter a url with a data source in JSON Array format. This can be used to populate a Select list with external JSON values",
+                  "format": "uri",
+                  "default": ""
                 }
               }
             }
