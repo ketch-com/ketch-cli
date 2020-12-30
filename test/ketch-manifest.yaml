@@ -96,8 +96,8 @@ permissions:
 # ___________________________________________________________________________________________________________________________________________________________________________
 # Setup Form
 form:
-- key: organization_id
-  label: "Organization ID"
+- name: organization_id
+  title: "Organization ID"
   type: string
   required: true
   minLength: 5
