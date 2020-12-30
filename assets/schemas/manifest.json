@@ -689,7 +689,7 @@
       "items": {
         "type": "object",
         "required": [
-          "key",
+          "name",
           "type"
         ],
         "additionalProperties": false,
