@@ -96,7 +96,7 @@ permissions:
 # ___________________________________________________________________________________________________________________________________________________________________________
 # Setup Form
 form:
-- name: organization_id
+- name: organizationID
   title: "Organization ID"
   type: string
   required: true
