@@ -72,8 +72,8 @@
         "enum": [
           "permitPropagation",
           "permitIngestion",
-          "rightsPropagation",
-          "rightsIngestion"
+          "rightPropagation",
+          "rightIngestion"
         ]
       }
     },
