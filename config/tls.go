@@ -29,7 +29,7 @@ func GetTLSConfig(cmd *cobra.Command) (*orlop.TLSConfig, error) {
 		return nil, err
 	}
 
-	if len(tls.Cert.File) > 0 {
+	if len(tls.Cert.File) > 0 || tls.Insecure {
 		tls.Enabled = true
 	}
 

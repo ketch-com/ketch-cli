@@ -16,10 +16,10 @@ type ErrorResponse struct {
 
 var AppCapabilityValues = map[string]int32{
 	"UNSPECIFIED_APP_CAPABILITY": 0,
-	"permitPropagation":         1,
-	"permitIngestion":           2,
-	"rightPropagation":         3,
-	"rightIngestion":           4,
+	"permitPropagation":          1,
+	"permitIngestion":            2,
+	"rightPropagation":           3,
+	"rightIngestion":             4,
 }
 
 var AppContactTypeValues = map[string]int32{
@@ -59,10 +59,10 @@ type FormComponent struct {
 	// The type property will be used to select which component to render on the frontend. It cannot be an existing field type
 	Type string `yaml:"type,omitempty" json:"type,omitempty"`
 	// If true, the field will be required to have a value
-	Required  bool       `yaml:"required,omitempty" json:"required,omitempty"`
-	MinLength int64      `yaml:"minLength,omitempty" json:"minLength,omitempty"`
-	MaxLength int64      `yaml:"maxLength,omitempty" json:"maxLength,omitempty"`
-	Pattern   string     `yaml:"pattern,omitempty" json:"pattern,omitempty"`
+	Required  bool   `yaml:"required,omitempty" json:"required,omitempty"`
+	MinLength int64  `yaml:"minLength,omitempty" json:"minLength,omitempty"`
+	MaxLength int64  `yaml:"maxLength,omitempty" json:"maxLength,omitempty"`
+	Pattern   string `yaml:"pattern,omitempty" json:"pattern,omitempty"`
 	// Default will be the default value for this field, before user interaction. Having a default value will override the placeholder text
 	Default string `yaml:"default,omitempty" json:"default,omitempty"`
 	// The placeholder text that will appear when this field is empty
@@ -84,6 +84,13 @@ type WebHook struct {
 	Secret        string   `yaml:"secret" json:"secret,omitempty"`
 	Authorization string   `yaml:"authorization,omitempty" json:"authorization,omitempty"`
 	Events        []string `yaml:"events,omitempty" json:"events,omitempty"`
+	TLS           TLS      `yaml:"tls,omitempty" json:"tls,omitempty"`
+	MaxQPS        int32    `yaml:"maxQPS,omitempty" json:"maxQPS,omitempty"`
+}
+
+// TODO - add rest of TLS properties with proper secrets handling
+type TLS struct {
+	Insecure bool `yaml:"insecure,omitempty" json:"insecure,omitempty"`
 }
 
 type IdentitySpaceFilter struct {

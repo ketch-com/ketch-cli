@@ -524,6 +524,20 @@
               "permit.deleted"
             ]
           }
+        },
+        "maxQPS": {
+          "type": "integer",
+          "format": "int32",
+          "default": 100
+        },
+        "tls": {
+          "type": ["object", "null"],
+          "title": "TLS configuration",
+          "properties": {
+            "insecure": {
+              "type": "boolean"
+            }
+          }
         }
       }
     },
