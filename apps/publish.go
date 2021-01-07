@@ -143,7 +143,7 @@ func Publish(cmd *cobra.Command, args []string) error {
 		marketplaceEntry.Previews = previews
 	}
 
-	err = publishApp(ctx, cfg, token, app, marketplaceEntry)
+	err = publishApp(ctx, cfg, token, app, marketplaceEntry, publishAppConfig.Webhook)
 	if err != nil {
 		return err
 	}
@@ -249,10 +249,13 @@ func updateApp(ctx context.Context, cfg *config.Config, token string, app *App) 
 	return nil
 }
 
-func publishApp(ctx context.Context, cfg *config.Config, token string, app *App, marketplaceEntry *AppMarketplaceEntry) error {
+func publishApp(ctx context.Context, cfg *config.Config, token string, app *App, marketplaceEntry *AppMarketplaceEntry, webhook *Webhook) error {
 	publishURL := fmt.Sprintf("organizations/%s/apps/%s/publish", app.OrgCode, app.ID)
 
-	body, err := json.Marshal(marketplaceEntry)
+	body, err := json.Marshal(&PublishAppRequest{
+		AppMarketplaceEntry: marketplaceEntry,
+		Webhook:             webhook,
+	})
 	if err != nil {
 		return err
 	}
