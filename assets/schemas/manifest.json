@@ -487,7 +487,6 @@
       "title": "App webhook",
       "required": [
         "url",
-        "secret",
         "events"
       ],
       "additionalProperties": false,

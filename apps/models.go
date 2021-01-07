@@ -79,7 +79,7 @@ type FormComponent struct {
 	Data *SelectData `yaml:"data,omitempty" json:"data,omitempty"`
 }
 
-type WebHook struct {
+type Webhook struct {
 	URL           string   `yaml:"url" json:"url,omitempty"`
 	Secret        string   `yaml:"secret" json:"secret,omitempty"`
 	Authorization string   `yaml:"authorization,omitempty" json:"authorization,omitempty"`
@@ -190,7 +190,7 @@ type PublishAppConfig struct {
 	RequestUserAuth     bool                `yaml:"requestUserAuth,omitempty" json:"requestUserAuth,omitempty"`
 	UserAuthCallbackUrl string              `yaml:"userAuthCallbackURL,omitempty" json:"userAuthCallbackURL,omitempty"`
 	RedirectOnUpdate    bool                `yaml:"redirectOnUpdate,omitempty" json:"redirectOnUpdate,omitempty"`
-	Webhook             *WebHook            `yaml:"webhook,omitempty" json:"webhook,omitempty"`
+	Webhook             *Webhook            `yaml:"webhook,omitempty" json:"webhook,omitempty"`
 	Workflow            []*WorkflowConfig   `yaml:"workflow,flow,omitempty" json:"workflow,omitempty"`
 	Form                []*FormComponent    `yaml:"form,omitempty" json:"form,omitempty"`
 }
@@ -247,8 +247,13 @@ type Image struct {
 	Height int32  `yaml:"height" json:"height,omitempty"`
 }
 
+type PublishAppRequest struct {
+	AppMarketplaceEntry *AppMarketplaceEntry `json:"marketplaceEntry,omitempty"`
+	Webhook             *Webhook             `json:"webhook,omitempty"`
+}
+
 type WebhookResponse struct {
-	Webhook *WebHook
+	Webhook *Webhook
 }
 
 type PutAppResponse struct {
@@ -270,6 +275,7 @@ func NewApp(p PublishAppConfig) (*App, error) {
 
 	return &App{
 		ID:                  p.ID,
+		OrgCode:             p.OrgCode,
 		Name:                p.Name,
 		Version:             p.Version,
 		HomepageUrl:         p.HomepageUrl,
