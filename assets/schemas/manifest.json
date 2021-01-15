@@ -520,7 +520,7 @@
               "app.refresh",
               "app.uninstalled",
               "permit.created",
-              "permit.deleted"
+              "consent.propagated"
             ]
           }
         },
