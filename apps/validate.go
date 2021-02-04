@@ -30,7 +30,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	var publishAppConfig PublishAppConfig
+	var publishAppConfig ManifestInputs
 	if err := yaml.Unmarshal(b, &publishAppConfig); err != nil {
 		return err
 	}

@@ -36,6 +36,22 @@ var AppMarketplaceCategoryValues = map[string]int32{
 	"asset":                                2,
 }
 
+var AppVersionBumpTypeLookup = map[string]AppVersionBumpType{
+	"UNSPECIFIED_APP_VERSION_BUMP_TYPE": UnspecifiedAppVersionBumpType,
+	"patch":                             PatchAppVersionBumpType,
+	"minor":                             MinorAppVersionBumpType,
+	"major":                             MajorAppVersionBumpType,
+}
+
+type AppVersionBumpType int32
+
+const (
+	UnspecifiedAppVersionBumpType AppVersionBumpType = 0
+	PatchAppVersionBumpType       AppVersionBumpType = 1
+	MinorAppVersionBumpType       AppVersionBumpType = 2
+	MajorAppVersionBumpType       AppVersionBumpType = 3
+)
+
 type SelectData struct {
 	// These are the values that will be selected on this field
 	Values []*SelectDataValue `yaml:"values,omitempty" json:"values,omitempty"`
@@ -158,11 +174,14 @@ type WorkflowConfig struct {
 	Options  *WorkflowOptions
 }
 
-type PublishAppConfig struct {
-	ID                  string              `yaml:"id,omitempty" json:"id,omitempty"`
-	Name                string              `yaml:"name,omitempty" json:"name,omitempty"`
-	OrgCode             string              `yaml:"org,omitempty" json:"org,omitempty"`
-	Version             string              `yaml:"version,omitempty" json:"version,omitempty"`
+type ManifestInputs struct {
+	Code    string `yaml:"code,omitempty" json:"code,omitempty"`
+	ID      string `yaml:"id,omitempty" json:"id,omitempty"`
+	Name    string `yaml:"name,omitempty" json:"name,omitempty"`
+	OrgCode string `yaml:"org,omitempty" json:"org,omitempty"`
+	// deprecated - Version string - version assigned by commissary, cannot be dictated by manifest
+	VersionBumpType     string              `yaml:"versionBumpType,omitempty" json:"versionBumpType,omitempty"`
+	AutoUpgrade         bool                `yaml:"autoUpgrade,omitempty" json:"autoUpgrade,omitempty"`
 	PrimaryCategory     string              `yaml:"primaryCategory,omitempty" json:"primaryCategory,omitempty"`
 	SecondaryCategory   string              `yaml:"secondaryCategory,omitempty" json:"secondaryCategory,omitempty"`
 	Rules               map[string]string   `yaml:"rules" json:"rules,omitempty"`
@@ -196,11 +215,12 @@ type PublishAppConfig struct {
 }
 
 type App struct {
+	Code                string            `json:"code,omitempty"`
 	ID                  string            `json:"id,omitempty"`
 	OrgCode             string            `yaml:"orgCode" json:"orgCode,omitempty"`
-	Code                string            `json:"code,omitempty"`
 	Name                string            `json:"name,omitempty"`
 	Version             string            `json:"version,omitempty"`
+	AutoUpgrade         bool              `json:"autoUpgrade,omitempty"`
 	Readme              string            `json:"readme,omitempty"`
 	HomepageUrl         string            `json:"homepageURL,omitempty"`
 	UserAuthCallbackUrl string            `json:"userAuthCallbackURL,omitempty"`
@@ -218,11 +238,13 @@ type App struct {
 	Rights              []string          `yaml:",flow" json:"rights,omitempty"`
 	Rules               map[string]string `yaml:",flow" json:"rules,omitempty"`
 	RefreshInterval     time.Duration     `yaml:"refreshInterval" json:"refreshInterval,omitempty"`
+	EventTypes          []string          `json:"eventTypes,omitempty"`
 }
 
 type AppMarketplaceEntry struct {
-	AppID               string `json:"appID,omitempty"`
-	Version             string
+	AppCode             string        `json:"appCode,omitempty"`
+	AppID               string        `json:"appID,omitempty"`
+	Version             string        `json:"version,omitempty"`
 	Contacts            []*AppContact `yaml:",flow"`
 	ShortDescription    string        `json:"shortDescription,omitempty"`
 	PrimaryCategory     int32         `yaml:",inline" json:"primaryCategory,omitempty"`
@@ -252,15 +274,24 @@ type PublishAppRequest struct {
 	Webhook             *Webhook             `json:"webhook,omitempty"`
 }
 
+type PublishAppResponse struct {
+	AppMarketplaceEntry *AppMarketplaceEntry `json:"marketplaceEntry,omitempty"`
+}
+
 type WebhookResponse struct {
 	Webhook *Webhook
+}
+
+type PutAppRequest struct {
+	App             *App
+	VersionBumpType AppVersionBumpType
 }
 
 type PutAppResponse struct {
 	App *App
 }
 
-func NewApp(p PublishAppConfig) (*App, error) {
+func NewApp(p ManifestInputs) (*App, error) {
 	var appCapabilities []int32
 	for _, capability := range p.Capabilities {
 		if appCapability, ok := AppCapabilityValues[capability]; ok {
@@ -274,10 +305,11 @@ func NewApp(p PublishAppConfig) (*App, error) {
 	}
 
 	return &App{
+		Code:                p.Code,
 		ID:                  p.ID,
 		OrgCode:             p.OrgCode,
 		Name:                p.Name,
-		Version:             p.Version,
+		AutoUpgrade:         p.AutoUpgrade,
 		HomepageUrl:         p.HomepageUrl,
 		UserAuthCallbackUrl: p.UserAuthCallbackUrl,
 		ExpireUserTokens:    p.ExpireUserTokens,
@@ -293,10 +325,11 @@ func NewApp(p PublishAppConfig) (*App, error) {
 		Rights:              p.Rights,
 		Rules:               p.Rules,
 		RefreshInterval:     refreshInterval,
+		EventTypes:          p.Webhook.Events,
 	}, nil
 }
 
-func NewAppMarketplaceEntry(p PublishAppConfig) *AppMarketplaceEntry {
+func NewAppMarketplaceEntry(p ManifestInputs) *AppMarketplaceEntry {
 	var appCapabilities []int32
 	for _, capability := range p.Capabilities {
 		if appCapability, ok := AppCapabilityValues[capability]; ok {
@@ -316,7 +349,7 @@ func NewAppMarketplaceEntry(p PublishAppConfig) *AppMarketplaceEntry {
 	secondaryCategory := AppMarketplaceCategoryValues[p.SecondaryCategory]
 
 	return &AppMarketplaceEntry{
-		Version:             p.Version,
+		AppCode:             p.Code,
 		Contacts:            appContacts,
 		ShortDescription:    p.ShortDescription,
 		PrimaryCategory:     primaryCategory,
@@ -330,6 +363,5 @@ func NewAppMarketplaceEntry(p PublishAppConfig) *AppMarketplaceEntry {
 		Logo:                Image{},
 		IntroDescription:    p.ShortDescription,
 		DetailedDescription: p.DetailedDescription,
-		//TODO: Previews:            p.Previews,
 	}
 }

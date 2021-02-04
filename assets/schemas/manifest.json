@@ -4,13 +4,18 @@
   "title": "Marketplace app schema",
   "required": [
     "name",
-    "version"
+    "code"
   ],
   "dependencies": {
     "requestUserAuth": ["user_auth_callback_url"]
   },
   "additionalProperties": false,
   "properties": {
+    "code": {
+      "type": "string",
+      "title": "App Code",
+      "default": ""
+    },
     "id": {
       "type": "string",
       "title": "App ID",
@@ -25,10 +30,18 @@
       "type": "string",
       "title": "App name"
     },
-    "version": {
-      "type": "string",
-      "title": "App semantic version",
-      "pattern": "^([0-9]+)\\.([0-9]+)\\.([0-9]+)$"
+    "versionBumpType": {
+      "type": ["string", "null"],
+      "title": "App semantic version bump type",
+      "enum": [
+        "patch",
+        "minor",
+        "major"
+      ]
+    },
+    "autoUpgrade": {
+      "type": "boolean",
+      "title": "set to true for instances to be automatically upgraded when new versions are published"
     },
     "primaryCategory": {
       "type": ["string", "null"],
