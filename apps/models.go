@@ -36,22 +36,6 @@ var AppMarketplaceCategoryValues = map[string]int32{
 	"asset":                                2,
 }
 
-var AppVersionBumpTypeLookup = map[string]AppVersionBumpType{
-	"UNSPECIFIED_APP_VERSION_BUMP_TYPE": UnspecifiedAppVersionBumpType,
-	"patch":                             PatchAppVersionBumpType,
-	"minor":                             MinorAppVersionBumpType,
-	"major":                             MajorAppVersionBumpType,
-}
-
-type AppVersionBumpType int32
-
-const (
-	UnspecifiedAppVersionBumpType AppVersionBumpType = 0
-	PatchAppVersionBumpType       AppVersionBumpType = 1
-	MinorAppVersionBumpType       AppVersionBumpType = 2
-	MajorAppVersionBumpType       AppVersionBumpType = 3
-)
-
 type SelectData struct {
 	// These are the values that will be selected on this field
 	Values []*SelectDataValue `yaml:"values,omitempty" json:"values,omitempty"`
@@ -175,12 +159,11 @@ type WorkflowConfig struct {
 }
 
 type ManifestInputs struct {
-	Code    string `yaml:"code,omitempty" json:"code,omitempty"`
-	ID      string `yaml:"id,omitempty" json:"id,omitempty"`
-	Name    string `yaml:"name,omitempty" json:"name,omitempty"`
-	OrgCode string `yaml:"org,omitempty" json:"org,omitempty"`
-	// deprecated - Version string - version assigned by commissary, cannot be dictated by manifest
-	VersionBumpType     string              `yaml:"versionBumpType,omitempty" json:"versionBumpType,omitempty"`
+	Code                string              `yaml:"code,omitempty" json:"code,omitempty"`
+	ID                  string              `yaml:"id,omitempty" json:"id,omitempty"`
+	Name                string              `yaml:"name,omitempty" json:"name,omitempty"`
+	OrgCode             string              `yaml:"org,omitempty" json:"org,omitempty"`
+	Version             string              `yaml:"version,omitempty" json:"version,omitempty"`
 	AutoUpgrade         bool                `yaml:"autoUpgrade,omitempty" json:"autoUpgrade,omitempty"`
 	PrimaryCategory     string              `yaml:"primaryCategory,omitempty" json:"primaryCategory,omitempty"`
 	SecondaryCategory   string              `yaml:"secondaryCategory,omitempty" json:"secondaryCategory,omitempty"`
@@ -283,8 +266,7 @@ type WebhookResponse struct {
 }
 
 type PutAppRequest struct {
-	App             *App
-	VersionBumpType AppVersionBumpType
+	App *App
 }
 
 type PutAppResponse struct {
@@ -309,6 +291,7 @@ func NewApp(p ManifestInputs) (*App, error) {
 		ID:                  p.ID,
 		OrgCode:             p.OrgCode,
 		Name:                p.Name,
+		Version:             p.Version,
 		AutoUpgrade:         p.AutoUpgrade,
 		HomepageUrl:         p.HomepageUrl,
 		UserAuthCallbackUrl: p.UserAuthCallbackUrl,
@@ -350,6 +333,7 @@ func NewAppMarketplaceEntry(p ManifestInputs) *AppMarketplaceEntry {
 
 	return &AppMarketplaceEntry{
 		AppCode:             p.Code,
+		Version:             p.Version,
 		Contacts:            appContacts,
 		ShortDescription:    p.ShortDescription,
 		PrimaryCategory:     primaryCategory,

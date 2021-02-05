@@ -76,6 +76,10 @@ func Publish(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	if len(versionCliArg) > 0 {
+		manifestInputs.Version = versionCliArg
+	}
+
 	if err := validateAppConfig(manifestInputs); err != nil {
 		return err
 	}
@@ -90,21 +94,13 @@ func Publish(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	var versionBumpType AppVersionBumpType
-	if len(versionCliArg) > 0 {
-		val, ok := AppVersionBumpTypeLookup[versionCliArg]
-		if !ok {
-			return errors.New(fmt.Sprintf("invalid version bump type '%s' (accepts: patch, minor, major)", versionCliArg))
-		}
-
-		versionBumpType = val
-	} else if len(manifestInputs.VersionBumpType) > 0 {
-		versionBumpType = AppVersionBumpTypeLookup[manifestInputs.VersionBumpType]
+	if len(app.Version) == 0 {
+		return errors.New("app version must be specified via cli --version or via manifest")
 	}
 
 	if len(app.ID) == 0 {
 		if create {
-			app, err = createApp(ctx, cfg, token, app, versionBumpType)
+			app, err = createApp(ctx, cfg, token, app)
 			if err != nil {
 				return err
 			}
@@ -198,12 +194,11 @@ func callRest(ctx context.Context, cfg *config.Config, method, urlPath, token st
 	return cli.Do(req)
 }
 
-func createApp(ctx context.Context, cfg *config.Config, token string, app *App, versionBumpType AppVersionBumpType) (*App, error) {
+func createApp(ctx context.Context, cfg *config.Config, token string, app *App) (*App, error) {
 	createAppURL := fmt.Sprintf("organizations/%s/apps", app.OrgCode)
 
 	body, err := json.Marshal(&PutAppRequest{
-		App:             app,
-		VersionBumpType: versionBumpType,
+		App: app,
 	})
 	if err != nil {
 		return nil, err

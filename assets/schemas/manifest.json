@@ -30,14 +30,10 @@
       "type": "string",
       "title": "App name"
     },
-    "versionBumpType": {
-      "type": ["string", "null"],
-      "title": "App semantic version bump type",
-      "enum": [
-        "patch",
-        "minor",
-        "major"
-      ]
+    "version": {
+      "type": "string",
+      "title": "App semantic version",
+      "pattern": "^([0-9]{1,6})\\.([0-9]{1,6})\\.([0-9]{1,6})$"
     },
     "autoUpgrade": {
       "type": "boolean",
