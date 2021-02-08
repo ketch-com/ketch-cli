@@ -25,6 +25,9 @@ runs:
   image: "docker://ghcr.io/ketch-com/ketch-cli:latest"
   env:
     KETCH_TOKEN: ${{ inputs.token }}
+    APP_WEBHOOK_URL: ${{ inputs.APP_WEBHOOK_URL }}
+    APP_USER_AUTH_CALLBACK_URL: ${{ inputs.APP_USER_AUTH_CALLBACK_URL }}
+    APP_SETUP_URL: ${{ inputs.APP_SETUP_URL }}
   args:
     - ${{ inputs.command }}
     - "-f"
