@@ -19,7 +19,7 @@ jobs:
       with:
         submodules: true
         token: ${{ secrets.GH_TOKEN }}
-    - uses: actions/cache@v2
+    - uses: actions/cache@v2.1.4
       with:
         path: /home/runner/go
         key: v1-go-mod-${{ hashFiles('go.sum') }}
