@@ -27,10 +27,14 @@ runs:
     KETCH_TOKEN: ${{ inputs.token }}
   args:
     - ${{ inputs.command }}
-    - "-f ${{ inputs.filename }}"
-    - "--token ${{ inputs.token }}"
-    - "--url ${{ inputs.url }}"
-    - "--create ${{ inputs.create }}"
+    - "-f"
+    - ${{ inputs.filename }}
+    - "--token"
+    - ${{ inputs.token }}
+    - "--url"
+    - ${{ inputs.url }}
+    - "--create"
+    - ${{ inputs.create }}
 branding:
   icon: 'share-2'
   color: 'purple'
