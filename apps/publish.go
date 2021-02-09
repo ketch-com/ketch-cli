@@ -34,11 +34,6 @@ func Publish(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	create, err := cmd.Flags().GetBool(flags.Create)
-	if err != nil {
-		return err
-	}
-
 	token, err := cmd.Flags().GetString(flags.Token)
 	if err != nil {
 		return err
@@ -92,20 +87,9 @@ func Publish(cmd *cobra.Command, args []string) error {
 		app.Version = version
 	}
 
-	if len(app.ID) == 0 {
-		if create {
-			app.ID, err = createApp(ctx, cfg, token, app)
-			if err != nil {
-				return err
-			}
-		} else {
-			return errors.New("app ID must be specified unless creating")
-		}
-	} else {
-		err = updateApp(ctx, cfg, token, app)
-		if err != nil {
-			return err
-		}
+	app.ID, err = putApp(ctx, cfg, token, app)
+	if err != nil {
+		return err
 	}
 
 	marketplaceEntry := NewAppMarketplaceEntry(publishAppConfig)
@@ -193,15 +177,15 @@ func callRest(ctx context.Context, cfg *config.Config, method, urlPath, token st
 	return cli.Do(req)
 }
 
-func createApp(ctx context.Context, cfg *config.Config, token string, app *App) (string, error) {
-	createAppURL := fmt.Sprintf("organizations/%s/apps", app.OrgCode)
+func putApp(ctx context.Context, cfg *config.Config, token string, app *App) (string, error) {
+	putAppURL := fmt.Sprintf("organizations/%s/apps", app.OrgCode)
 
 	body, err := json.Marshal(app)
 	if err != nil {
 		return "", err
 	}
 
-	resp, err := callRest(ctx, cfg, http.MethodPost, createAppURL, token, body)
+	resp, err := callRest(ctx, cfg, http.MethodPost, putAppURL, token, body)
 	if err != nil {
 		return "", err
 	}
@@ -222,31 +206,6 @@ func createApp(ctx context.Context, cfg *config.Config, token string, app *App) 
 	}
 
 	return appResp.App.ID, nil
-}
-
-func updateApp(ctx context.Context, cfg *config.Config, token string, app *App) error {
-	updateAppURL := fmt.Sprintf("organizations/%s/apps/%s", app.OrgCode, app.ID)
-
-	body, err := json.Marshal(app)
-	if err != nil {
-		return err
-	}
-
-	resp, err := callRest(ctx, cfg, http.MethodPut, updateAppURL, token, body)
-	if err != nil {
-		return err
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		respErr, err := handleRestResponseError(resp)
-		if err != nil {
-			return err
-		}
-
-		return errors.New(respErr.Message)
-	}
-
-	return nil
 }
 
 func publishApp(ctx context.Context, cfg *config.Config, token string, app *App, marketplaceEntry *AppMarketplaceEntry, webhook *Webhook) error {

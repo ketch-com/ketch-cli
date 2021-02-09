@@ -7,7 +7,6 @@ const (
 	AppID         = "app-id"
 	URL           = "url"
 	Version       = "version"
-	Create        = "create"
 	TLSInsecure   = "insecure"
 	TLSCert       = "tls-cert"
 	TLSKey        = "tls-key"
