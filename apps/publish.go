@@ -270,6 +270,8 @@ func validateAppConfig(publishAppConfig PublishAppConfig) error {
 					return errors.New(fmt.Sprintf("app config invalid: %s",
 						"identitySpaces.code must start with \""+publishAppConfig.Code+".\""))
 				}
+
+				codes[identitySpace.Code] = struct{}{}
 			}
 		}
 
@@ -285,6 +287,8 @@ func validateAppConfig(publishAppConfig PublishAppConfig) error {
 					return errors.New(fmt.Sprintf("app config invalid: %s",
 						"purposeTemplates.code must start with \""+publishAppConfig.Code+".\""))
 				}
+
+				codes[purposeTemplate.Code] = struct{}{}
 			}
 		}
 
@@ -300,6 +304,8 @@ func validateAppConfig(publishAppConfig PublishAppConfig) error {
 					return errors.New(fmt.Sprintf("app config invalid: %s",
 						"purposes.code must start with \""+publishAppConfig.Code+".\""))
 				}
+
+				codes[purpose.Code] = struct{}{}
 			}
 		}
 
@@ -315,6 +321,8 @@ func validateAppConfig(publishAppConfig PublishAppConfig) error {
 					return errors.New(fmt.Sprintf("app config invalid: %s",
 						"policyScopes.code must start with \""+publishAppConfig.Code+".\""))
 				}
+
+				codes[policyScope.Code] = struct{}{}
 			}
 		}
 
@@ -330,6 +338,8 @@ func validateAppConfig(publishAppConfig PublishAppConfig) error {
 					return errors.New(fmt.Sprintf("app config invalid: %s",
 						"legalBases.code must start with \""+publishAppConfig.Code+".\""))
 				}
+
+				codes[legalBasis.Code] = struct{}{}
 			}
 		}
 
@@ -345,6 +355,8 @@ func validateAppConfig(publishAppConfig PublishAppConfig) error {
 					return errors.New(fmt.Sprintf("app config invalid: %s",
 						"themes.code must start with \""+publishAppConfig.Code+".\""))
 				}
+
+				codes[theme.Code] = struct{}{}
 			}
 		}
 	}
