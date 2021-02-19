@@ -15,6 +15,14 @@ type ErrorResponse struct {
 	Error *Error
 }
 
+type AppType string
+
+const (
+	AppTypeSystem   AppType = "system"
+	AppTypeInternal AppType = "internal"
+	AppTypeCustom   AppType = "custom"
+)
+
 var AppCapabilityValues = map[string]int32{
 	"UNSPECIFIED_APP_CAPABILITY": 0,
 	"permitPropagation":          1,
@@ -37,7 +45,7 @@ var AppMarketplaceCategoryValues = map[string]int32{
 	"asset":                                2,
 }
 
-var AppTypeValues = map[string]int32{
+var AppTypeValues = map[AppType]int32{
 	"UnspecifiedAppType": 0,
 	"SystemAppType":      1,
 	"InternalAppType":    2,
@@ -576,7 +584,7 @@ type PublishAppConfig struct {
 	Version                string                                 `yaml:"version,omitempty" json:"version,omitempty"`
 	Depends                string                                 `yaml:"depends,omitempty" json:"depends,omitempty"`
 	Provides               []string                               `yaml:"provides,omitempty" json:"provides,omitempty"`
-	Type                   string                                 `yaml:"type,omitempty" json:"type,omitempty"`
+	Type                   AppType                                `yaml:"type,omitempty" json:"type,omitempty"`
 	AutoUpgrade            bool                                   `yaml:"autoUpgrade,omitempty" json:"autoUpgrade,omitempty"`
 	Instances              string                                 `yaml:"instances,omitempty" json:"instances,omitempty"`
 	PrimaryCategory        string                                 `yaml:"primaryCategory,omitempty" json:"primaryCategory,omitempty"`

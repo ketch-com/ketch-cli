@@ -19,6 +19,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"strings"
 )
 
 func Publish(cmd *cobra.Command, args []string) error {
@@ -256,7 +257,107 @@ func validateAppConfig(publishAppConfig PublishAppConfig) error {
 		return errors.New(fmt.Sprintf("app config invalid: %s", errs))
 	}
 
+	if publishAppConfig.Type == AppTypeCustom {
+		if len(publishAppConfig.IdentitySpaces) > 0 {
+			codes := make(map[string]interface{}, len(publishAppConfig.IdentitySpaces))
+			for _, identitySpace := range publishAppConfig.IdentitySpaces {
+				if _, ok := codes[identitySpace.Code]; ok {
+					return errors.New(fmt.Sprintf("app config invalid: %s",
+						"identitySpaces.code "+identitySpace.Code+" is not unique"))
+				}
+
+				if !isEntityCodeValid(publishAppConfig.Code, identitySpace.Code) {
+					return errors.New(fmt.Sprintf("app config invalid: %s",
+						"identitySpaces.code must start with \""+publishAppConfig.Code+".\""))
+				}
+			}
+		}
+
+		if len(publishAppConfig.PurposeTemplates) > 0 {
+			codes := make(map[string]interface{}, len(publishAppConfig.PurposeTemplates))
+			for _, purposeTemplate := range publishAppConfig.PurposeTemplates {
+				if _, ok := codes[purposeTemplate.Code]; ok {
+					return errors.New(fmt.Sprintf("app config invalid: %s",
+						"purposeTemplates.code "+purposeTemplate.Code+" is not unique"))
+				}
+
+				if !isEntityCodeValid(publishAppConfig.Code, purposeTemplate.Code) {
+					return errors.New(fmt.Sprintf("app config invalid: %s",
+						"purposeTemplates.code must start with \""+publishAppConfig.Code+".\""))
+				}
+			}
+		}
+
+		if len(publishAppConfig.Purposes) > 0 {
+			codes := make(map[string]interface{}, len(publishAppConfig.Purposes))
+			for _, purpose := range publishAppConfig.Purposes {
+				if _, ok := codes[purpose.Code]; ok {
+					return errors.New(fmt.Sprintf("app config invalid: %s",
+						"purposes.code "+purpose.Code+" is not unique"))
+				}
+
+				if !isEntityCodeValid(publishAppConfig.Code, purpose.Code) {
+					return errors.New(fmt.Sprintf("app config invalid: %s",
+						"purposes.code must start with \""+publishAppConfig.Code+".\""))
+				}
+			}
+		}
+
+		if len(publishAppConfig.PolicyScopes) > 0 {
+			codes := make(map[string]interface{}, len(publishAppConfig.PolicyScopes))
+			for _, policyScope := range publishAppConfig.PolicyScopes {
+				if _, ok := codes[policyScope.Code]; ok {
+					return errors.New(fmt.Sprintf("app config invalid: %s",
+						"policyScopes.code "+policyScope.Code+" is not unique"))
+				}
+
+				if !isEntityCodeValid(publishAppConfig.Code, policyScope.Code) {
+					return errors.New(fmt.Sprintf("app config invalid: %s",
+						"policyScopes.code must start with \""+publishAppConfig.Code+".\""))
+				}
+			}
+		}
+
+		if len(publishAppConfig.LegalBases) > 0 {
+			codes := make(map[string]interface{}, len(publishAppConfig.LegalBases))
+			for _, legalBasis := range publishAppConfig.LegalBases {
+				if _, ok := codes[legalBasis.Code]; ok {
+					return errors.New(fmt.Sprintf("app config invalid: %s",
+						"legalBases.code "+legalBasis.Code+" is not unique"))
+				}
+
+				if !isEntityCodeValid(publishAppConfig.Code, legalBasis.Code) {
+					return errors.New(fmt.Sprintf("app config invalid: %s",
+						"legalBases.code must start with \""+publishAppConfig.Code+".\""))
+				}
+			}
+		}
+
+		if len(publishAppConfig.Themes) > 0 {
+			codes := make(map[string]interface{}, len(publishAppConfig.Themes))
+			for _, theme := range publishAppConfig.Themes {
+				if _, ok := codes[theme.Code]; ok {
+					return errors.New(fmt.Sprintf("app config invalid: %s",
+						"themes.code "+theme.Code+" is not unique"))
+				}
+
+				if !isEntityCodeValid(publishAppConfig.Code, theme.Code) {
+					return errors.New(fmt.Sprintf("app config invalid: %s",
+						"themes.code must start with \""+publishAppConfig.Code+".\""))
+				}
+			}
+		}
+	}
+
 	return nil
+}
+
+func isEntityCodeValid(appCode, entityCode string) bool {
+	if strings.HasPrefix(appCode, entityCode+".") {
+		return true
+	}
+
+	return false
 }
 
 func isRemoteLink(link string) bool {
