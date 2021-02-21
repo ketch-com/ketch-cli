@@ -459,7 +459,6 @@ type Theme struct {
 	FeedbackColor         string `yaml:"feedbackColor,omitempty" json:"feedbackColor,omitempty"`
 }
 
-//====================================================================== START
 type RetryPolicy struct {
 	InitialInterval          int64    `yaml:"initialInterval,omitempty" json:"initial_interval,omitempty"`
 	BackoffCoefficient       float64  `yaml:"backoffCoefficient,omitempty" json:"backoff_coefficient,omitempty"`
@@ -574,8 +573,6 @@ type WorkflowDefinition struct {
 	Options  *WorkflowOptions `yaml:"options,omitempty" json:"options,omitempty"`
 	Steps    []*Step          `yaml:"steps,omitempty" json:"steps,omitempty"`
 }
-
-//====================================================================== END
 
 type PublishAppConfig struct {
 	Code                   string                                 `yaml:"code,omitempty" json:"code,omitempty"`
