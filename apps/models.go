@@ -93,6 +93,12 @@ var CookieCategoryValues = map[string]int32{
 	"marketing":                   4,
 }
 
+var ParentClosePolicyValues = map[string]int32{
+	"terminate":     0,
+	"requestCancel": 1,
+	"abandon":       2,
+}
+
 type SelectData struct {
 	// These are the values that will be selected on this field
 	Values []*SelectDataValue `yaml:"values,omitempty" json:"values,omitempty"`
@@ -214,7 +220,7 @@ type WorkflowStepChildWorkflowOptions struct {
 	WorkflowRunTimeout       int64             `yaml:"workflowRunTimeout,omitempty" json:"workflow_run_timeout,omitempty"`
 	WorkflowTaskTimeout      int64             `yaml:"workflowTaskTimeout,omitempty" json:"workflow_task_timeout,omitempty"`
 	WaitForCancellation      bool              `yaml:"waitForCancellation,omitempty" json:"wait_for_cancellation,omitempty"`
-	ParentClosePolicy        string            `yaml:"parentClosePolicy,omitempty" json:"parent_close_policy,omitempty"`
+	ParentClosePolicy        int64             `yaml:"parentClosePolicy,omitempty" json:"parent_close_policy,omitempty"`
 	Memo                     map[string]string `yaml:"memo,omitempty" json:"memo,omitempty"`
 	SearchAttributes         map[string]string `yaml:"searchAttributes,omitempty" json:"search_attributes,omitempty"`
 	RetryPolicy              *RetryPolicy      `yaml:"retryPolicy,omitempty" json:"retry_policy,omitempty"`
