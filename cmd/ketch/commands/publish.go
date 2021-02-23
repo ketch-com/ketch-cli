@@ -16,6 +16,7 @@ func init() {
 
 	publish.Flags().StringP(flags.File, "f", "ketch-manifest.yml", "app config name")
 	publish.Flags().String(flags.Version, os.Getenv("KETCH_VERSION"), "app version")
+	publish.Flags().Bool(flags.Create, false, "flag that specifies to create an app before publishing")
 	publish.Flags().String(flags.Token, os.Getenv("KETCH_TOKEN"), "token for Ketch API")
 	publish.Flags().String(flags.URL, os.Getenv("KETCH_URL"), "url to Ketch API")
 	publish.Flags().Bool(flags.TLSInsecure, false, "set true to skip certificate verification")

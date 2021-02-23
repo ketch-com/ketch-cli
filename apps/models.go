@@ -346,6 +346,16 @@ type PurposeTemplate struct {
 	LegalBasisRestriction string `yaml:"legalBasisRestriction,omitempty" json:"legalBasisRestriction,omitempty"`
 }
 
+type Tcf struct {
+	Id              string   `yaml:"id,omitempty" json:"id,omitempty"`
+	Name            string   `yaml:"name,omitempty" json:"name,omitempty"`
+	Purposes        []string `yaml:"purposes,omitempty" json:"purposes,omitempty"`
+	SpecialPurposes []string `yaml:"specialPurposes,omitempty" json:"specialPurposes,omitempty"`
+	Features        []string `yaml:"features,omitempty" json:"features,omitempty"`
+	SpecialFeatures []string `yaml:"specialFeatures,omitempty" json:"specialFeatures,omitempty"`
+	PolicyUrl       string   `yaml:"policyUrl,omitempty" json:"policyUrl,omitempty"`
+}
+
 type AppConfigCookie struct {
 	Code            string `yaml:"code,omitempty" json:"code,omitempty"`
 	Name            string `yaml:"name,omitempty" json:"name,omitempty"`
@@ -404,6 +414,32 @@ type Purpose struct {
 	Translations          map[string]string `json:"translations,omitempty"`
 	DataSubjectRole       int32             `json:"dataSubjectRole,omitempty"`
 	DataRole              int32             `json:"dataRole,omitempty"`
+}
+
+type RightTranslation struct {
+	Name        string `yaml:"name,omitempty" json:"name,omitempty"`
+	Description string `yaml:"description,omitempty" json:"description,omitempty"`
+}
+
+type CanonicalRight struct {
+	Code        string `yaml:"code,omitempty" json:"code,omitempty"`
+	Name        string `yaml:"name,omitempty" json:"name,omitempty"`
+	Description string `yaml:"description,omitempty" json:"description,omitempty"`
+}
+
+type Right struct {
+	Code            string                       `yaml:"code,omitempty" json:"code,omitempty"`
+	Name            string                       `yaml:"name,omitempty" json:"name,omitempty"`
+	Description     string                       `yaml:"description,omitempty" json:"description,omitempty"`
+	Translations    map[string]*RightTranslation `yaml:"translations,omitempty" json:"translations,omitempty"`
+	CanonicalRights []*CanonicalRight            `yaml:"canonicalRights,omitempty" json:"canonicalRights,omitempty"`
+}
+
+type Regulation struct {
+	Code              string              `yaml:"code,omitempty" json:"code,omitempty"`
+	Name              string              `yaml:"name,omitempty" json:"name,omitempty"`
+	Description       string              `yaml:"description,omitempty" json:"description,omitempty"`
+	RightsFulfillment []*RightFulfillment `yaml:"rightsFulfillment,omitempty" json:"rightsFulfillment,omitempty"`
 }
 
 type LegalBasisRestriction struct {
@@ -499,7 +535,6 @@ type AppConfigStartStep struct {
 	Params      *json.RawMessage `yaml:"params,omitempty" json:"params,omitempty"`
 }
 
-
 type AppConfigFinishStep struct {
 	ID          string           `yaml:"id,omitempty" json:"id,omitempty"`
 	Code        string           `yaml:"code,omitempty" json:"code,omitempty"`
@@ -581,8 +616,8 @@ type WorkflowDefinition struct {
 	Steps    []*Step          `yaml:"steps,omitempty" json:"steps,omitempty"`
 }
 
-
-type PublishAppConfig struct {
+type ManifestInputs struct {
+	ID                     string                                 `yaml:"ID,omitempty" json:"ID,omitempty"`
 	Code                   string                                 `yaml:"code,omitempty" json:"code,omitempty"`
 	OrgCode                string                                 `yaml:"org,omitempty" json:"org,omitempty"`
 	Name                   string                                 `yaml:"name,omitempty" json:"name,omitempty"`
@@ -624,8 +659,11 @@ type PublishAppConfig struct {
 	Workflows              []*AppConfigWorkflowDefinition         `yaml:"workflows,flow,omitempty" json:"workflows,omitempty"`
 	Activities             []*AppConfigWorkflowActivityDefinition `yaml:"activities,flow,omitempty" json:"activities,omitempty"`
 	ChildWorkflows         []*AppConfigWorkflowActivityDefinition `yaml:"childWorkflows,flow,omitempty" json:"childWorkflows,omitempty"`
-	PurposeTemplates       []*PurposeTemplate                     `yaml:"purposeTemplates,flow,omitempty" json:"purposeTemplates,omitempty"`
+	Tcf                    *Tcf                                   `yaml:"tcf,flow,omitempty" json:"tcf,omitempty"`
+	PurposeTemplates       []*PurposeTemplate                     `yaml:"purposeTemplateCollections,flow,omitempty" json:"purposeTemplateCollections,omitempty"`
 	Purposes               []*AppConfigPurpose                    `yaml:"purposes,flow,omitempty" json:"purposes,omitempty"`
+	Rights                 []*Right                               `yaml:"rights,flow" json:"rights,omitempty"`
+	Regulations            []*Regulation                          `yaml:"regulations,flow" json:"regulations,omitempty"`
 	LegalBasisRestrictions []*LegalBasisRestriction               `yaml:"legalBasisRestrictions,flow,omitempty" json:"legalBasisRestrictions,omitempty"`
 	PolicyScopes           []*AppConfigPolicyScope                `yaml:"policyScopes,flow,omitempty" json:"policyScopes,omitempty"`
 	LegalBases             []*AppConfigLegalBasis                 `yaml:"legalBases,flow,omitempty" json:"legalBases,omitempty"`
@@ -670,6 +708,9 @@ type App struct {
 	PolicyScopes           []*PolicyScope                `json:"policyScopes,omitempty"`
 	LegalBases             []*LegalBasis                 `json:"legalBases,omitempty"`
 	Themes                 []*Theme                      `json:"themes,omitempty"`
+	Rights                 []*Right                      `yaml:",flow" json:"rights,omitempty"`
+	Regulations            []*Regulation                 `yaml:",flow" json:"regulations,omitempty"`
+	Tcf                    *Tcf                          `json:"tcf,omitempty"`
 }
 
 type AppMarketplaceEntry struct {
@@ -721,7 +762,7 @@ type PutAppResponse struct {
 	App *App
 }
 
-func NewApp(p PublishAppConfig) (*App, error) {
+func NewApp(p ManifestInputs) (*App, error) {
 	var appCapabilities []int32
 	for _, capability := range p.Capabilities {
 		if appCapability, ok := AppCapabilityValues[capability]; ok {
@@ -935,6 +976,7 @@ func NewApp(p PublishAppConfig) (*App, error) {
 	}
 
 	return &App{
+		ID:                     p.ID,
 		Code:                   p.Code,
 		OrgCode:                p.OrgCode,
 		Name:                   p.Name,
@@ -961,6 +1003,9 @@ func NewApp(p PublishAppConfig) (*App, error) {
 		Form:                   p.Form,
 		IdentitySpaces:         p.IdentitySpaces,
 		Purposes:               purposes,
+		Rights:                 p.Rights,
+		Regulations:            p.Regulations,
+		Tcf:                    p.Tcf,
 		Workflows:              workflows,
 		Activities:             activities,
 		ChildWorkflows:         childWorkflows,
@@ -972,7 +1017,7 @@ func NewApp(p PublishAppConfig) (*App, error) {
 	}, nil
 }
 
-func NewAppMarketplaceEntry(p PublishAppConfig) *AppMarketplaceEntry {
+func NewAppMarketplaceEntry(p ManifestInputs) *AppMarketplaceEntry {
 	var appCapabilities []int32
 	for _, capability := range p.Capabilities {
 		if appCapability, ok := AppCapabilityValues[capability]; ok {

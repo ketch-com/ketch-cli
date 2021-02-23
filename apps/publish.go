@@ -72,7 +72,7 @@ func Publish(cmd *cobra.Command, args []string) error {
 
 	b = []byte(os.ExpandEnv(string(b)))
 
-	var manifestInputs PublishAppConfig
+	var manifestInputs ManifestInputs
 	if err := yaml.Unmarshal(b, &manifestInputs); err != nil {
 		return err
 	}
@@ -271,7 +271,7 @@ func publishApp(ctx context.Context, cfg *config.Config, token string, app *App,
 	return a.AppMarketplaceEntry, nil
 }
 
-func validateAppConfig(publishAppConfig PublishAppConfig) error {
+func validateAppConfig(publishAppConfig ManifestInputs) error {
 	manifestSchema := assets.GetAsset("/schemas/manifest.json")
 	schemaLoader := gojsonschema.NewStringLoader(manifestSchema)
 
