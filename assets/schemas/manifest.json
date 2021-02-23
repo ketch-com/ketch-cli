@@ -4,7 +4,7 @@
   "title": "Marketplace app schema",
   "required": [
     "name",
-    "version"
+    "code"
   ],
   "dependencies": {
     "requestUserAuth": ["user_auth_callback_url"]
@@ -14,6 +14,11 @@
     "code": {
       "type": "string",
       "title": "App Code",
+      "default": ""
+    },
+    "id": {
+      "type": "string",
+      "title": "App ID",
       "default": ""
     },
     "org": {
@@ -28,7 +33,11 @@
     "version": {
       "type": "string",
       "title": "App semantic version",
-      "pattern": "^([0-9]+)\\.([0-9]+)\\.([0-9]+)$"
+      "pattern": "^([0-9]{1,6})\\.([0-9]{1,6})\\.([0-9]{1,6})$"
+    },
+    "autoUpgrade": {
+      "type": "boolean",
+      "title": "set to true for instances to be automatically upgraded when new versions are published"
     },
     "depends": {
       "type": "string",

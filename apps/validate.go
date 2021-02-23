@@ -20,6 +20,8 @@ func Validate(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	b = []byte(os.ExpandEnv(string(b)))
+
 	appConfig, err = filepath.Abs(appConfig)
 	if err != nil {
 		return err
@@ -30,12 +32,12 @@ func Validate(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	var publishAppConfig PublishAppConfig
-	if err := yaml.Unmarshal(b, &publishAppConfig); err != nil {
+	var manifestInputs ManifestInputs
+	if err := yaml.Unmarshal(b, &manifestInputs); err != nil {
 		return err
 	}
 
-	if err := validateAppConfig(publishAppConfig); err != nil {
+	if err := validateAppConfig(manifestInputs); err != nil {
 		return err
 	}
 
