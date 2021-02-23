@@ -60,10 +60,6 @@
       "default": "custom",
       "title": "type of the package"
     },
-    "autoUpgrade": {
-      "type": "boolean",
-      "title": "set to true for instances to be automatically upgraded when new versions are published"
-    },
     "instances": {
       "type": "string",
       "enum": [
@@ -1342,6 +1338,9 @@
           "description": {
             "type": "string"
           },
+          "tcfId": {
+            "type": "integer"
+          },
           "tcfType": {
             "type": "string",
             "enum": [
@@ -1351,11 +1350,11 @@
               "specialFeature"
             ]
           },
-          "isEditable": {
+          "editable": {
             "type": "boolean",
             "default": false
           },
-          "isRequired": {
+          "required": {
             "type": "boolean",
             "default": false
           },
@@ -1445,6 +1444,9 @@
           "description": {
             "type": "string"
           },
+          "tcfId": {
+            "type": "integer"
+          },
           "tcfType": {
             "type": "string",
             "enum": [
@@ -1454,11 +1456,11 @@
               "specialFeature"
             ]
           },
-          "idEditable": {
+          "editable": {
             "type": "boolean",
             "default": false
           },
-          "isRequired": {
+          "required": {
             "type": "boolean",
             "default": false
           },
@@ -1542,7 +1544,9 @@
       "items": {
         "type": "object",
         "properties": {
-          "id": "string",
+          "id": {
+            "type": "string"
+          },
           "regulation": {
             "type": "string"
           },
@@ -1653,40 +1657,42 @@
     },
     "tcf": {
       "type": "object",
-      "vendor":{
+      "vendor": {
         "type": "object",
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "purposes": {
-          "type": "array",
-          "items": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "purposes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "specialPurposes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "features": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "specialFeatures": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "policyUrl": {
             "type": "string"
           }
-        },
-        "specialPurposes": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "features": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "specialFeatures": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "policyUrl": {
-          "type": "string"
         }
       }
     },
