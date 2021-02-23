@@ -1319,42 +1319,6 @@
         }
       }
     },
-    "purposeTemplates": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "tcfId": {
-            "type": "integer"
-          },
-          "tcfType": {
-            "type": "string",
-            "enum": [
-              "purpose",
-              "specialPurpose",
-              "feature",
-              "specialFeature"
-            ]
-          },
-          "editable": {
-            "type": "boolean",
-            "default": false
-          },
-          "legalBasisRestriction": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "purposes": {
       "type": "array",
       "items": {
@@ -1369,9 +1333,6 @@
           "description": {
             "type": "string"
           },
-          "tcfId": {
-            "type": "integer"
-          },
           "tcfType": {
             "type": "string",
             "enum": [
@@ -1381,12 +1342,19 @@
               "specialFeature"
             ]
           },
-          "editable": {
+          "isEditable": {
+            "type": "boolean",
+            "default": false
+          },
+          "isRequired": {
             "type": "boolean",
             "default": false
           },
           "legalBasisRestriction": {
-            "type": "string"
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "displayName": {
             "type": "string"
@@ -1406,47 +1374,7 @@
           "cookies": {
             "type": "array",
             "items": {
-              "type": "object",
-              "properties": {
-                "code": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "host": {
-                  "type": "string"
-                },
-                "duration": {
-                  "type": "string",
-                  "enum": [
-                    "session",
-                    "persistent"
-                  ]
-                },
-                "provenance": {
-                  "type": "string",
-                  "enum": [
-                    "firstParty",
-                    "thirdParty"
-                  ]
-                },
-                "category": {
-                  "type": "string",
-                  "enum": [
-                    "strictlyNecessary",
-                    "functional",
-                    "performance",
-                    "marketing"
-                  ]
-                },
-                "serviceProvider": {
-                  "type": "string"
-                }
-              }
+              "type": "string"
             }
           },
           "canonicalPurposes": {
@@ -1454,7 +1382,16 @@
             "items": {
               "type": "string",
               "enum": [
-                "TODO"
+                "essential_services",
+                "prod_enhancement",
+                "analytics",
+                "behavioral_advertising",
+                "personalization",
+                "tele_mktg",
+                "sms_mktg",
+                "email_mktg",
+                "mail_mktg",
+                "data_broking"
               ]
             }
           },
@@ -1485,27 +1422,166 @@
         }
       }
     },
+    "purposeTemplates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "tcfType": {
+            "type": "string",
+            "enum": [
+              "purpose",
+              "specialPurpose",
+              "feature",
+              "specialFeature"
+            ]
+          },
+          "idEditable": {
+            "type": "boolean",
+            "default": false
+          },
+          "isRequired": {
+            "type": "boolean",
+            "default": false
+          },
+          "legalBasisRestrictions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "displayDescription": {
+            "type": "string"
+          },
+          "legalBasis": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "cookies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "canonicalPurposes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "essential_services",
+                "prod_enhancement",
+                "analytics",
+                "behavioral_advertising",
+                "personalization",
+                "tele_mktg",
+                "sms_mktg",
+                "email_mktg",
+                "mail_mktg",
+                "data_broking"
+              ]
+            }
+          },
+          "translations": {
+            "type": "object",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "dataSubjectRole": {
+            "type": "string",
+            "enum": [
+              "customer",
+              "employee"
+            ]
+          },
+          "dataRole": {
+            "type": "string",
+            "enum": [
+              "processor",
+              "controller",
+              "jointController",
+              "jointProcessor",
+              "coController"
+            ]
+          },
+          "collections": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "legalBasisRestrictions": {
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
+          "id": "string",
           "regulation": {
             "type": "string"
           },
           "legalBasis": {
             "type": "array",
             "items": {
-              "type": "string",
-              "enum": [
-                "TODO"
-              ]
+              "type": "string"
             }
           }
         }
       }
     },
     "policyScopes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "regulations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "fulfillment": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "policyScopeTemplates": {
       "type": "array",
       "items": {
         "type": "object",
@@ -1562,6 +1638,167 @@
           },
           "requiresPrivacyPolicy": {
             "type": "boolean"
+          }
+        }
+      }
+    },
+    "tcf": {
+      "type": "object",
+      "vendor":{
+        "type": "object",
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "purposes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "specialPurposes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "specialFeatures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "policyUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "cookies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "host": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "string",
+            "enum": [
+              "session",
+              "persistent"
+            ]
+          },
+          "provenance": {
+            "type": "string",
+            "enum": [
+              "firstParty",
+              "thirdParty"
+            ]
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "strictlyNecessary",
+              "functional",
+              "performance",
+              "marketing"
+            ]
+          },
+          "serviceProvider": {
+            "type": "string"
+          },
+          "translations": {
+            "type": "object",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        }
+      }
+    },
+    "purposeCollections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "regulations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "rightsFulfillment": {
+            "type": "object",
+            "properties": {
+              "rightCode": {
+                "type": "string"
+              },
+              "fulfillment": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "rights": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "translations": {
+          "type": "object",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "canonicalRights": {
+          "type": "array",
+          "items": {
+            "type": "string"
           }
         }
       }
