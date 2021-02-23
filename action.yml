@@ -12,6 +12,14 @@ inputs:
   token:
     description: 'Ketch token'
     required: true
+  url:
+    description: 'URL to Ketch Rest'
+    required: false
+    default: 'https://global.ketchapi.com/rest'
+  create:
+    description: 'Flag indicating app create'
+    required: false
+    default: 'false'
 runs:
   using: 'docker'
   image: "docker://ghcr.io/ketch-com/ketch-cli:latest"
@@ -21,6 +29,12 @@ runs:
     - ${{ inputs.command }}
     - "-f"
     - ${{ inputs.filename }}
+    - "--token"
+    - ${{ inputs.token }}
+    - "--url"
+    - ${{ inputs.url }}
+    - "--create"
+    - ${{ inputs.create }}
 branding:
   icon: 'share-2'
   color: 'purple'

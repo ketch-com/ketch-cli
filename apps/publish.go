@@ -30,7 +30,12 @@ func Publish(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	version, err := cmd.Flags().GetString(flags.Version)
+	versionCliArg, err := cmd.Flags().GetString(flags.Version)
+	if err != nil {
+		return err
+	}
+
+	create, err := cmd.Flags().GetBool(flags.Create)
 	if err != nil {
 		return err
 	}
@@ -65,12 +70,18 @@ func Publish(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	var publishAppConfig PublishAppConfig
-	if err := yaml.Unmarshal(b, &publishAppConfig); err != nil {
+	b = []byte(os.ExpandEnv(string(b)))
+
+	var manifestInputs PublishAppConfig
+	if err := yaml.Unmarshal(b, &manifestInputs); err != nil {
 		return err
 	}
 
-	if err := validateAppConfig(publishAppConfig); err != nil {
+	if len(versionCliArg) > 0 {
+		manifestInputs.Version = versionCliArg
+	}
+
+	if err := validateAppConfig(manifestInputs); err != nil {
 		return err
 	}
 
@@ -79,39 +90,45 @@ func Publish(cmd *cobra.Command, args []string) error {
 	cfg.URL = rootUrl
 	cfg.TLS = *t
 
-	app, err := NewApp(publishAppConfig)
+	app, err := NewApp(manifestInputs)
 	if err != nil {
 		return err
 	}
 
-	if len(version) > 0 {
-		app.Version = version
+	if len(app.Version) == 0 {
+		return errors.New("app version must be specified via cli --version or via manifest")
 	}
 
-	app.ID, err = putApp(ctx, cfg, token, app)
-	if err != nil {
-		return err
+	if len(app.ID) == 0 {
+		if create {
+			app, err = createApp(ctx, cfg, token, app)
+			if err != nil {
+				return err
+			}
+		} else {
+			return errors.New("app ID must be specified unless creating")
+		}
 	}
 
-	marketplaceEntry := NewAppMarketplaceEntry(publishAppConfig)
+	marketplaceEntry := NewAppMarketplaceEntry(manifestInputs)
 	marketplaceEntry.AppID = app.ID
 
-	if len(publishAppConfig.Logo.Link) > 0 {
+	if len(manifestInputs.Logo.Link) > 0 {
 		marketplaceEntry.Logo = Image{
-			Title:  publishAppConfig.Logo.Title,
-			Width:  publishAppConfig.Logo.Width,
-			Height: publishAppConfig.Logo.Height,
+			Title:  manifestInputs.Logo.Title,
+			Width:  manifestInputs.Logo.Width,
+			Height: manifestInputs.Logo.Height,
 		}
 
-		if marketplaceEntry.Logo.Data, err = getFileData(publishAppConfig.Logo.Link); err != nil {
+		if marketplaceEntry.Logo.Data, err = getFileData(manifestInputs.Logo.Link); err != nil {
 			return err
 		}
 	}
 
-	if len(publishAppConfig.Previews) > 0 {
+	if len(manifestInputs.Previews) > 0 {
 		var previews []*Image
 
-		for _, preview := range publishAppConfig.Previews {
+		for _, preview := range manifestInputs.Previews {
 			previewImage := &Image{
 				Title:  preview.Title,
 				Width:  preview.Width,
@@ -128,12 +145,12 @@ func Publish(cmd *cobra.Command, args []string) error {
 		marketplaceEntry.Previews = previews
 	}
 
-	err = publishApp(ctx, cfg, token, app, marketplaceEntry, publishAppConfig.Webhook)
+	published, err := publishApp(ctx, cfg, token, app, marketplaceEntry, manifestInputs.Webhook)
 	if err != nil {
 		return err
 	}
 
-	fmt.Printf("app published successfully: %s\n", app.ID)
+	fmt.Printf("app published successfully:\nappCode: %s\nappID: %s\nappVersion: %s\n", app.Code, app.ID, published.Version)
 
 	return nil
 }
@@ -178,38 +195,42 @@ func callRest(ctx context.Context, cfg *config.Config, method, urlPath, token st
 	return cli.Do(req)
 }
 
-func putApp(ctx context.Context, cfg *config.Config, token string, app *App) (string, error) {
-	putAppURL := fmt.Sprintf("organizations/%s/apps", app.OrgCode)
+func createApp(ctx context.Context, cfg *config.Config, token string, app *App) (*App, error) {
+	createAppURL := fmt.Sprintf("organizations/%s/apps", app.OrgCode)
 
-	body, err := json.Marshal(app)
+	body, err := json.Marshal(&PutAppRequest{
+		App: app,
+	})
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	resp, err := callRest(ctx, cfg, http.MethodPost, putAppURL, token, body)
+	resp, err := callRest(ctx, cfg, http.MethodPost, createAppURL, token, body)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
+
+	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
 		respErr, err := handleRestResponseError(resp)
 		if err != nil {
-			return "", err
+			return nil, err
 		}
 
-		return "", errors.New(respErr.Message)
+		return nil, errors.New(respErr.Message)
 	}
 
 	var appResp PutAppResponse
 	err = json.NewDecoder(resp.Body).Decode(&appResp)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return appResp.App.ID, nil
+	return appResp.App, nil
 }
 
-func publishApp(ctx context.Context, cfg *config.Config, token string, app *App, marketplaceEntry *AppMarketplaceEntry, webhook *Webhook) error {
+func publishApp(ctx context.Context, cfg *config.Config, token string, app *App, marketplaceEntry *AppMarketplaceEntry, webhook *Webhook) (*AppMarketplaceEntry, error) {
 	publishURL := fmt.Sprintf("organizations/%s/apps/%s/publish", app.OrgCode, app.ID)
 
 	body, err := json.Marshal(&PublishAppRequest{
@@ -217,24 +238,37 @@ func publishApp(ctx context.Context, cfg *config.Config, token string, app *App,
 		Webhook:             webhook,
 	})
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	resp, err := callRest(ctx, cfg, http.MethodPost, publishURL, token, body)
 	if err != nil {
-		return err
+		return nil, err
 	}
+
+	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
 		respErr, err := handleRestResponseError(resp)
 		if err != nil {
-			return err
+			return nil, err
 		}
 
-		return errors.New(respErr.Message)
+		return nil, errors.New(respErr.Message)
 	}
 
-	return nil
+	respBody, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var a PublishAppResponse
+	err = json.Unmarshal(respBody, &a)
+	if err != nil {
+		return nil, err
+	}
+
+	return a.AppMarketplaceEntry, nil
 }
 
 func validateAppConfig(publishAppConfig PublishAppConfig) error {

@@ -6,5 +6,6 @@ RUN adduser -S -D -h /app ketch && \
     mkdir -p /app/bin
 USER ketch
 COPY ./bin/linux-amd64/ketch /app/bin
+COPY ./docker-entrypoint.sh /usr/local/bin
 WORKDIR /app
-ENTRYPOINT ["/app/bin/ketch"]
+ENTRYPOINT ["docker-entrypoint.sh"]

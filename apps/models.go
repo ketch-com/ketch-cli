@@ -499,6 +499,7 @@ type AppConfigStartStep struct {
 	Params      *json.RawMessage `yaml:"params,omitempty" json:"params,omitempty"`
 }
 
+
 type AppConfigFinishStep struct {
 	ID          string           `yaml:"id,omitempty" json:"id,omitempty"`
 	Code        string           `yaml:"code,omitempty" json:"code,omitempty"`
@@ -579,6 +580,7 @@ type WorkflowDefinition struct {
 	Options  *WorkflowOptions `yaml:"options,omitempty" json:"options,omitempty"`
 	Steps    []*Step          `yaml:"steps,omitempty" json:"steps,omitempty"`
 }
+
 
 type PublishAppConfig struct {
 	Code                   string                                 `yaml:"code,omitempty" json:"code,omitempty"`
@@ -671,8 +673,9 @@ type App struct {
 }
 
 type AppMarketplaceEntry struct {
-	AppID               string `json:"appID,omitempty"`
-	Version             string
+	AppCode             string        `json:"appCode,omitempty"`
+	AppID               string        `json:"appID,omitempty"`
+	Version             string        `json:"version,omitempty"`
 	Contacts            []*AppContact `yaml:",flow"`
 	ShortDescription    string        `json:"shortDescription,omitempty"`
 	PrimaryCategory     int32         `yaml:",inline" json:"primaryCategory,omitempty"`
@@ -702,8 +705,16 @@ type PublishAppRequest struct {
 	Webhook             *Webhook             `json:"webhook,omitempty"`
 }
 
+type PublishAppResponse struct {
+	AppMarketplaceEntry *AppMarketplaceEntry `json:"marketplaceEntry,omitempty"`
+}
+
 type WebhookResponse struct {
 	Webhook *Webhook
+}
+
+type PutAppRequest struct {
+	App *App
 }
 
 type PutAppResponse struct {
@@ -981,6 +992,7 @@ func NewAppMarketplaceEntry(p PublishAppConfig) *AppMarketplaceEntry {
 	secondaryCategory := AppMarketplaceCategoryValues[p.SecondaryCategory]
 
 	return &AppMarketplaceEntry{
+		AppCode:             p.Code,
 		Version:             p.Version,
 		Contacts:            appContacts,
 		ShortDescription:    p.ShortDescription,
@@ -995,6 +1007,5 @@ func NewAppMarketplaceEntry(p PublishAppConfig) *AppMarketplaceEntry {
 		Logo:                Image{},
 		IntroDescription:    p.ShortDescription,
 		DetailedDescription: p.DetailedDescription,
-		//TODO: Previews:            p.Previews,
 	}
 }
