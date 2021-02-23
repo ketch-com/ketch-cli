@@ -393,6 +393,40 @@ func validateAppConfig(publishAppConfig ManifestInputs) error {
 				codes[theme.Code] = struct{}{}
 			}
 		}
+
+		if len(publishAppConfig.Rights) > 0 {
+			codes := make(map[string]interface{}, len(publishAppConfig.Rights))
+			for _, right := range publishAppConfig.Rights {
+				if _, ok := codes[right.Code]; ok {
+					return errors.New(fmt.Sprintf("app config invalid: %s",
+						"rights.code "+right.Code+" is not unique"))
+				}
+
+				if !isEntityCodeValid(publishAppConfig.Code, right.Code) {
+					return errors.New(fmt.Sprintf("app config invalid: %s",
+						"right.code must start with \""+publishAppConfig.Code+".\""))
+				}
+
+				codes[right.Code] = struct{}{}
+			}
+		}
+
+		if len(publishAppConfig.Regulations) > 0 {
+			codes := make(map[string]interface{}, len(publishAppConfig.Regulations))
+			for _, regulation := range publishAppConfig.Regulations {
+				if _, ok := codes[regulation.Code]; ok {
+					return errors.New(fmt.Sprintf("app config invalid: %s",
+						"regulations.code "+regulation.Code+" is not unique"))
+				}
+
+				if !isEntityCodeValid(publishAppConfig.Code, regulation.Code) {
+					return errors.New(fmt.Sprintf("app config invalid: %s",
+						"regulation.code must start with \""+publishAppConfig.Code+".\""))
+				}
+
+				codes[regulation.Code] = struct{}{}
+			}
+		}
 	}
 
 	return nil
