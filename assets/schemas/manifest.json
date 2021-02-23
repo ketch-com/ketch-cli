@@ -1544,13 +1544,13 @@
       "items": {
         "type": "object",
         "properties": {
-          "id": {
+          "code": {
             "type": "string"
           },
           "regulation": {
             "type": "string"
           },
-          "legalBasis": {
+          "legalBases": {
             "type": "array",
             "items": {
               "type": "string"
@@ -1749,7 +1749,7 @@
         }
       }
     },
-    "purposeCollections": {
+    "purposeTemplateCollections": {
       "type": "array",
       "items": {
         "type": "object",
