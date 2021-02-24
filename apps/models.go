@@ -691,7 +691,7 @@ type App struct {
 	SetupUrl               string                        `json:"setupURL,omitempty"`
 	HomepageUrl            string                        `json:"homepageURL,omitempty"`
 	ExpireUserTokens       bool                          `json:"expireUserTokens,omitempty"`
-	RefreshInterval        time.Duration                 `yaml:"refreshInterval" json:"refreshInterval,omitempty"`
+	RefreshInterval        int64                         `yaml:"refreshInterval" json:"refreshInterval,omitempty"`
 	RequestUserAuth        bool                          `json:"requestUserAuth,omitempty"`
 	UserAuthCallbackUrl    string                        `json:"userAuthCallbackURL,omitempty"`
 	RedirectOnUpdate       bool                          `json:"redirectOnUpdate,omitempty"`
@@ -711,6 +711,7 @@ type App struct {
 	Rights                 []*Right                      `yaml:",flow" json:"rights,omitempty"`
 	Regulations            []*Regulation                 `yaml:",flow" json:"regulations,omitempty"`
 	Tcf                    *Tcf                          `json:"tcf,omitempty"`
+	EventTypes             []string                      `json:"eventTypes,omitempty"`
 }
 
 type AppMarketplaceEntry struct {
@@ -770,10 +771,11 @@ func NewApp(p ManifestInputs) (*App, error) {
 		}
 	}
 
-	refreshInterval, err := time.ParseDuration(p.RefreshInterval)
+	refreshIntervalNanoseconds, err := time.ParseDuration(p.RefreshInterval)
 	if err != nil {
 		return nil, err
 	}
+	refreshIntervalHours := int64(refreshIntervalNanoseconds / time.Hour)
 
 	var policyScopes []*PolicyScope
 	for _, policyScope := range p.PolicyScopes {
@@ -996,7 +998,7 @@ func NewApp(p ManifestInputs) (*App, error) {
 		SetupUrl:               p.SetupUrl,
 		HomepageUrl:            p.HomepageUrl,
 		ExpireUserTokens:       p.ExpireUserTokens,
-		RefreshInterval:        refreshInterval,
+		RefreshInterval:        refreshIntervalHours,
 		RequestUserAuth:        p.RequestUserAuth,
 		UserAuthCallbackUrl:    p.UserAuthCallbackUrl,
 		RedirectOnUpdate:       p.RedirectOnUpdate,
@@ -1014,6 +1016,7 @@ func NewApp(p ManifestInputs) (*App, error) {
 		PolicyScopes:           policyScopes,
 		LegalBases:             legalBases,
 		Themes:                 p.Themes,
+		EventTypes:             p.Webhook.Events,
 	}, nil
 }
 
