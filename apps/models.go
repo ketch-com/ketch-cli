@@ -220,7 +220,7 @@ type App struct {
 	IdentitySpaces      []*IdentitySpace  `yaml:",flow" json:"identitySpaces,omitempty"`
 	Rights              []string          `yaml:",flow" json:"rights,omitempty"`
 	Rules               map[string]string `yaml:",flow" json:"rules,omitempty"`
-	RefreshInterval     time.Duration     `yaml:"refreshInterval" json:"refreshInterval,omitempty"`
+	RefreshInterval     int64             `yaml:"refreshInterval" json:"refreshInterval,omitempty"`
 	EventTypes          []string          `json:"eventTypes,omitempty"`
 }
 
@@ -281,10 +281,11 @@ func NewApp(p ManifestInputs) (*App, error) {
 		}
 	}
 
-	refreshInterval, err := time.ParseDuration(p.RefreshInterval)
+	refreshIntervalNanoseconds, err := time.ParseDuration(p.RefreshInterval)
 	if err != nil {
 		return nil, err
 	}
+	refreshIntervalHours := int64(refreshIntervalNanoseconds / time.Hour)
 
 	return &App{
 		Code:                p.Code,
@@ -307,7 +308,7 @@ func NewApp(p ManifestInputs) (*App, error) {
 		IdentitySpaces:      p.IdentitySpaces,
 		Rights:              p.Rights,
 		Rules:               p.Rules,
-		RefreshInterval:     refreshInterval,
+		RefreshInterval:     refreshIntervalHours,
 		EventTypes:          p.Webhook.Events,
 	}, nil
 }
