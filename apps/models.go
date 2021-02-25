@@ -771,11 +771,14 @@ func NewApp(p ManifestInputs) (*App, error) {
 		}
 	}
 
-	refreshIntervalNanoseconds, err := time.ParseDuration(p.RefreshInterval)
-	if err != nil {
-		return nil, err
+	var refreshIntervalHours int64
+	if len(p.RefreshInterval) > 0 {
+		refreshIntervalNanoseconds, err := time.ParseDuration(p.RefreshInterval)
+		if err != nil {
+			return nil, err
+		}
+		refreshIntervalHours = int64(refreshIntervalNanoseconds / time.Hour)
 	}
-	refreshIntervalHours := int64(refreshIntervalNanoseconds / time.Hour)
 
 	var policyScopes []*PolicyScope
 	for _, policyScope := range p.PolicyScopes {
