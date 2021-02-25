@@ -35,11 +35,6 @@ func Publish(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	create, err := cmd.Flags().GetBool(flags.Create)
-	if err != nil {
-		return err
-	}
-
 	token, err := cmd.Flags().GetString(flags.Token)
 	if err != nil {
 		return err
@@ -99,15 +94,9 @@ func Publish(cmd *cobra.Command, args []string) error {
 		return errors.New("app version must be specified via cli --version or via manifest")
 	}
 
-	if len(app.ID) == 0 {
-		if create {
-			app, err = createApp(ctx, cfg, token, app)
-			if err != nil {
-				return err
-			}
-		} else {
-			return errors.New("app ID must be specified unless creating")
-		}
+	app, err = createApp(ctx, cfg, token, app)
+	if err != nil {
+		return err
 	}
 
 	marketplaceEntry := NewAppMarketplaceEntry(manifestInputs)
