@@ -33,8 +33,6 @@ runs:
     - ${{ inputs.token }}
     - "--url"
     - ${{ inputs.url }}
-    - "--create"
-    - ${{ inputs.create }}
 branding:
   icon: 'share-2'
   color: 'purple'
