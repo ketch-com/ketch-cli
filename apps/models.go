@@ -980,6 +980,11 @@ func NewApp(p ManifestInputs) (*App, error) {
 		})
 	}
 
+	var eventTypes []string
+	if p.Webhook != nil {
+		eventTypes = p.Webhook.Events
+	}
+
 	return &App{
 		ID:                     p.ID,
 		Code:                   p.Code,
@@ -1019,7 +1024,7 @@ func NewApp(p ManifestInputs) (*App, error) {
 		PolicyScopes:           policyScopes,
 		LegalBases:             legalBases,
 		Themes:                 p.Themes,
-		EventTypes:             p.Webhook.Events,
+		EventTypes:             eventTypes,
 	}, nil
 }
 
