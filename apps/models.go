@@ -638,6 +638,7 @@ type ManifestInputs struct {
 	DetailedDescription    string                                 `yaml:"detailedDescription,omitempty" json:"detailedDescription,omitempty"`
 	PermissionNote         string                                 `yaml:"permissionNote,omitempty" json:"permissionNote,omitempty"`
 	Permissions            []string                               `yaml:"permissions,omitempty" json:"permissions,omitempty"`
+	InfoUrl                string                                 `yaml:"infoURL,omitempty" json:"infoURL,omitempty"`
 	SetupUrl               string                                 `yaml:"setupURL,omitempty" json:"setupURL,omitempty"`
 	HomepageUrl            string                                 `yaml:"homepageURL,omitempty" json:"homepageURL,omitempty"`
 	CustomerSupportUrl     string                                 `yaml:"customerSupportURL,omitempty" json:"customerSupportURL,omitempty"`
@@ -688,6 +689,7 @@ type App struct {
 	SupportedRights        []string                      `yaml:",flow" json:"supportedRights,omitempty"`
 	PermissionNote         string                        `json:"permissionNode,omitempty"`
 	Permissions            []string                      `yaml:",flow"`
+	InfoUrl                string                        `json:"infoURL,omitempty"`
 	SetupUrl               string                        `json:"setupURL,omitempty"`
 	HomepageUrl            string                        `json:"homepageURL,omitempty"`
 	ExpireUserTokens       bool                          `json:"expireUserTokens,omitempty"`
@@ -1003,6 +1005,7 @@ func NewApp(p ManifestInputs) (*App, error) {
 		SupportedRights:        p.SupportedRights,
 		PermissionNote:         p.PermissionNote,
 		Permissions:            p.Permissions,
+		InfoUrl:                p.InfoUrl,
 		SetupUrl:               p.SetupUrl,
 		HomepageUrl:            p.HomepageUrl,
 		ExpireUserTokens:       p.ExpireUserTokens,

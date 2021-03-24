@@ -82,6 +82,7 @@ requestUserAuth: false
 redirectOnUpdate: false
 refreshInterval: 5h
 userAuthCallbackURL: "https://ketchapp.com/callback"
+infoURL: "https://ketchapp.com/info"
 setupURL: "https://ketchapp.com/setup"
 webhook:
   url: "https://ketch.com"

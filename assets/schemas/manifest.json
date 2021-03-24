@@ -181,6 +181,10 @@
         "title": "Permission"
       }
     },
+    "infoURL": {
+      "type": "string",
+      "title": "App info URL"
+    },
     "setupURL": {
       "type": "string",
       "title": "App setup URL"
