@@ -222,7 +222,7 @@ func createApp(ctx context.Context, cfg *config.Config, token string, app *App) 
 	}
 
 	if appResp.App == nil || len(appResp.App.ID) == 0 {
-		return nil, errors.Errorf("app not created. statusCode %s, body %s", resp.StatusCode, string(b))
+		return nil, errors.Errorf("app not created. statusCode %v, body %v", resp.StatusCode, string(b))
 	}
 
 	return appResp.App, nil
@@ -267,7 +267,7 @@ func publishApp(ctx context.Context, cfg *config.Config, token string, app *App,
 	}
 
 	if a.AppMarketplaceEntry == nil || len(a.AppMarketplaceEntry.AppID) == 0 {
-		return nil, errors.Errorf("app marketplace entry not created. statusCode %s, body %s", resp.StatusCode, string(respBody))
+		return nil, errors.Errorf("app marketplace entry not created. statusCode %v, body %v", resp.StatusCode, string(respBody))
 	}
 
 	return a.AppMarketplaceEntry, nil
