@@ -210,10 +210,19 @@ func createApp(ctx context.Context, cfg *config.Config, token string, app *App) 
 		return nil, errors.New(respErr.Message)
 	}
 
-	var appResp PutAppResponse
-	err = json.NewDecoder(resp.Body).Decode(&appResp)
+	b, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
+	}
+
+	var appResp PutAppResponse
+	err = json.Unmarshal(b, &appResp)
+	if err != nil {
+		return nil, err
+	}
+
+	if appResp.App == nil || len(appResp.App.ID) == 0 {
+		return nil, errors.Errorf("app not created. statusCode %v, body %v", resp.StatusCode, string(b))
 	}
 
 	return appResp.App, nil
@@ -255,6 +264,10 @@ func publishApp(ctx context.Context, cfg *config.Config, token string, app *App,
 	err = json.Unmarshal(respBody, &a)
 	if err != nil {
 		return nil, err
+	}
+
+	if a.AppMarketplaceEntry == nil || len(a.AppMarketplaceEntry.AppID) == 0 {
+		return nil, errors.Errorf("app marketplace entry not created. statusCode %v, body %v", resp.StatusCode, string(respBody))
 	}
 
 	return a.AppMarketplaceEntry, nil
