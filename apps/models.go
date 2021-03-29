@@ -346,7 +346,7 @@ type PurposeTemplate struct {
 	LegalBasisRestriction string `yaml:"legalBasisRestriction,omitempty" json:"legalBasisRestriction,omitempty"`
 }
 
-type Tcf struct {
+type Vendor struct {
 	Id              string   `yaml:"id,omitempty" json:"id,omitempty"`
 	Name            string   `yaml:"name,omitempty" json:"name,omitempty"`
 	Purposes        []string `yaml:"purposes,omitempty" json:"purposes,omitempty"`
@@ -354,6 +354,13 @@ type Tcf struct {
 	Features        []string `yaml:"features,omitempty" json:"features,omitempty"`
 	SpecialFeatures []string `yaml:"specialFeatures,omitempty" json:"specialFeatures,omitempty"`
 	PolicyUrl       string   `yaml:"policyUrl,omitempty" json:"policyUrl,omitempty"`
+}
+
+type Tcf struct {
+	Vendor                  Vendor `yaml:"vendor,omitempty" json:"vendor,omitempty"`
+	GvlSpecificationVersion string `yaml:"gvlSpecificationVersion,omitempty" json:"gvlSpecificationVersion,omitempty"`
+	VendorListVersion       string `yaml:"vendorListVersion,omitempty" json:"vendorListVersion,omitempty"`
+	TcfPolicyVersion        string `yaml:"tcfPolicyVersion,omitempty" json:"tcfPolicyVersion,omitempty"`
 }
 
 type AppConfigCookie struct {
