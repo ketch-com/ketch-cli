@@ -165,7 +165,6 @@ github.com/google/pprof v0.0.0-20181206194817-3ea8567a2e57/go.mod h1:zfwlbNMJ+OI
 github.com/google/pprof v0.0.0-20190515194954-54271f7e092f/go.mod h1:zfwlbNMJ+OItoe0UupaVj+oy1omPYYDuagoSzA8v9mc=
 github.com/google/renameio v0.1.0/go.mod h1:KWCgfxg9yswjAJkECMjeO8J8rahYeXnNhOm40UhjYkI=
 github.com/google/uuid v1.0.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/google/uuid v1.1.2 h1:EVhdT+1Kseyi1/pUmXKaFxYsDNy9RQYkMWRH68J/W7Y=
 github.com/google/uuid v1.1.2/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
@@ -452,8 +451,8 @@ github.com/yuin/goldmark v1.2.1/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9dec
 go.etcd.io/bbolt v1.3.2/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=
 go.etcd.io/bbolt v1.3.3/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=
 go.etcd.io/etcd v0.0.0-20191023171146-3cf2f69b5738/go.mod h1:dnLIgRNXwCJa5e+c6mIZCrds/GIG4ncV9HhK5PX7jPg=
-go.ketch.com/lib/oid v1.1.0 h1:+64TEDFmVJNMxFGgALYZ8v1kmWM8RTAq+SgTRzsbpO8=
-go.ketch.com/lib/oid v1.1.0/go.mod h1:z5Vv+db9quqyAwbk3qKmHu3DyzP2lWw2xLwFfOhBdC0=
+go.ketch.com/lib/oid v1.1.1 h1:OGvw71KSNGodHwDgHwddO+/1QZKutnit/ZxJw6e6zP8=
+go.ketch.com/lib/oid v1.1.1/go.mod h1:z5Vv+db9quqyAwbk3qKmHu3DyzP2lWw2xLwFfOhBdC0=
 go.ketch.com/lib/orlop v1.35.3 h1:Pc+7iqa4kWmz4CiU0NyveBENeGoDT94BleRjgas7jCE=
 go.ketch.com/lib/orlop v1.35.3/go.mod h1:vpOFdg6GQYktDVDErcTxkbrDQT1Gz7KLjR9m5VUResc=
 go.ketch.com/lib/webhook-client v0.2.4 h1:XGdPcITYArrKCxsDxuBQsznyZ512CU/DdEebC2jVBkA=

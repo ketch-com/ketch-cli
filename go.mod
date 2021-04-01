@@ -11,7 +11,7 @@ require (
 	github.com/spf13/cobra v1.1.1
 	github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb // indirect
 	github.com/xeipuuv/gojsonschema v1.2.0
-	go.ketch.com/lib/oid v1.1.0
+	go.ketch.com/lib/oid v1.1.1
 	go.ketch.com/lib/orlop v1.35.3
 	go.ketch.com/lib/webhook-client v0.2.4
 	go.opencensus.io v0.22.5 // indirect
