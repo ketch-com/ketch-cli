@@ -13,7 +13,7 @@ require (
 	github.com/xeipuuv/gojsonschema v1.2.0
 	go.ketch.com/lib/oid v1.1.0
 	go.ketch.com/lib/orlop v1.35.3
-	go.ketch.com/lib/webhook-client v0.2.4
+	go.ketch.com/lib/webhook-client v0.3.1
 	go.opencensus.io v0.22.5 // indirect
 	go.opentelemetry.io/otel/exporters/metric/prometheus v0.15.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
