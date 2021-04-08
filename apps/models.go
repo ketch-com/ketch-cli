@@ -346,14 +346,28 @@ type PurposeTemplate struct {
 	LegalBasisRestriction string `yaml:"legalBasisRestriction,omitempty" json:"legalBasisRestriction,omitempty"`
 }
 
+type Vendor struct {
+	Id                         string   `yaml:"id,omitempty" json:"id,omitempty"`
+	Name                       string   `yaml:"name,omitempty" json:"name,omitempty"`
+	Purposes                   []string `yaml:"purposes,omitempty" json:"purposes,omitempty"`
+	SpecialPurposes            []string `yaml:"specialPurposes,omitempty" json:"specialPurposes,omitempty"`
+	Features                   []string `yaml:"features,omitempty" json:"features,omitempty"`
+	SpecialFeatures            []string `yaml:"specialFeatures,omitempty" json:"specialFeatures,omitempty"`
+	PolicyUrl                  string   `yaml:"policyUrl,omitempty" json:"policyUrl,omitempty"`
+	LegIntPurposes             []string `yaml:"legIntPurposes,omitempty" json:"legIntPurposes,omitempty"`
+	FlexiblePurposes           []string `yaml:"flexiblePurposes,omitempty" json:"flexiblePurposes,omitempty"`
+	UsesCookies                bool     `yaml:"usesCookies,omitempty" json:"usesCookies,omitempty"`
+	CookieMaxAgeSeconds        int64    `yaml:"cookieMaxAgeSeconds,omitempty" json:"cookieMaxAgeSeconds,omitempty"`
+	CookieRefresh              bool     `yaml:"cookieRefresh,omitempty" json:"cookieRefresh,omitempty"`
+	UsesNonCookieAccess        bool     `yaml:"usesNonCookieAccess,omitempty" json:"usesNonCookieAccess,omitempty"`
+	DeviceStorageDisclosureUrl string   `yaml:"deviceStorageDisclosureUrl,omitempty" json:"deviceStorageDisclosureUrl,omitempty"`
+}
+
 type Tcf struct {
-	Id              string   `yaml:"id,omitempty" json:"id,omitempty"`
-	Name            string   `yaml:"name,omitempty" json:"name,omitempty"`
-	Purposes        []string `yaml:"purposes,omitempty" json:"purposes,omitempty"`
-	SpecialPurposes []string `yaml:"specialPurposes,omitempty" json:"specialPurposes,omitempty"`
-	Features        []string `yaml:"features,omitempty" json:"features,omitempty"`
-	SpecialFeatures []string `yaml:"specialFeatures,omitempty" json:"specialFeatures,omitempty"`
-	PolicyUrl       string   `yaml:"policyUrl,omitempty" json:"policyUrl,omitempty"`
+	Vendor                  Vendor `yaml:"vendor,omitempty" json:"vendor,omitempty"`
+	GvlSpecificationVersion string `yaml:"gvlSpecificationVersion,omitempty" json:"gvlSpecificationVersion,omitempty"`
+	VendorListVersion       string `yaml:"vendorListVersion,omitempty" json:"vendorListVersion,omitempty"`
+	TcfPolicyVersion        string `yaml:"tcfPolicyVersion,omitempty" json:"tcfPolicyVersion,omitempty"`
 }
 
 type AppConfigCookie struct {
