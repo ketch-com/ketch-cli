@@ -1,0 +1,5148 @@
+# Developer Information
+expireUserTokens: false
+requestUserAuth: false
+redirectOnUpdate: false
+refreshInterval: 336h
+#userAuthCallbackURL: ${APP_USER_AUTH_CALLBACK_URL}
+userAuthCallbackURL: https://localhost:5000
+#setupURL: ${APP_SETUP_URL}
+setupURL: https://localhost:5000
+webhook:
+  #url: ${APP_WEBHOOK_URL}
+  url: https://localhost:5000
+  events:
+    - "rightInvocation.created"
+  maxQPS: 100
+  tls:
+    insecure: true
+permissionNote: "This app needs access to your marketplace."
+permissions:
+  - "marketplace:read"
+# ___________________________________________________________________________________________________________________________________________________________________________
+# Basic Details
+code: "ketch-library"
+name: "Ketch Library"
+org: "ketch_apps"
+autoUpgrade: true
+supportedLanguages:
+  - "en"
+rules:
+  view:
+  install:
+primaryCategory: "privacy"
+capabilities: ~
+supportedPurposes: ~
+supportedRights: ~
+
+identitySpaces: ~
+
+# ___________________________________________________________________________________________________________________________________________________________________________
+# Branding
+shortDescription: ""
+homepageURL: ""
+customerSupportURL: ""
+privacyPolicyURL: ""
+tosURL: ""
+docURL: ""
+logo:
+    link: ""
+# ___________________________________________________________________________________________________________________________________________________________________________
+# Setup Form
+form: ~
+# ___________________________________________________________________________________________________________________________________________________________________________
+# Cookies
+cookies:
+-
+    serviceProvider: Google
+    code: cookiePreferences
+    name: cookiePreferences
+    description: Registers cookie preferences of a user
+    provenance: 
+    category: functional
+    domain: ""
+    duration: persistent
+-
+    serviceProvider: Cookiebot
+    code: CookieConsent [x4]
+    name: CookieConsent [x4]
+    description: Registers cookie preferences of a user
+    provenance: 
+    category: functional
+    domain: cookiebot.com
+    duration: persistent
+-
+    serviceProvider: Cookiebot
+    code: CookieConsentBulkTicket
+    name: CookieConsentBulkTicket
+    description: Enables sharing cookie preferences across domains / websites
+    provenance: 
+    category: functional
+    domain: cookiebot.com
+    duration: persistent
+-
+    serviceProvider: Cookiebot
+    code: userlang [x2]
+    name: userlang [x2]
+    description: Saves language preferences of user for a website
+    provenance: 
+    category: functional
+    domain: cookiebot.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: _ga
+    name: _ga
+    description: ID used to identify users
+    provenance: 
+    category: analytics
+    domain: google-analytics.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: _ga_
+    name: _ga_
+    description: ID used to identify users
+    provenance: 
+    category: analytics
+    domain: google-analytics.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: _gid
+    name: _gid
+    description: ID used to identify users for 24 hours after last activity
+    provenance: 
+    category: analytics
+    domain: google-analytics.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: _gat
+    name: _gat
+    description: Used to monitor number of Google Analytics server requests when using Google Tag Manager
+    provenance: 
+    category: analytics
+    domain: google-analytics.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: _dc_gtm_
+    name: _dc_gtm_
+    description: Used to monitor number of Google Analytics server requests
+    provenance: 
+    category: analytics
+    domain: google-analytics.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: AMP_TOKEN
+    name: AMP_TOKEN
+    description: "Contains a token code that is used to read out a Client ID from the AMP Client ID Service. By matching this ID with that of Google Analytics, users can be matched when switching between AMP content and non-AMP content. Reference: https://support.google.com/analytics/answer/7486764?hl=en"
+    provenance: 
+    category: analytics
+    domain: google-analytics.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: _gat_gtag_
+    name: _gat_gtag_
+    description: Used to set and get tracking data
+    provenance: 
+    category: analytics
+    domain: google-analytics.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: _gac_
+    name: _gac_
+    description: Contains information related to marketing campaigns of the user. These are shared with Google AdWords / Google Ads when the Google Ads and Google Analytics accounts are linked together.
+    provenance: 
+    category: marketing
+    domain: google-analytics.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: __utma
+    name: __utma
+    description: ID used to identify users and sessions
+    provenance: 
+    category: analytics
+    domain: google-analytics.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: __utmt
+    name: __utmt
+    description: Used to monitor number of Google Analytics server requests
+    provenance: 
+    category: analytics
+    domain: google-analytics.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: __utmb
+    name: __utmb
+    description: Used to distinguish new sessions and visits. This cookie is set when the GA.js javascript library is loaded and there is no existing __utmb cookie. The cookie is updated every time data is sent to the Google Analytics server.
+    provenance: 
+    category: analytics
+    domain: google-analytics.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: __utmc
+    name: __utmc
+    description: Used only with old Urchin versions of Google Analytics and not with GA.js. Was used to distinguish between new sessions and visits at the end of a session.
+    provenance: 
+    category: analytics
+    domain: google-analytics.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: __utmz
+    name: __utmz
+    description: Contains information about the traffic source or campaign that directed user to the website. The cookie is set when the GA.js javascript is loaded and updated when data is sent to the Google Anaytics server
+    provenance: 
+    category: analytics
+    domain: google-analytics.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: __utmv
+    name: __utmv
+    description: Bevat custom informatie die door de webdeveloper is ingesteld via de _setCustomVar methode in Google Analytics. Deze cookie wordt iedere keer geupdate als er nieuwe gegevens naar de Google Analytics server worden gestuurd.
+    provenance: 
+    category: analytics
+    domain: google-analytics.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: __utmx
+    name: __utmx
+    description: Used to determine whether a user is included in an A / B or Multivariate test.
+    provenance: 
+    category: analytics
+    domain: google-analytics.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: __utmxx
+    name: __utmxx
+    description: Used to determine when the A / B or Multivariate test in which the user participates ends
+    provenance: 
+    category: analytics
+    domain: google-analytics.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: _GRECAPTCHA
+    name: _GRECAPTCHA
+    description: Google reCAPTCHA sets a necessary cookie (_GRECAPTCHA) when executed for the purpose of providing its risk analysis.
+    provenance: 
+    category: functional
+    domain: google.com
+    duration: persistent
+-
+    serviceProvider: comScore
+    code: S1
+    name: S1
+    description: 'Comscore: statistical and analytical data'
+    provenance: 
+    category: analytics
+    domain: nl.sitestat.com
+    duration: persistent
+-
+    serviceProvider: comScore
+    code: C1
+    name: C1
+    description: 'Comscore: statistical and analytical data'
+    provenance: 
+    category: analytics
+    domain: nl.sitestat.com
+    duration: persistent
+-
+    serviceProvider: "Advertiser's website"
+    code: s_cc
+    name: s_cc
+    description: Used to determine if browser of user accepts cookies or not
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: "Advertiser's website"
+    code: s_sq
+    name: s_sq
+    description: Used to register the previous link clicked by the user
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: "Advertiser's website"
+    code: s_vi
+    name: s_vi
+    description: Contains a unique ID to identify a user
+    provenance: 
+    category: analytics
+    domain: 207.net
+    duration: persistent
+-
+    serviceProvider: "Advertiser's website"
+    code: s_fid
+    name: s_fid
+    description: Alternative cookie with unique user ID / timestamp when the s_vi cookie can not be set for technical reasons
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: "Advertiser's website"
+    code: fid
+    name: fid
+    description: If other visitor ID methods fail, Adobe sets a fallback cookie or uses a combination of IP address and user agent to identify the visitor.
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Adobe
+    code: demdex
+    name: demdex
+    description: Unique value with which Audience Manager can identify a user. Used, among others, for identification, segmentation, modeling and reporting purposes.
+    provenance: 
+    category: marketing
+    domain: demdex.net
+    duration: persistent
+-
+    serviceProvider: Adobe
+    code: dextp
+    name: dextp
+    description: Registers the date plus time (timestamp) on which a data synchronization was last performed by the Audience Manager.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Adobe
+    code: dst
+    name: dst
+    description: Used to register a possible error message when sending data to a linked system.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Adobe
+    code: _dp Cookie
+    name: _dp Cookie
+    description: Used to determine if browser of user accepts cookies or not
+    provenance: 
+    category: marketing
+    domain: demdex.net
+    duration: persistent
+-
+    serviceProvider: Adobe
+    code: aam_uuid
+    name: aam_uuid
+    description: Adobe Audience Manager - data management platform uses these cookies to assign a unique ID when users visit a website.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Adobe
+    code: AMCV_
+    name: AMCV_
+    description: Adobe Experience Cloud uses a cookie to store a unique visitor ID that is used across Experience Cloud Solutions.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Adobe
+    code: AMCVS_
+    name: AMCVS_
+    description: The AMCVS cookie serves as a flag indicating that the session has been initialized. Its value is always 1 and discontinues when the session has ended.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: session
+-
+    serviceProvider: Adobe
+    code: mbox
+    name: mbox
+    description: Adobe Target uses cookies to give website operators the ability to test which online content and offers are more relevant to visitors.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Adobe
+    code: at_check
+    name: at_check
+    description: A simple test value used to determine if a visitor supports cookies. Set each time a visitor requests a page.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Adobe
+    code: renderid
+    name: renderid
+    description: This cookie is needed by the dispatcher (webserver) to distinguish between the different publisher server.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Adobe
+    code: s_ppv
+    name: s_ppv
+    description: Stores information on the percentage of the page displayed
+    provenance: 
+    category: analytics
+    domain: 
+    duration: session
+-
+    serviceProvider: Adobe
+    code: s_tp
+    name: s_tp
+    description: This lets us know how much of the page you viewed.
+    provenance: 
+    category: analytics
+    domain: 
+    duration: session
+-
+    serviceProvider: Adform
+    code: TPC
+    name: TPC
+    description: Used to determine if browser of user accepts third party cookies or not
+    provenance: 
+    category: marketing
+    domain: adform.net
+    duration: persistent
+-
+    serviceProvider: Adform
+    code: C
+    name: C
+    description: Used to determine if browser of user accepts cookies or not
+    provenance: 
+    category: marketing
+    domain: adform.net
+    duration: persistent
+-
+    serviceProvider: Adform
+    code: uid
+    name: uid
+    description: Contains a unique ID to identify a user
+    provenance: 
+    category: marketing
+    domain: adform.net
+    duration: persistent
+-
+    serviceProvider: Adform
+    code: cid
+    name: cid
+    description: Unique value to be able to identify cookies from users (same as uid)
+    provenance: 
+    category: marketing
+    domain: adform.net
+    duration: persistent
+-
+    serviceProvider: Adform
+    code: GCM
+    name: GCM
+    description: Checks if a new partner cookie synchronozation is required
+    provenance: 
+    category: marketing
+    domain: adform.net
+    duration: persistent
+-
+    serviceProvider: Adform
+    code: CM
+    name: CM
+    description: Checks if a new partner cookie synchronozation is required (cookie set by ad server)
+    provenance: 
+    category: marketing
+    domain: adform.net
+    duration: persistent
+-
+    serviceProvider: Adform
+    code: CM14
+    name: CM14
+    description: Checks if a new partner cookie synchronozation is required (cookie set during cookie synchronozation )
+    provenance: 
+    category: marketing
+    domain: adform.net
+    duration: persistent
+-
+    serviceProvider: Adform
+    code: token
+    name: token
+    description: Security token for opt out functionality
+    provenance: 
+    category: marketing
+    domain: adform.net
+    duration: persistent
+-
+    serviceProvider: Adform
+    code: otsid
+    name: otsid
+    description: Opt out cookie for specific advertiser
+    provenance: 
+    category: marketing
+    domain: adform.net
+    duration: persistent
+-
+    serviceProvider: Adform
+    code: adtrc
+    name: adtrc
+    description: Used to determine if browser related information has been collected
+    provenance: 
+    category: marketing
+    domain: adform.net
+    duration: persistent
+-
+    serviceProvider: Adform
+    code: SR<RotatorID>
+    name: SR<RotatorID>
+    description: 'Unique value that records info about consecutive ads - includes: total impressions, daily impressions, total clicks, daily clicks, and last impression date'
+    provenance: 
+    category: marketing
+    domain: adform.net
+    duration: persistent
+-
+    serviceProvider: Adform
+    code: CT<TrackingSetupID>
+    name: CT<TrackingSetupID>
+    description: "Identifies the last click membership for third-party pixels on advertiser's pages"
+    provenance: 
+    category: marketing
+    domain: adform.net
+    duration: persistent
+-
+    serviceProvider: Adform
+    code: EBFCD<BannerID>
+    name: EBFCD<BannerID>
+    description: Registers daily max. number of impressions (frequency cap) for expanding advertisements (expandables)
+    provenance: 
+    category: marketing
+    domain: adform.net
+    duration: persistent
+-
+    serviceProvider: Adform
+    code: EBFC<BannerID>
+    name: EBFC<BannerID>
+    description: Registers max. total number of impressions (frequency cap) for expanding advertisements (expandables)
+    provenance: 
+    category: marketing
+    domain: adform.net
+    duration: persistent
+-
+    serviceProvider: Adform
+    code: CFFC<TagID>
+    name: CFFC<TagID>
+    description: Registers max. number of impressions (frequency cap) for compound banners
+    provenance: 
+    category: marketing
+    domain: adform.net
+    duration: persistent
+-
+    serviceProvider: Adform
+    code: DigiTrust.v1.identity
+    name: DigiTrust.v1.identity
+    description: Unique value with which the user is identified by DigiTrust, an independent industrial body
+    provenance: 
+    category: marketing
+    domain: adform.net
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: lu
+    name: lu
+    description: "Used to record whether the person chose to remain logged in Contents: User ID and miscellaneous log in information (e.g., number of logins per account, state of the 'remember me' check box, etc.)"
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: xs
+    name: xs
+    description: "Used in conjunction with the c_user cookie to authenticate your identity to Facebook. Contents: Session ID, creation time, authentication value, secure session state, caching group ID"
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: c_user
+    name: c_user
+    description: "Used in conjunction with the xs cookie to authenticate your identity to Facebook. Contents: User ID"
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: m_user
+    name: m_user
+    description: "Used to authenticate your identity on Facebook's mobile website. Contents: Email, User ID, authentication value, version, user agent capability, creation time, Facebook version indicator"
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: pl
+    name: pl
+    description: "Used to record that a device or browser logged in via Facebook platform. Contents: Y/N"
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: dbln
+    name: dbln
+    description: "Used to enable device-based logins. Contents: Login authentication values"
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: aks
+    name: aks
+    description: "Determines the login state of a person visiting accountkit.com. Contents: Account kit access token"
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: aksb
+    name: aksb
+    description: "Authenticates logins using Account Kit. Contents: Request time value"
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: sfau
+    name: sfau
+    description: "Optimizes recovery flow after failed login attempts. Contents: Encrypted user ID, contact point, time stamp, and other login information"
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: ick
+    name: ick
+    description: Stores an encryption key used to encrypt cookies
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: csm
+    name: csm
+    description: Insecure indicator
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: s
+    name: s
+    description: Facebook browser identification, authentication, marketing, and other Facebook-specific function cookies.
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: datr
+    name: datr
+    description: Used to prevent creation of fake / spammy accounts. Datr cookie is associated with a browser, not individual people.
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: sb
+    name: sb
+    description: Facebook browser identification, authentication, marketing, and other Facebook-specific function cookies.
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: fr
+    name: fr
+    description: Contains a unique browser and user ID, used for targeted advertising.
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: oo
+    name: oo
+    description: Ad optout cookie
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: ddid
+    name: ddid
+    description: "Used to open a specific location in an advertiser's app upon installation"
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: locale
+    name: locale
+    description: "This cookie contains the display locale of the last logged in user on this browser. This cookie appears to only be set after the user logs out. The locale cookie has a lifetime of one week."
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: _fbp
+    name: _fbp
+    description: Used by Facebook to deliver a series of advertisement products such as real time bidding from third party advertisers
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: js_ver
+    name: js_ver
+    description: Records the age of Facebook javascript files.
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: rc
+    name: rc
+    description: Used to optimize site performance for advertisers
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: campaign_click_url
+    name: campaign_click_url
+    description: Records the Facebook URL that an individual landed on after clicking on an ad promoting Facebook
+    provenance: 
+    category: marketing
+    domain: facebook.com
+    duration: persistent
+-
+    serviceProvider: Facebook
+    code: wd
+    name: wd
+    description: This cookie stores the browser window dimensions and is used by Facebook to optimise the rendering of the page.
+    provenance: 
+    category: functional
+    domain: facebook.com
+    duration: session
+-
+    serviceProvider: Google
+    code: IDE
+    name: IDE
+    description: This cookie is used for targeting, analyzing and optimisation of ad campaigns in DoubleClick/Google Marketing Suite
+    provenance: 
+    category: marketing
+    domain: doubleclick.net
+    duration: persistent
+-
+    serviceProvider: Google
+    code: DSID
+    name: DSID
+    description: This cookie is used for targeting, analyzing and optimisation of ad campaigns in DoubleClick/Google Marketing Suite
+    provenance: 
+    category: marketing
+    domain: doubleclick.net
+    duration: persistent
+-
+    serviceProvider: Google
+    code: ID
+    name: ID
+    description: This cookie is used for targeting, analyzing and optimisation of ad campaigns in DoubleClick/Google Marketing Suite
+    provenance: 
+    category: marketing
+    domain: doubleclick.net
+    duration: persistent
+-
+    serviceProvider: Google
+    code: RUL
+    name: RUL
+    description: Used by DoubleClick to determine if the website ad was properly displayed. This is done to make their marketing efforts more efficient.
+    provenance: 
+    category: marketing
+    domain: doubleclick.net
+    duration: persistent
+-
+    serviceProvider: Platform161
+    code: fl_inst
+    name: fl_inst
+    description: Used to check if Flash plugin is enabled in browser of user.
+    provenance: 
+    category: marketing
+    domain: creative-serving.com
+    duration: persistent
+-
+    serviceProvider: Platform161
+    code: pvc2
+    name: pvc2
+    description: Contains information related to ad impressions.
+    provenance: 
+    category: marketing
+    domain: creative-serving.com
+    duration: persistent
+-
+    serviceProvider: Platform161
+    code: pcc2
+    name: pcc2
+    description: Contains information related to ad impressions.
+    provenance: 
+    category: marketing
+    domain: creative-serving.com
+    duration: persistent
+-
+    serviceProvider: Platform161
+    code: trc
+    name: trc
+    description: Contains information related to ad impressions.
+    provenance: 
+    category: marketing
+    domain: creative-serving.com
+    duration: persistent
+-
+    serviceProvider: Platform161
+    code: tuuid
+    name: tuuid
+    description: Unique value to identify individual users.
+    provenance: 
+    category: marketing
+    domain: creative-serving.com
+    duration: persistent
+-
+    serviceProvider: Platform161
+    code: ad2
+    name: ad2
+    description: Contains information related to ad impressions.
+    provenance: 
+    category: marketing
+    domain: creative-serving.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: MR
+    name: MR
+    description: Used to collect information for analytics purposes.
+    provenance: 
+    category: marketing
+    domain: .bing.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: MUID
+    name: MUID
+    description: Identifies unique web browsers visiting Microsoft sites. These cookies are used for advertising, site analytics, and other operational purposes.
+    provenance: 
+    category: marketing
+    domain: .bing.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: MUIDB
+    name: MUIDB
+    description: Identifies unique web browsers visiting Microsoft sites. These cookies are used for advertising, site analytics, and other operational purposes.
+    provenance: 
+    category: marketing
+    domain: .bing.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: MC1
+    name: MC1
+    description: Identifies unique web browsers visiting Microsoft sites. These cookies are used for advertising, site analytics, and other operational purposes.
+    provenance: 
+    category: marketing
+    domain: .bing.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: MSFPC
+    name: MSFPC
+    description: Identifies unique web browsers visiting Microsoft sites. These cookies are used for advertising, site analytics, and other operational purposes.
+    provenance: 
+    category: marketing
+    domain: .bing.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: _uetsid
+    name: _uetsid
+    description: This cookie is used by Bing to determine what ads should be shown that may be relevant to the end user perusing the site.
+    provenance: 
+    category: marketing
+    domain: .bing.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: _uetvid
+    name: _uetvid
+    description: This is a cookie utilised by Microsoft Bing Ads and is a tracking cookie. It allows us to engage with a user that has previously visited our website.
+    provenance: 
+    category: marketing
+    domain: .bing.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: ANON
+    name: ANON
+    description: Contains the ANID, a unique identifier derived from your Microsoft account, which is used for advertising, personalization, and operational purposes. It is also used to preserve your choice to opt out of interest-based advertising from Microsoft if you have chosen to associate the opt-out with your Microsoft account.
+    provenance: 
+    category: marketing
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: CC
+    name: CC
+    description: Contains a country code as determined from your IP address.
+    provenance: 
+    category: marketing
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: PPAuth
+    name: PPAuth
+    description: Helps to authenticate you when you sign in with your Microsoft account.
+    provenance: 
+    category: functional
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: MSPAuth
+    name: MSPAuth
+    description: Helps to authenticate you when you sign in with your Microsoft account.
+    provenance: 
+    category: functional
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: MSNRPSAuth
+    name: MSNRPSAuth
+    description: Helps to authenticate you when you sign in with your Microsoft account.
+    provenance: 
+    category: functional
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: KievRPSAuth
+    name: KievRPSAuth
+    description: Helps to authenticate you when you sign in with your Microsoft account.
+    provenance: 
+    category: functional
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: WLSSC
+    name: WLSSC
+    description: Helps to authenticate you when you sign in with your Microsoft account.
+    provenance: 
+    category: functional
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: MSPProf
+    name: MSPProf
+    description: Helps to authenticate you when you sign in with your Microsoft account.
+    provenance: 
+    category: functional
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: MC0
+    name: MC0
+    description: Detects whether cookies are enabled in the browser.
+    provenance: 
+    category: functional
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: MS0
+    name: MS0
+    description: Identifies a specific session.
+    provenance: 
+    category: functional
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: NAP
+    name: NAP
+    description: Contains an encrypted version of your country, postal code, age, gender, language and occupation, if known, based on your Microsoft account profile.
+    provenance: 
+    category: marketing
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: MH
+    name: MH
+    description: Appears on co-branded sites where Microsoft is partnering with an advertiser. This cookie identifies the advertiser, so the right ad is selected.
+    provenance: 
+    category: marketing
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: childinfo
+    name: childinfo
+    description: Contains information that Microsoft account uses within its pages in relation to child accounts.
+    provenance: 
+    category: marketing
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: kcdob
+    name: kcdob
+    description: Contains information that Microsoft account uses within its pages in relation to child accounts.
+    provenance: 
+    category: marketing
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: kcrelid
+    name: kcrelid
+    description: Contains information that Microsoft account uses within its pages in relation to child accounts.
+    provenance: 
+    category: marketing
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: kcru
+    name: kcru
+    description: Contains information that Microsoft account uses within its pages in relation to child accounts.
+    provenance: 
+    category: marketing
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: pcfm
+    name: pcfm
+    description: Contains information that Microsoft account uses within its pages in relation to child accounts.
+    provenance: 
+    category: marketing
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: x-ms-gateway-slice
+    name: x-ms-gateway-slice
+    description: Identifies a gateway for load balancing.
+    provenance: 
+    category: functional
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: ToptOut
+    name: ToptOut
+    description: Records your decision not to receive interest-based advertising delivered by Microsoft.
+    provenance: 
+    category: marketing
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: ACH01
+    name: ACH01
+    description: Maintains information about which ad and where the user clicked on the ad.
+    provenance: 
+    category: marketing
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: AADSSO
+    name: AADSSO
+    description: Microsoft Microsoft Online Authentication Cookie
+    provenance: 
+    category: functional
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: brcap
+    name: brcap
+    description: Microsoft Microsoft Online Authentication Cookie
+    provenance: 
+    category: functional
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: buid
+    name: buid
+    description: This cookie is used by Microsoft to securely verify your login information
+    provenance: 
+    category: functional
+    domain: .microsoft.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: esctx
+    name: esctx
+    description: This cookie is used by Microsoft to securely verify your login information
+    provenance: 
+    category: functional
+    domain: .microsoft.com
+    duration: session
+-
+    serviceProvider: Microsoft
+    code: fpc
+    name: fpc
+    description: This cookie is used by Microsoft to securely verify your login information
+    provenance: 
+    category: functional
+    domain: .microsoft.com
+    duration: session
+-
+    serviceProvider: Microsoft
+    code: stsservicecookie
+    name: stsservicecookie
+    description: Cookie for Azure Active Directory B2C-verification
+    provenance: 
+    category: functional
+    domain: .microsoft.com
+    duration: session
+-
+    serviceProvider: Microsoft
+    code: ARRAffinity
+    name: ARRAffinity
+    description: "When using Microsoft Azure as a hosting platform and enabling load balancing, this cookie ensures that  requests from one visitor's browsing session are always handled by the same server in the cluster."
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: ARRAffinitySameSite
+    name: ARRAffinitySameSite
+    description: "When using Microsoft Azure as a hosting platform and enabling load balancing, this cookie ensures that  requests from one visitor's browsing session are always handled by the same server in the cluster."
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: nSGt-
+    name: nSGt-
+    description: This cookie is used by Microsoft to securely verify your Sharepoint login information
+    provenance: 
+    category: functional
+    domain: .microsoft.com
+    duration: session
+-
+    serviceProvider: Microsoft
+    code: RpsContextCookie
+    name: RpsContextCookie
+    description: This cookie is used by Microsoft to securely verify your Sharepoint login information
+    provenance: 
+    category: functional
+    domain: .microsoft.com
+    duration: session
+-
+    serviceProvider: Twitter
+    code: guest_id
+    name: guest_id
+    description: This cookie is set by Twitter to identify and track the website visitor. Registers if a users is signed in the Twitter platform and collects information about ad preferences.
+    provenance: 
+    category: marketing
+    domain: twitter.com
+    duration: persistent
+-
+    serviceProvider: Twitter
+    code: personalization_id
+    name: personalization_id
+    description: Unique value with which users can be identified by Twitter. Collected information is used to be personalize Twitter services, including Twitter trends, stories, ads and suggestions.
+    provenance: 
+    category: marketing
+    domain: twitter.com
+    duration: persistent
+-
+    serviceProvider: Twitter
+    code: ct0
+    name: ct0
+    description: These cookies enable us to track visitor activity from our Twitter ads on our website, and also to allow users to share content from our websites. They cookies do not provide us with any confidential information relating to your account.
+    provenance: 
+    category: marketing
+    domain: twitter.com
+    duration: persistent
+-
+    serviceProvider: Twitter
+    code: gt
+    name: gt
+    description: Twitter uses these cookies to support plugin integration with our website. If you use the Tweet plugin and log into your Twitter account, Twitter will set some of these cookies to remember that you are logged in. Twitter will also use cookies for their own analytics purposes.
+    provenance: 
+    category: marketing
+    domain: twitter.com
+    duration: persistent
+-
+    serviceProvider: Inspectlet
+    code: __insp_pad
+    name: __insp_pad
+    description: This cookie contains the page number of the session recording.
+    provenance: 
+    category: analytics
+    domain: inspectlet.com
+    duration: persistent
+-
+    serviceProvider: Inspectlet
+    code: __insp_sid
+    name: __insp_sid
+    description: This cookie contains the ID of the Inspectlet session that is being recorded.
+    provenance: 
+    category: analytics
+    domain: inspectlet.com
+    duration: persistent
+-
+    serviceProvider: Inspectlet
+    code: __insp_ref
+    name: __insp_ref
+    description: The cookie contains the referrer source/URL
+    provenance: 
+    category: analytics
+    domain: inspectlet.com
+    duration: persistent
+-
+    serviceProvider: Inspectlet
+    code: __insp_scpt
+    name: __insp_scpt
+    description: This cookie contains an integer that allows us to know if the screen capture was triggered or not.
+    provenance: 
+    category: analytics
+    domain: inspectlet.com
+    duration: persistent
+-
+    serviceProvider: Inspectlet
+    code: __insp_nv
+    name: __insp_nv
+    description: This cookie contains a value that allows Inspectlet to know if this user is a new visitor or a returning visitor.
+    provenance: 
+    category: analytics
+    domain: inspectlet.com
+    duration: persistent
+-
+    serviceProvider: Inspectlet
+    code: __insp_wid
+    name: __insp_wid
+    description: This cookie contains an uniqe user ID provided by the website if set up.
+    provenance: 
+    category: analytics
+    domain: inspectlet.com
+    duration: persistent
+-
+    serviceProvider: Inspectlet
+    code: __insp_uid
+    name: __insp_uid
+    description: This cookie contains random ID assigned to a visitor.
+    provenance: 
+    category: analytics
+    domain: inspectlet.com
+    duration: persistent
+-
+    serviceProvider: Inspectlet
+    code: __insp_dct
+    name: __insp_dct
+    description: "Registers statistical data on visitor's behaviour on the website. Used for internal analytics by the website operator."
+    provenance: 
+    category: analytics
+    domain: inspectlet.com
+    duration: session
+-
+    serviceProvider: Indeed
+    code: CTK
+    name: CTK
+    description: Contains information related to registering (counting) a job application via a job listing on indeed.com.
+    provenance: 
+    category: analytics
+    domain: conv.indeed.com
+    duration: persistent
+-
+    serviceProvider: Indeed
+    code: ctkgen
+    name: ctkgen
+    description: Contains information related to registering (counting) a job application via a job listing on indeed.com.
+    provenance: 
+    category: analytics
+    domain: conv.indeed.com
+    duration: persistent
+-
+    serviceProvider: Indeed
+    code: INDEED_CSRF_TOKEN
+    name: INDEED_CSRF_TOKEN
+    description: Contains information related to registering (counting) a job application via a job listing on indeed.com.
+    provenance: 
+    category: analytics
+    domain: conv.indeed.com
+    duration: persistent
+-
+    serviceProvider: Indeed
+    code: jasx_pool_id
+    name: jasx_pool_id
+    description: Contains information related to registering (counting) a job application via a job listing on indeed.com.
+    provenance: 
+    category: analytics
+    domain: conv.indeed.com
+    duration: persistent
+-
+    serviceProvider: Indeed
+    code: pagead/conv/%INTEGER%
+    name: pagead/conv/%INTEGER%
+    description: Contains information related to registering (counting) a job application via a job listing on indeed.com.
+    provenance: 
+    category: analytics
+    domain: conv.indeed.com
+    duration: persistent
+-
+    serviceProvider: Abovo Media
+    code: tv_spot_tracker
+    name: tv_spot_tracker
+    description: Contains information about the timeslot of a running TV ad
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: CookieConsent.io
+    code: cookie-consent-io
+    name: cookie-consent-io
+    description: Registers cookie preferences of a user
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Google
+    code: GPS
+    name: GPS
+    description: Registers a unique ID on mobile devices to enable tracking based on geographical GPS location.
+    provenance: 
+    category: marketing
+    domain: youtube.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: VISITOR_INFO1_LIVE
+    name: VISITOR_INFO1_LIVE
+    description: "Tries to estimate the user's bandwidth on pages with integrated YouTube videos."
+    provenance: 
+    category: marketing
+    domain: youtube.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: PREF
+    name: PREF
+    description: This cookie stores your preferences and other information, in particular preferred language, how many search results you wish to be shown on your page, and whether or not you wish to have Googleâ€™s SafeSearch filter turned on.
+    provenance: 
+    category: functional
+    domain: youtube.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: YSC
+    name: YSC
+    description: Registers a unique ID to keep statistics of what videos from YouTube the user has seen.
+    provenance: 
+    category: functional
+    domain: youtube.com
+    duration: session
+-
+    serviceProvider: Admatic
+    code: __adm_ui
+    name: __adm_ui
+    description: "Used to track visitors on multiple websites, in order to present relevant advertisement based on the visitor's preferences."
+    provenance: 
+    category: marketing
+    domain: admatic.com.tr
+    duration: persistent
+-
+    serviceProvider: Admatic
+    code: __adm_uiex
+    name: __adm_uiex
+    description: "Used to track visitors on multiple websites, in order to present relevant advertisement based on the visitor's preferences."
+    provenance: 
+    category: marketing
+    domain: admatic.com.tr
+    duration: persistent
+-
+    serviceProvider: Admatic
+    code: __adm_usyncc
+    name: __adm_usyncc
+    description: Used to identify the visitor across visits and devices. This allows the website to present the visitor with relevant advertisement - The service is provided by third party advertisement hubs, which facilitate real-time bidding for advertisers.
+    provenance: 
+    category: marketing
+    domain: admatic.com.tr
+    duration: persistent
+-
+    serviceProvider: Cloudflare
+    code: __cfduid
+    name: __cfduid
+    description: "The '__cfduid' cookie is set by the CloudFlare service to identify trusted web traffic. It does not correspond to any user id in the web application, nor does the cookie store any personally identifiable"
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Cloudflare
+    code: __cfruid
+    name: __cfruid
+    description: Used by the content network, Cloudflare, to identify trusted web traffic.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Sonobi
+    code: __uin_bw
+    name: __uin_bw
+    description: Collects information on visitor behaviour on multiple websites. This information is used on the website, in order to optimize the relevance of advertisement.
+    provenance: 
+    category: marketing
+    domain: .go.sonobi.com
+    duration: persistent
+-
+    serviceProvider: Sonobi
+    code: __uir_bw
+    name: __uir_bw
+    description: "Collects data on visitor's behaviour and interaction - This is used to optimize the website and make advertisement on the website more relevant."
+    provenance: 
+    category: marketing
+    domain: .go.sonobi.com
+    duration: persistent
+-
+    serviceProvider: Sonobi
+    code: __uis
+    name: __uis
+    description: "Used to track visitors on multiple websites, in order to present relevant advertisement based on the visitor's preferences."
+    provenance: 
+    category: marketing
+    domain: .go.sonobi.com
+    duration: persistent
+-
+    serviceProvider: Sonobi
+    code: HAPLB5S
+    name: HAPLB5S
+    description: "Used to track visitors on multiple websites, in order to present relevant advertisement based on the visitor's preferences."
+    provenance: 
+    category: marketing
+    domain: .go.sonobi.com
+    duration: persistent
+-
+    serviceProvider: Pulsepoint
+    code: _dbefe
+    name: _dbefe
+    description: Collects information on user preferences and/or interaction with web-campaign content - This is used on CRM-campaign-platform used by website owners for promoting events or products.
+    provenance: 
+    category: marketing
+    domain: contextweb.com
+    duration: session
+-
+    serviceProvider: Hotjar
+    code: _hjid
+    name: _hjid
+    description: Hotjar cookie. This cookie is set when the customer first lands on a page with the Hotjar script. It is used to persist the random user ID, unique to that site on the browser. This ensures that behavior in subsequent visits to the same site will be attributed to the same user ID.
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Hotjar
+    code: _hjIncludedInSample
+    name: _hjIncludedInSample
+    description: Hotjar cookie. This session cookie is set to let Hotjar know whether that visitor is included in the sample which is used to generate funnels.
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Hotjar
+    code: _hjClosedSurveyInvites
+    name: _hjClosedSurveyInvites
+    description: Hotjar cookie. This cookie is set once a visitor interacts with a Survey invitation modal popup. It is used to ensure that the same invite does not re-appear if it has already been shown.
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Hotjar
+    code: _hjDonePolls
+    name: _hjDonePolls
+    description: Hotjar cookie. This cookie is set once a visitor completes a poll using the Feedback Poll widget. It is used to ensure that the same poll does not re-appear if it has already been filled in.
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Hotjar
+    code: _hjMinimizedPolls
+    name: _hjMinimizedPolls
+    description: Hotjar cookie. This cookie is set once a visitor minimizes a Feedback Poll widget. It is used to ensure that the widget stays minimizes when the visitor navigates through your site.
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Hotjar
+    code: _hjDoneTestersWidgets
+    name: _hjDoneTestersWidgets
+    description: Hotjar cookie. This cookie is set once a visitor submits their information in the Recruit User Testers widget. It is used to ensure that the same form does not re-appear if it has already been filled in.
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Hotjar
+    code: _hjMinimizedTestersWidgets
+    name: _hjMinimizedTestersWidgets
+    description: Hotjar cookie. This cookie is set once a visitor minimizes a Recruit User Testers widget. It is used to ensure that the widget stays minimizes when the visitor navigates through your site.
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Hotjar
+    code: _hjShownFeedbackMessage
+    name: _hjShownFeedbackMessage
+    description: This cookie is set when a visitor minimizes or completes Incoming Feedback. This is done so that the Incoming Feedback will load as minimized immediately if they navigate to another page where it is set to show.
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Hotjar
+    code: _hjTLDTest
+    name: _hjTLDTest
+    description: When the Hotjar script executes we try to determine the most generic cookie path we should use, instead of the page hostname. This is done so that cookies can be shared across subdomains (where applicable). To determine this, we try to store the _hjTLDTest cookie for different URL substring alternatives until it fails. After this check, the cookie is removed.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Hotjar
+    code: _hjUserAttributesHash
+    name: _hjUserAttributesHash
+    description: User Attributes sent through the Hotjar Identify API are cached for the duration of the session in order to know when an attribute has changed and needs to be updated.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Hotjar
+    code: _hjCachedUserAttributes
+    name: _hjCachedUserAttributes
+    description: This cookie stores User Attributes which are sent through the Hotjar Identify API, whenever the user is not in the sample. These attributes will only be saved if the user interacts with a Hotjar Feedback tool.
+    provenance: 
+    category: analytics
+    domain: 
+    duration: session
+-
+    serviceProvider: Hotjar
+    code: _hjLocalStorageTest
+    name: _hjLocalStorageTest
+    description: This cookie is used to check if the Hotjar Tracking Script can use local storage. If it can, a value of 1 is set in this cookie. The data stored in_hjLocalStorageTest has no expiration time, but it is deleted immediately after creating it so the expected storage time is under 100ms.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Hotjar
+    code: _hjptid
+    name: _hjptid
+    description: This cookie is set for logged in users of Hotjar, who have Admin Team Member permissions. It is used during pricing experiments to show the Admin consistent pricing across the site.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Hotjar
+    code: _hjAbsoluteSessionInProgress
+    name: _hjAbsoluteSessionInProgress
+    description: "The cookie is set so Hotjar can track the beginning of the user's journey for a total session count. It does not contain any identifiable information."
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Hotjar
+    code: _hjFirstSeen
+    name: _hjFirstSeen
+    description: "The cookie is set so Hotjar can track the beginning of the user's journey for a total session count. It does not contain any identifiable information."
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Hotjar
+    code: _hjIncludedInPageviewSample
+    name: _hjIncludedInPageviewSample
+    description: "This cookie is set to let Hotjar know whether that visitor is included in the data sampling defined by your site's pageview limit."
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Hotjar
+    code: _hjIncludedInSessionSample
+    name: _hjIncludedInSessionSample
+    description: "This cookie is set to let Hotjar know whether that visitor is included in the data sampling defined by your site's daily session limit"
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Salesforce
+    code: _kuid_
+    name: _kuid_
+    description: "Registers a unique ID that identifies a returning user's device. The ID is used for targeted ads."
+    provenance: 
+    category: marketing
+    domain: krdx.net
+    duration: persistent
+-
+    serviceProvider: Twitter
+    code: _twitter_sess
+    name: _twitter_sess
+    description: This cookie is set due to Twitter integration and sharing capabilities for the social media.
+    provenance: 
+    category: marketing
+    domain: twitter.com
+    duration: session
+-
+    serviceProvider: Google
+    code: _gcl_au
+    name: _gcl_au
+    description: Used by Google AdSense for experimenting with advertisement efficiency across websites using their services.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Active Campaign
+    code: ac_enable_tracking
+    name: ac_enable_tracking
+    description: This cookie is associated with Active Campaign and is set to confirm that tracking has been enabled for the website. Tracking is used to create reports of our web traffic and improve the user experience of the website.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: ASP.NET_SessionId
+    name: ASP.NET_SessionId
+    description: General purpose platform session cookie, used by sites written with Miscrosoft .NET based technologies. Usually used to maintain an anonymised user session by the server.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Microsoft
+    code: ASP.NET_SessionId_Fallback
+    name: ASP.NET_SessionId_Fallback
+    description: "Fallback session cookie to support older browsers that haven't implemented the Secure flag, in modern evergreen browsers this cookie is never set as it haven't got the Secure flag."
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Oracle
+    code: JSESSIONID
+    name: JSESSIONID
+    description: JSESSIONID is a platform session cookie and is used by sites with JavaServer Pages (JSP). The cookie is used to maintain an anonymous user session by the server.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Laravel
+    code: laravel_session
+    name: laravel_session
+    description: Internally laravel uses laravel_session to identify a session instance for a user
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: PHP.net
+    code: PHPSESSID
+    name: PHPSESSID
+    description: Cookie generated by applications based on the PHP language. This is a general purpose identifier used to maintain user session variables. It is normally a random generated number, how it is used can be specific to the site, but a good example is maintaining a logged-in status for a user between pages.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: None
+    code: XSRF-TOKEN
+    name: XSRF-TOKEN
+    description: This cookie is written to help with site security in preventing Cross-Site Request Forgery attacks.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: LinkedIn
+    code: lidc
+    name: lidc
+    description: Used by the social networking service, LinkedIn, for tracking the use of embedded services.
+    provenance: 
+    category: marketing
+    domain: linkedin.com
+    duration: persistent
+-
+    serviceProvider: LinkedIn
+    code: bcookie
+    name: bcookie
+    description: Used by LinkedIn to track the use of embedded services.
+    provenance: 
+    category: marketing
+    domain: linkedin.com
+    duration: persistent
+-
+    serviceProvider: LinkedIn
+    code: bscookie
+    name: bscookie
+    description: Used by LinkedIn to track the use of embedded services.
+    provenance: 
+    category: marketing
+    domain: linkedin.com
+    duration: persistent
+-
+    serviceProvider: LinkedIn
+    code: trkCode
+    name: trkCode
+    description: "This cookie is used by LinkedIn to support the functionality of adding a panel invite labeled 'Follow Us'"
+    provenance: 
+    category: marketing
+    domain: linkedin.com
+    duration: persistent
+-
+    serviceProvider: LinkedIn
+    code: trkInfo
+    name: trkInfo
+    description: "This cookie is used by LinkedIn to support the functionality of adding a panel invite labeled 'Follow Us'"
+    provenance: 
+    category: marketing
+    domain: linkedin.com
+    duration: persistent
+-
+    serviceProvider: LinkedinIn
+    code: li_oatml
+    name: li_oatml
+    description: Collects information about how visitors use our site.
+    provenance: 
+    category: marketing
+    domain: linkedin.com
+    duration: persistent
+-
+    serviceProvider: LinkedinIn
+    code: liap
+    name: liap
+    description: Cookie used for Sign-in with Linkedin and/or to allow for the Linkedin follow feature.
+    provenance: 
+    category: marketing
+    domain: linkedin.com
+    duration: persistent
+-
+    serviceProvider: LinkedinIn
+    code: lissc
+    name: lissc
+    description: Pending
+    provenance: 
+    category: marketing
+    domain: linkedin.com
+    duration: persistent
+-
+    serviceProvider: LinkedIn
+    code: spectroscopyId
+    name: spectroscopyId
+    description: "These cookies are set by LinkedIn for advertising purposes, including: tracking visitors so that more relevant ads can be presented, allowing users to use the 'Apply with LinkedIn' or the 'Sign-in with LinkedIn' functions, collecting information about how visitors use the site, etc."
+    provenance: 
+    category: marketing
+    domain: linkedin.com
+    duration: session
+-
+    serviceProvider: LinkedIn
+    code: UserMatchHistory
+    name: UserMatchHistory
+    description: "These cookies are set by LinkedIn for advertising purposes, including: tracking visitors so that more relevant ads can be presented, allowing users to use the 'Apply with LinkedIn' or the 'Sign-in with LinkedIn' functions, collecting information about how visitors use the site, etc."
+    provenance: 
+    category: marketing
+    domain: linkedin.com
+    duration: session
+-
+    serviceProvider: LinkedIn
+    code: lang
+    name: lang
+    description: "Used to remember a user's language setting"
+    provenance: 
+    category: functional
+    domain: linkedin.com
+    duration: session
+-
+    serviceProvider: LinkedIn
+    code: li_gc
+    name: li_gc
+    description: Used to store guest consent to the use of cookies for non-essential purposes
+    provenance: 
+    category: functional
+    domain: linkedin.com
+    duration: persistent
+-
+    serviceProvider: LinkedIn
+    code: li_rm
+    name: li_rm
+    description: Used as part of the LinkedIn Remember Me feature and is set when a user clicks Remember Me on the device to make it easier for him or her to sign in to that device
+    provenance: 
+    category: functional
+    domain: linkedin.com
+    duration: persistent
+-
+    serviceProvider: LinkedIn
+    code: AnalyticsSyncHistory
+    name: AnalyticsSyncHistory
+    description: Used to store information about the time a sync with the lms_analytics cookie took place for users in the Designated Countries
+    provenance: 
+    category: functional
+    domain: linkedin.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: GCLB
+    name: GCLB
+    description: This cookie is used in context with load balancing - This optimizes the response rate between the visitor and the site, by distributing the traffic load on multiple network links or servers.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Amazon Web Services
+    code: AWSALB
+    name: AWSALB
+    description: These cookies enable us to allocate server traffic to make the user experience as smooth as possible. A so-called load balancer is used to determine which server currently has the best availability. The information generated cannot identify you as an individual.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Amazon Web Services
+    code: AWSALBCORS
+    name: AWSALBCORS
+    description: For continued stickiness support with CORS use cases after the Chromium update, we are creating additional stickiness cookies for each of these duration-based stickiness features named AWSALBCORS (ALB).
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Amazon Web Services
+    code: AWSELBCORS
+    name: AWSELBCORS
+    description: For continued stickiness support with CORS use cases after the Chromium update, we are creating additional stickiness cookies for each of these duration-based stickiness features named AWSELBCORS (ALB).
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Casale Media
+    code: CMID
+    name: CMID
+    description: "Collects visitor data related to the user's visits to the website, such as the number of visits, average time spent on the website and what pages have been loaded, with the purpose of displaying targeted ads."
+    provenance: 
+    category: marketing
+    domain: casalemedia.com
+    duration: persistent
+-
+    serviceProvider: Casale Media
+    code: CMPRO
+    name: CMPRO
+    description: Collects data on visitor behaviour from multiple websites, in order to present more relevant advertisement - This also allows the website to limit the number of times that the visitor is shown the same advertisement.
+    provenance: 
+    category: marketing
+    domain: casalemedia.com
+    duration: persistent
+-
+    serviceProvider: Casale Media
+    code: CMPS
+    name: CMPS
+    description: "Collects visitor data related to the user's visits to the website, such as the number of visits, average time spent on the website and what pages have been loaded, with the purpose of displaying targeted ads"
+    provenance: 
+    category: marketing
+    domain: casalemedia.com
+    duration: persistent
+-
+    serviceProvider: Casale Media
+    code: CMRUM3
+    name: CMRUM3
+    description: "Collects visitor data related to the user's visits to the website, such as the number of visits, average time spent on the website and what pages have been loaded, with the purpose of displaying targeted ads."
+    provenance: 
+    category: marketing
+    domain: casalemedia.com
+    duration: persistent
+-
+    serviceProvider: Casale Media
+    code: CMST
+    name: CMST
+    description: "Collects visitor data related to the user's visits to the website, such as the number of visits, average time spent on the website and what pages have been loaded, with the purpose of displaying targeted ads."
+    provenance: 
+    category: marketing
+    domain: casalemedia.com
+    duration: persistent
+-
+    serviceProvider: Outbrain
+    code: cookieJartestCookie
+    name: cookieJartestCookie
+    description: Pending
+    provenance: 
+    category: marketing
+    domain: outbrain.com
+    duration: persistent
+-
+    serviceProvider: Outbrain
+    code: obuid
+    name: obuid
+    description: "Holds the anonymous user's ID. Used for tracking user actions, such as clicks on the recommendations"
+    provenance: 
+    category: marketing
+    domain: outbrain.com
+    duration: persistent
+-
+    serviceProvider: Outbrain
+    code: apnxs
+    name: apnxs
+    description: This cookie is set by Outbrain and it is used to analyse technical data about the website
+    provenance: 
+    category: marketing
+    domain: outbrain.com
+    duration: persistent
+-
+    serviceProvider: Outbrain
+    code: criteo
+    name: criteo
+    description: This cookie is set by Outbrain and it is used to analyse technical data about the website
+    provenance: 
+    category: marketing
+    domain: outbrain.com
+    duration: persistent
+-
+    serviceProvider: Outbrain
+    code: mdfrc
+    name: mdfrc
+    description: This cookie is set by Outbrain and it is used to analyse technical data about the website
+    provenance: 
+    category: marketing
+    domain: outbrain.com
+    duration: persistent
+-
+    serviceProvider: Outbrain
+    code: adrl
+    name: adrl
+    description: This cookie is set by Outbrain and it is used to analyse technical data about the website
+    provenance: 
+    category: marketing
+    domain: outbrain.com
+    duration: persistent
+-
+    serviceProvider: Outbrain
+    code: ttd
+    name: ttd
+    description: This cookie is set by Outbrain and it is used to analyse technical data about the website
+    provenance: 
+    category: marketing
+    domain: outbrain.com
+    duration: persistent
+-
+    serviceProvider: JustPremium
+    code: jpxumaster
+    name: jpxumaster
+    description: Used to present the visitor with relevant content and advertisement - The service is provided by third party advertisement hubs, which facilitate real-time bidding for advertisers.
+    provenance: 
+    category: marketing
+    domain: justpremium.com
+    duration: persistent
+-
+    serviceProvider: JustPremium
+    code: jpxumatched
+    name: jpxumatched
+    description: Used to present the visitor with relevant content and advertisement - The service is provided by third party advertisement hubs, which facilitate real-time bidding for advertisers.
+    provenance: 
+    category: marketing
+    domain: justpremium.com
+    duration: persistent
+-
+    serviceProvider: PubMatic
+    code: PUBMDCID
+    name: PUBMDCID
+    description: "Registers a unique ID that identifies the user's device during return visits across websites that use the same ad network. The ID is used to allow targeted ads."
+    provenance: 
+    category: marketing
+    domain: pubmatic.com
+    duration: persistent
+-
+    serviceProvider: PubMatic
+    code: PugT
+    name: PugT
+    description: "Registers a unique ID that identifies the user's device during return visits across websites that use the same ad network. The ID is used to allow targeted ads."
+    provenance: 
+    category: marketing
+    domain: pubmatic.com
+    duration: persistent
+-
+    serviceProvider: Kiyoh
+    code: Kiyohnl
+    name: Kiyohnl
+    description: Cookies are associated with the use of Kiyoh to collect and display customer reviews
+    provenance: 
+    category: functional
+    domain: kiyoh.nl
+    duration: persistent
+-
+    serviceProvider: ID5
+    code: id5
+    name: id5
+    description: Sets a unique ID for the visitor, that allows third party advertisers to target the visitor with relevant advertisement. This pairing service is provided by third party advertisement hubs, which facilitates real-time bidding for advertisers.
+    provenance: 
+    category: marketing
+    domain: id5-sync.com
+    duration: persistent
+-
+    serviceProvider: ID5
+    code: cip
+    name: cip
+    description: Used to present the visitor with relevant content and advertisement - The service is provided by third party advertisement hubs, which facilitate real-time bidding for advertisers.
+    provenance: 
+    category: marketing
+    domain: id5-sync.com
+    duration: persistent
+-
+    serviceProvider: ID5
+    code: car
+    name: car
+    description: Used to present the visitor with relevant content and advertisement - The service is provided by third party advertisement hubs, which facilitate real-time bidding for advertisers.
+    provenance: 
+    category: marketing
+    domain: id5-sync.com
+    duration: persistent
+-
+    serviceProvider: ID5
+    code: callback
+    name: callback
+    description: Collects data on visitor behaviour from multiple websites, in order to present more relevant advertisement - This also allows the website to limit the number of times that the visitor is shown the same advertisement.
+    provenance: 
+    category: marketing
+    domain: id5-sync.com
+    duration: persistent
+-
+    serviceProvider: ID5
+    code: cnac
+    name: cnac
+    description: Used to present the visitor with relevant content and advertisement - The service is provided by third party advertisement hubs, which facilitate real-time bidding for advertisers.
+    provenance: 
+    category: marketing
+    domain: id5-sync.com
+    duration: persistent
+-
+    serviceProvider: ID5
+    code: cf
+    name: cf
+    description: Sets a unique ID for the visitor, that allows third party advertisers to target the visitor with relevant advertisement. This pairing service is provided by third party advertisement hubs, which facilitates real-time bidding for advertisers.
+    provenance: 
+    category: marketing
+    domain: id5-sync.com
+    duration: persistent
+-
+    serviceProvider: ComScore
+    code: UIDR
+    name: UIDR
+    description: "Collects information of the user and his/her movement, such as timestamp for visits, most recently loaded pages and IP address. The data is used by the marketing research network, Scorecard Research, to analyse traffic patterns and carry out surveys to help their clients better understand the customer's preferences."
+    provenance: 
+    category: marketing
+    domain: scorecardresearch.com
+    duration: persistent
+-
+    serviceProvider: semasio.net
+    code: SEUNCY
+    name: SEUNCY
+    description: Registers a unique ID that identifies the userâ€™s device for return visits.
+    provenance: 
+    category: marketing
+    domain: semasio.net
+    duration: persistent
+-
+    serviceProvider: OpenX
+    code: OAID
+    name: OAID
+    description: This cookie is used by the ad server software to manage which ads are placed on our website, and to capture clicks on those ads. Information is collected in anonymous form, and we do not use this data to deliver specific content, advertising or otherwise, to your browser.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Federated Media Publishing
+    code: ljt_reader
+    name: ljt_reader
+    description: Collects data related to reader interests, context, demographics and other information on behalf of the Lijit platform with the purpose of finding interested users on websites with related content.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: rekmob.com
+    code: rek_content
+    name: rek_content
+    description: Pending
+    provenance: 
+    category: marketing
+    domain: rekmob.com
+    duration: persistent
+-
+    serviceProvider: ad.360yield.com
+    code: um
+    name: um
+    description: To enable the bidding process.
+    provenance: 
+    category: marketing
+    domain: ad.360yield.com
+    duration: persistent
+-
+    serviceProvider: ad.360yield.com
+    code: umeh
+    name: umeh
+    description: To enable the bidding process.
+    provenance: 
+    category: marketing
+    domain: ad.360yield.com
+    duration: persistent
+-
+    serviceProvider: vmg.host
+    code: BSWtracker
+    name: BSWtracker
+    description: Collects data on visitor behaviour from multiple websites, in order to present more relevant advertisement - This also allows the website to limit the number of times that the visitor is shown the same advertisement.
+    provenance: 
+    category: marketing
+    domain: vmg.host
+    duration: persistent
+-
+    serviceProvider: 1rx.io
+    code: _rxuuid
+    name: _rxuuid
+    description: Sets a unique ID for the visitor, with which external advertisers can target the visitor with relevant advertisements. This linking service is provided by third-party advertising hubs, facilitating real-time bidding for advertisers.
+    provenance: 
+    category: marketing
+    domain: 1rx.io
+    duration: persistent
+-
+    serviceProvider: Atlas
+    code: AA003
+    name: AA003
+    description: Collects information on visitor behaviour on multiple websites. This information is used on the website, in order to optimize the relevance of advertisement.
+    provenance: 
+    category: marketing
+    domain: atdmt.com
+    duration: persistent
+-
+    serviceProvider: Atlas
+    code: ATN
+    name: ATN
+    description: Collects information on visitor behaviour on multiple websites. This information is used on the website, in order to optimize the relevance of advertisement.
+    provenance: 
+    category: marketing
+    domain: atdmt.com
+    duration: persistent
+-
+    serviceProvider: Teads.com
+    code: tt_viewer
+    name: tt_viewer
+    description: "Teads uses a tt_viewer cookie to help personalize the video ads you see on our partner websites."
+    provenance: 
+    category: marketing
+    domain: teads.com
+    duration: persistent
+-
+    serviceProvider: Adobe ColdFusion
+    code: cfid
+    name: cfid
+    description: This cookie is used to determine which type of device the visitor is using, so the website can be properly formatted
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Adobe ColdFusion
+    code: cftoken
+    name: cftoken
+    description: This cookie is used to determine which type of device the visitor is using, so the website can be properly formatted
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Google
+    code: test_cookie
+    name: test_cookie
+    description: "This cookie is set by DoubleClick (which is owned by Google) to determine if the website visitor's browser supports cookies."
+    provenance: 
+    category: marketing
+    domain: doubleclick.net
+    duration: persistent
+-
+    serviceProvider: CXense
+    code: gckp
+    name: gckp
+    description: "Registers a unique ID that identifies a returning user's device. The ID is used for targeted ads."
+    provenance: 
+    category: marketing
+    domain: cxense.com
+    duration: persistent
+-
+    serviceProvider: visx.net
+    code: um2
+    name: um2
+    description: Sets a unique ID for the visitor, that allows third party advertisers to target the visitor with relevant advertisement. This pairing service is provided by third party advertisement hubs, which facilitates real-time bidding for advertisers.
+    provenance: 
+    category: marketing
+    domain: visx.net
+    duration: persistent
+-
+    serviceProvider: bidswitch.net
+    code: tuuid_lu
+    name: tuuid_lu
+    description: Contains a unique visitor ID, which allows Bidswitch.com to track the visitor across multiple websites. This allows Bidswitch to optimize advertisement relevance and ensure that the visitor does not see the same ads multiple times.
+    provenance: 
+    category: marketing
+    domain: bidswitch.net
+    duration: persistent
+-
+    serviceProvider: adscale.de
+    code: uu
+    name: uu
+    description: "Used to target ads by registering the user's movements across websites."
+    provenance: 
+    category: marketing
+    domain: adscale.de
+    duration: persistent
+-
+    serviceProvider: betweendigital.com
+    code: betweendigital.com
+    name: betweendigital.com
+    description: "Collects data on visitor's behaviour and interaction - This is used to optimize the website and make advertisement on the website more relevant."
+    provenance: 
+    category: marketing
+    domain: betweendigital.com
+    duration: persistent
+-
+    serviceProvider: betweendigital.com
+    code: ss
+    name: ss
+    description: "Necessary for the functionality of the website's chat-box function."
+    provenance: 
+    category: functional
+    domain: betweendigital.com
+    duration: persistent
+-
+    serviceProvider: seedtag.com
+    code: st_csd
+    name: st_csd
+    description: Date of the last cookie-syn
+    provenance: 
+    category: marketing
+    domain: seedtag.com
+    duration: persistent
+-
+    serviceProvider: seedtag.com
+    code: st_cs
+    name: st_cs
+    description: Unique identifiers of DSPs
+    provenance: 
+    category: marketing
+    domain: seedtag.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: _gaexp
+    name: _gaexp
+    description: "Used to determine a user's inclusion in an experiment and the expiry of experiments a user has been included in."
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Smartadserver
+    code: TestIfCookieP
+    name: TestIfCookieP
+    description: SmartAdServer is a remote ad serving system. Sites and Advertisers are using the system to manage the delivery of their online advertising campaigns. They can collect anonymous statistical data on their visitors to follow the delivery of their campaign and to increase their performance.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Smartadserver
+    code: pid
+    name: pid
+    description: SmartAdServer is a remote ad serving system. Sites and Advertisers are using the system to manage the delivery of their online advertising campaigns. They can collect anonymous statistical data on their visitors to follow the delivery of their campaign and to increase their performance.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: .AspNetCore.Antiforgery.
+    name: .AspNetCore.Antiforgery.
+    description: Anti-forgery cookie is a security mechanism to defend against cross-site request forgery (CSRF) attacks.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Unrulymedia.com
+    code: unruly_m
+    name: unruly_m
+    description: Pending
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Pubmatic
+    code: KRTBCOOKIE_
+    name: KRTBCOOKIE_
+    description: "Registers a unique ID that identifies the user's device during return visits across websites that use the same ad network. The ID is used to allow targeted ads."
+    provenance: 
+    category: marketing
+    domain: pubmatic.com
+    duration: persistent
+-
+    serviceProvider: Outbrain
+    code: bdswch
+    name: bdswch
+    description: Used to present the visitor with relevant content and advertisement - The service is provided by third party advertisement hubs, which facilitate real-time bidding for advertisers.
+    provenance: 
+    category: marketing
+    domain: outbrain.com
+    duration: persistent
+-
+    serviceProvider: Smartadserver
+    code: csync
+    name: csync
+    description: "Optimises ad display based on the user's movement combined and various advertiser bids for displaying user ads."
+    provenance: 
+    category: marketing
+    domain: smartadserverMarketing.com
+    duration: persistent
+-
+    serviceProvider: liadm.com
+    code: lidid
+    name: lidid
+    description: "Collects data on visitor's behaviour and interaction - This is used to make advertisement on the website more relevant. The cookie also allows the website to detect any referrals from other websites."
+    provenance: 
+    category: marketing
+    domain: liadm.com
+    duration: persistent
+-
+    serviceProvider: simage2.pubmatic.com
+    code: f5_cspm
+    name: f5_cspm
+    description: This cookie name is associated with the BIG-IP product suite from company F5. It is used to monitor page load speed, as part of site performance monitoring.
+    provenance: 
+    category: analytics
+    domain: simage2.pubmatic.com
+    duration: session
+-
+    serviceProvider: 3lift.com
+    code: tluid
+    name: tluid
+    description: This cookie is used to identify the visitor and optimize ad-relevance by collecting visitor data from multiple websites â€“ this exchange of visitor data is normally provided by a third-party data-center or ad-exchange.
+    provenance: 
+    category: marketing
+    domain: 3lift.com
+    duration: persistent
+-
+    serviceProvider: taboola.com
+    code: t_gid
+    name: t_gid
+    description: This cookie gives a user who interacts with Taboola Widget a User ID allowing us to target advertisements and content to this specific user ID.
+    provenance: 
+    category: marketing
+    domain: taboola.com
+    duration: persistent
+-
+    serviceProvider: Zendesk
+    code: __zlcmid
+    name: __zlcmid
+    description: Live chat widget on Slack contact page (ZopIM)
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: OpenX
+    code: i
+    name: i
+    description: Registers user data, such as IP address, geographical location, websites visited and on which advertisements the user has clicked, with the aim of optimizing the display of advertisements based on user relocation on websites that use the same advertising network.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: demdex.net
+    code: dpm
+    name: dpm
+    description: Pending
+    provenance: 
+    category: marketing
+    domain: demdex.net
+    duration: persistent
+-
+    serviceProvider: AddThis
+    code: __atuvc
+    name: __atuvc
+    description: This cookie is associated with the AddThis social sharing widget, it stores an updated page share count.
+    provenance: 
+    category: functional
+    domain: .addthis.com
+    duration: persistent
+-
+    serviceProvider: AddThis
+    code: __atuvs
+    name: __atuvs
+    description: This cookie is associated with the AddThis social sharing widget, which serves a similar purpose to other cookies set by the service.
+    provenance: 
+    category: functional
+    domain: .addthis.com
+    duration: persistent
+-
+    serviceProvider: AddThis
+    code: ssc
+    name: ssc
+    description: AddThis - Cookie related to an AddThis sharing button available on the website
+    provenance: 
+    category: functional
+    domain: .addthis.com
+    duration: persistent
+-
+    serviceProvider: AddThis
+    code: uvc
+    name: uvc
+    description: AddThis - Cookie related to an AddThis sharing button available on the website
+    provenance: 
+    category: functional
+    domain: .addthis.com
+    duration: persistent
+-
+    serviceProvider: AddThis
+    code: loc
+    name: loc
+    description: AddThis - Cookie related to an AddThis sharing button available on the website
+    provenance: 
+    category: functional
+    domain: .addthis.com
+    duration: persistent
+-
+    serviceProvider: AddThis
+    code: na_id
+    name: na_id
+    description: AddThis - Cookie related to an AddThis sharing button available on the website
+    provenance: 
+    category: functional
+    domain: .addthis.com
+    duration: persistent
+-
+    serviceProvider: AddThis
+    code: na_tc
+    name: na_tc
+    description: AddThis - Cookie related to an AddThis sharing button available on the website
+    provenance: 
+    category: functional
+    domain: .addthis.com
+    duration: persistent
+-
+    serviceProvider: AddThis
+    code: ouid
+    name: ouid
+    description: AddThis - Cookie related to an AddThis sharing button available on the website
+    provenance: 
+    category: functional
+    domain: .addthis.com
+    duration: persistent
+-
+    serviceProvider: Funda
+    code: DG_HID
+    name: DG_HID
+    description: Pending
+    provenance: 
+    category: marketing
+    domain: funda.nl
+    duration: persistent
+-
+    serviceProvider: Funda
+    code: DG_IID
+    name: DG_IID
+    description: Pending
+    provenance: 
+    category: marketing
+    domain: funda.nl
+    duration: persistent
+-
+    serviceProvider: Funda
+    code: DG_SID
+    name: DG_SID
+    description: Pending
+    provenance: 
+    category: marketing
+    domain: funda.nl
+    duration: persistent
+-
+    serviceProvider: Funda
+    code: DG_UID
+    name: DG_UID
+    description: Pending
+    provenance: 
+    category: marketing
+    domain: funda.nl
+    duration: persistent
+-
+    serviceProvider: Funda
+    code: DG_ZID
+    name: DG_ZID
+    description: Pending
+    provenance: 
+    category: marketing
+    domain: funda.nl
+    duration: persistent
+-
+    serviceProvider: Funda
+    code: DG_ZUID
+    name: DG_ZUID
+    description: Pending
+    provenance: 
+    category: marketing
+    domain: funda.nl
+    duration: persistent
+-
+    serviceProvider: Funda
+    code: fonts-loaded
+    name: fonts-loaded
+    description: This cookie checks and remembers whether you have the font used by funda. Remembering this check makes visiting the website faster.
+    provenance: 
+    category: functional
+    domain: funda.nl
+    duration: persistent
+-
+    serviceProvider: Funda
+    code: html-classes
+    name: html-classes
+    description: Remembering how the website is displayed to adjust the appearance of the site to the environment and browser used by the user. This ensures that the site loads faster on a subsequent visit.
+    provenance: 
+    category: functional
+    domain: funda.nl
+    duration: persistent
+-
+    serviceProvider: Funda
+    code: SNLB2
+    name: SNLB2
+    description: Pending
+    provenance: 
+    category: functional
+    domain: funda.nl
+    duration: persistent
+-
+    serviceProvider: LiveZilla GmbH
+    code: lz_last_visit
+    name: lz_last_visit
+    description: Last Visit (Timestamp), used to determine when the website visitor browsed the website the last time.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: LiveZilla GmbH
+    code: lz_userid
+    name: lz_userid
+    description: "Sets up a unique ID which is used to generate statistical data about the website visitor's usage of the website."
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: LiveZilla GmbH
+    code: lz_visits
+    name: lz_visits
+    description: Number of visits, is used to identify how often the website visitor already visited the website.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: AFAS
+    code: .secureclient
+    name: .secureclient
+    description: Pending
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: AFAS
+    code: .securesession
+    name: .securesession
+    description: Pending
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: AFAS
+    code: .stateflags
+    name: .stateflags
+    description: Pending
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: AFAS
+    code: .auth
+    name: .auth
+    description: Pending
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Adxcore
+    code: advst_uid_11
+    name: advst_uid_11
+    description: Pending
+    provenance: 
+    category: marketing
+    domain: .adxcore.com
+    duration: persistent
+-
+    serviceProvider: Adxcore
+    code: DISPATCHER
+    name: DISPATCHER
+    description: Pending
+    provenance: 
+    category: marketing
+    domain: dispatcher.adxcore.com
+    duration: persistent
+-
+    serviceProvider: Fidelity-media.com
+    code: DSP_UID
+    name: DSP_UID
+    description: Pending
+    provenance: 
+    category: marketing
+    domain: fidelity-media.com
+    duration: persistent
+-
+    serviceProvider: Picreel
+    code: picreel_tracker__visited
+    name: picreel_tracker__visited
+    description: Used for statistical purposes when counting the number of pages, the user visited
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Picreel
+    code: picreel_tracker__first_visit
+    name: picreel_tracker__first_visit
+    description: Used for statistical purposes, keeping the date of the first visit
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Picreel
+    code: picreel_tracker__page_views
+    name: picreel_tracker__page_views
+    description: Pending
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Picreel
+    code: picreel_new_price
+    name: picreel_new_price
+    description: Pending
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Trustpilot
+    code: __auc
+    name: __auc
+    description: Used to track and report information to the Alexa analytics
+    provenance: 
+    category: analytics
+    domain: .trustpilot.com
+    duration: persistent
+-
+    serviceProvider: Trustpilot
+    code: ajs_user_id
+    name: ajs_user_id
+    description: This cookie helps track visitor usage, events, target marketing, and can also measure application performance and stability.
+    provenance: 
+    category: analytics
+    domain: .trustpilot.com
+    duration: persistent
+-
+    serviceProvider: Trustpilot
+    code: ajs_anonymous_id
+    name: ajs_anonymous_id
+    description: Used for Analytics and help count how many people visit a certain site by tracking if you have visited before
+    provenance: 
+    category: analytics
+    domain: .trustpilot.com
+    duration: persistent
+-
+    serviceProvider: Trustpilot
+    code: ajs_group_id
+    name: ajs_group_id
+    description: Track visitor usage and events within the website
+    provenance: 
+    category: analytics
+    domain: .trustpilot.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: 1P_JAR
+    name: 1P_JAR
+    description: These cookies are set via embedded youtube-videos. They register anonymous statistical data on for example how many times the video is displayed and what settings are used for playback.
+    provenance: 
+    category: marketing
+    domain: .gstatic.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: CONSENT
+    name: CONSENT
+    description: Google cookie consent tracker
+    provenance: 
+    category: functional
+    domain: .gstatic.com
+    duration: persistent
+-
+    serviceProvider: Twitter
+    code: ads_prefs
+    name: ads_prefs
+    description: These cookies enable us to track visitor activity from our Twitter ads on our website, and also to allow users to share content from our websites. They cookies do not provide us with any confidential information relating to your account.
+    provenance: 
+    category: marketing
+    domain: .twitter.com
+    duration: persistent
+-
+    serviceProvider: Twitter
+    code: auth_token
+    name: auth_token
+    description: These cookies enable us to track visitor activity from our Twitter ads on our website, and also to allow users to share content from our websites. They cookies do not provide us with any confidential information relating to your account.
+    provenance: 
+    category: marketing
+    domain: .twitter.com
+    duration: persistent
+-
+    serviceProvider: Twitter
+    code: csrf_same_site
+    name: csrf_same_site
+    description: These cookies enable us to track visitor activity from our Twitter ads on our website, and also to allow users to share content from our websites. They cookies do not provide us with any confidential information relating to your account.
+    provenance: 
+    category: marketing
+    domain: .twitter.com
+    duration: persistent
+-
+    serviceProvider: Twitter
+    code: csrf_same_site_set
+    name: csrf_same_site_set
+    description: These cookies enable us to track visitor activity from our Twitter ads on our website, and also to allow users to share content from our websites. They cookies do not provide us with any confidential information relating to your account.
+    provenance: 
+    category: marketing
+    domain: .twitter.com
+    duration: persistent
+-
+    serviceProvider: Twitter
+    code: dnt
+    name: dnt
+    description: These are third party Twitter cookies. These cookies enable users, if they wish, to login to their Twitter account share content from our websites with their friends. These cookies do not allow us access to your accounts or provide us with any confidential information relating to your accounts. These cookies also allow a news feed of tweets to appear on the website.
+    provenance: 
+    category: marketing
+    domain: .twitter.com
+    duration: persistent
+-
+    serviceProvider: Twitter
+    code: eu_cn
+    name: eu_cn
+    description: These are third party Twitter cookies. These cookies enable users, if they wish, to login to their Twitter account share content from our websites with their friends. These cookies do not allow us access to your accounts or provide us with any confidential information relating to your accounts. These cookies also allow a news feed of tweets to appear on the website.
+    provenance: 
+    category: marketing
+    domain: .twitter.com
+    duration: persistent
+-
+    serviceProvider: Twitter
+    code: external_referer
+    name: external_referer
+    description: Our Website uses Twitter buttons to allow our visitors to follow our promotional Twitter feeds, and sometimes embed feeds on our Website.
+    provenance: 
+    category: marketing
+    domain: .twitter.com
+    duration: persistent
+-
+    serviceProvider: Twitter
+    code: kdt
+    name: kdt
+    description: These are third party Twitter cookies. These cookies enable users, if they wish, to login to their Twitter account share content from our websites with their friends. These cookies do not allow us access to your accounts or provide us with any confidential information relating to your accounts. These cookies also allow a news feed of tweets to appear on the website.
+    provenance: 
+    category: marketing
+    domain: .twitter.com
+    duration: persistent
+-
+    serviceProvider: Twitter
+    code: remember_checked_on
+    name: remember_checked_on
+    description: These cookies enable us to track visitor activity from our Twitter ads on our website, and also to allow users to share content from our websites. These cookies do not provide us with any confidential information relating to your account.
+    provenance: 
+    category: marketing
+    domain: .twitter.com
+    duration: persistent
+-
+    serviceProvider: Twitter
+    code: rweb_optin
+    name: rweb_optin
+    description: These cookies enable us to track visitor activity from our Twitter ads on our website, and also to allow users to share content from our websites. These cookies do not provide us with any confidential information relating to your account.
+    provenance: 
+    category: marketing
+    domain: .twitter.com
+    duration: persistent
+-
+    serviceProvider: Twitter
+    code: syndication_guest_id
+    name: syndication_guest_id
+    description: Used to collect information about users browsing behaviour for marketing purposes including digital display and social media advertising.
+    provenance: 
+    category: marketing
+    domain: .twitter.com
+    duration: persistent
+-
+    serviceProvider: Twitter
+    code: twid
+    name: twid
+    description: These cookies enable us to track visitor activity from our Twitter ads on our website, and also to allow users to share content from our websites. They cookies do not provide us with any confidential information relating to your account.
+    provenance: 
+    category: marketing
+    domain: .twitter.com
+    duration: persistent
+-
+    serviceProvider: Twitter
+    code: tfw_exp
+    name: tfw_exp
+    description: These cookies enable us to track visitor activity from our Twitter ads on our website, and also to allow users to share content from our websites. They cookies do not provide us with any confidential information relating to your account.
+    provenance: 
+    category: marketing
+    domain: .twitter.com
+    duration: persistent
+-
+    serviceProvider: Trustpilot
+    code: __asc
+    name: __asc
+    description: A cookie set by Trustpilot if you click the read more widget
+    provenance: 
+    category: analytics
+    domain: .trustpilot.com
+    duration: persistent
+-
+    serviceProvider: Inspectlet
+    code: __insp_norec_sess
+    name: __insp_norec_sess
+    description: Inspectlet uses cookies to keep track of session information. These cookies are needed to accurately understand how visitors are navigating the website.
+    provenance: 
+    category: analytics
+    domain: inspectlet.com
+    duration: persistent
+-
+    serviceProvider: Inspectlet
+    code: __insp_slim
+    name: __insp_slim
+    description: Inspectlet uses cookies to keep track of session information. These cookies are needed to accurately understand how visitors are navigating the website.
+    provenance: 
+    category: analytics
+    domain: inspectlet.com
+    duration: persistent
+-
+    serviceProvider: Inspectlet
+    code: __insp_targlpt
+    name: __insp_targlpt
+    description: Inspectlet uses cookies to keep track of session information. These cookies are needed to accurately understand how visitors are navigating the website.
+    provenance: 
+    category: analytics
+    domain: inspectlet.com
+    duration: persistent
+-
+    serviceProvider: Inspectlet
+    code: __insp_targlpu
+    name: __insp_targlpu
+    description: Inspectlet uses cookies to keep track of session information. These cookies are needed to accurately understand how visitors are navigating the website.
+    provenance: 
+    category: analytics
+    domain: inspectlet.com
+    duration: persistent
+-
+    serviceProvider: Microsoft
+    code: __RequestVerificationToken
+    name: __RequestVerificationToken
+    description: This is an anti-forgery cookie set by web applications built using ASP.NET MVC technologies. It is designed to stop unauthorised posting of content to a website, known as Cross-Site Request Forgery.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: ShareThis
+    code: __stid
+    name: __stid
+    description: The __stid cookie is set as part of the ShareThis service and monitors user-activity, e.g. Web pages viewed, navigation from page to page, time spent on each page etc.
+    provenance: 
+    category: analytics
+    domain: sharethis.com
+    duration: persistent
+-
+    serviceProvider: Sonobi
+    code: __uin_mm
+    name: __uin_mm
+    description: These cookies are used to deliver adverts more relevant to you and your interests. They are also used to limit the number of times you see an advertisement as well as help measure the effectiveness of the advertising campaign.
+    provenance: 
+    category: marketing
+    domain: sonobi.com
+    duration: persistent
+-
+    serviceProvider: Sonobi
+    code: __uir_mm
+    name: __uir_mm
+    description: These cookies are used to deliver adverts more relevant to you and your interests. They are also used to limit the number of times you see an advertisement as well as help measure the effectiveness of the advertising campaign.
+    provenance: 
+    category: marketing
+    domain: sonobi.com
+    duration: persistent
+-
+    serviceProvider: Lotame
+    code: _cc_aud
+    name: _cc_aud
+    description: "Collects anonymous statistical data related to the user's website visits, such as the number of visits, average time spent on the website and what pages have been loaded. The purpose is to segment the website's users according to factors such as demographics and geographical location, in order to enable media and marketing agencies to structure and understand their target groups to enable customised online advertising."
+    provenance: 
+    category: marketing
+    domain: crwdcntrl.net
+    duration: persistent
+-
+    serviceProvider: Lotame
+    code: _cc_cc
+    name: _cc_cc
+    description: "Collects anonymous statistical data related to the user's website visits, such as the number of visits, average time spent on the website and what pages have been loaded. The purpose is to segment the website3s users according to factors such as demographics and geographical location, in order to enable media and marketing agencies to structure and understand their target groups to enable customised online advertising."
+    provenance: 
+    category: marketing
+    domain: crwdcntrl.net
+    duration: session
+-
+    serviceProvider: Lotame
+    code: _cc_id
+    name: _cc_id
+    description: "Collects anonymous statistical data related to the user's website visits, such as the number of visits, average time spent on the website and what pages have been loaded. The purpose is to segment the website's users according to factors such as demographics and geographical location, in order to enable media and marketing agencies to structure and understand their target groups to enable customised online advertising."
+    provenance: 
+    category: marketing
+    domain: crwdcntrl.net
+    duration: persistent
+-
+    serviceProvider: Neustar
+    code: ab
+    name: ab
+    description: This cookie is used by the websiteâ€™s operator in context with multi-variate testing. This is a tool used to combine or change content on the website. This allows the website to find the best variation/edition of the site.
+    provenance: 
+    category: marketing
+    domain: agkn.com
+    duration: persistent
+-
+    serviceProvider: Oracle
+    code: bkdc
+    name: bkdc
+    description: "Registers anonymised user data, such as IP address, geographical location, visited websites, and what ads the user has clicked, with the purpose of optimising ad display based on the user's movement on websites that use the same ad network."
+    provenance: 
+    category: marketing
+    domain: bluekai.com
+    duration: persistent
+-
+    serviceProvider: Oracle
+    code: bku
+    name: bku
+    description: "Registers anonymised user data, such as IP address, geographical location, visited websites, and what ads the user has clicked, with the purpose of optimising ad display based on the user's movement on websites that use the same ad network."
+    provenance: 
+    category: marketing
+    domain: bluekai.com
+    duration: persistent
+-
+    serviceProvider: Everest Technologies
+    code: everest_g_v2
+    name: everest_g_v2
+    description: "Created after a user initially clicks a client's ad, and used to map the current and subsequent clicks with other events on the client's website"
+    provenance: 
+    category: marketing
+    domain: everesttech.net
+    duration: persistent
+-
+    serviceProvider: MediaMath
+    code: mt_misc
+    name: mt_misc
+    description: MediaMath uses this cookie to hold attributes about the browser for fraud prevention and other technical optimizations.
+    provenance: 
+    category: marketing
+    domain: mathtag.com
+    duration: persistent
+-
+    serviceProvider: MediaMath
+    code: mt_mop
+    name: mt_mop
+    description: MediaMath uses this cookie to synchronize the visitor ID with a limited number of trusted exchanges and data partners
+    provenance: 
+    category: marketing
+    domain: mathtag.com
+    duration: persistent
+-
+    serviceProvider: PowerLinks
+    code: pl_user_id
+    name: pl_user_id
+    description: This cookie registers data on the visitor. The information is used to optimize advertisement relevance.
+    provenance: 
+    category: marketing
+    domain: powerlinks.com
+    duration: persistent
+-
+    serviceProvider: Tower Data
+    code: pxrc
+    name: pxrc
+    description: This cookie registers non-personal data on the visitor. The information is used to optimize advertisement relevance.
+    provenance: 
+    category: marketing
+    domain: rlcdn.com
+    duration: persistent
+-
+    serviceProvider: Tower Data
+    code: rlas3
+    name: rlas3
+    description: "Collects anonymous data related to the user's visits to the website, such as the number of visits, average time spent on the website and what pages have been loaded, with the purpose of displaying targeted ads."
+    provenance: 
+    category: marketing
+    domain: rlcdn.com
+    duration: persistent
+-
+    serviceProvider: Tapad
+    code: TapAd_DID
+    name: TapAd_DID
+    description: Used to determine what type of devices (smartphones, tablets, computers, TVs etc.) is used by a user.
+    provenance: 
+    category: marketing
+    domain: tapad.com
+    duration: persistent
+-
+    serviceProvider: Tapad
+    code: TapAd_TS
+    name: TapAd_TS
+    description: Used to determine what type of devices (smartphones, tablets, computers, TVs etc.) is used by a user.
+    provenance: 
+    category: marketing
+    domain: tapad.com
+    duration: persistent
+-
+    serviceProvider: The Tradedesk
+    code: TDCPM
+    name: TDCPM
+    description: "Registers a unique ID that identifies a returning user's device. The ID is used for targeted ads."
+    provenance: 
+    category: marketing
+    domain: adsrvr.org
+    duration: persistent
+-
+    serviceProvider: The Tradedesk
+    code: TDID
+    name: TDID
+    description: "Registers a unique ID that identifies a returning user's device. The ID is used for targeted ads."
+    provenance: 
+    category: marketing
+    domain: adsrvr.org
+    duration: persistent
+-
+    serviceProvider: FreeWheel
+    code: uid-bp-
+    name: uid-bp-
+    description: Pending
+    provenance: 
+    category: marketing
+    domain: stickyadstv.com
+    duration: persistent
+-
+    serviceProvider: MediaMath
+    code: uuidc
+    name: uuidc
+    description: "Collects data on the user's visits to the website, such as what pages have been loaded. The registered data is used for targeted ads."
+    provenance: 
+    category: marketing
+    domain: mathtag.com
+    duration: persistent
+-
+    serviceProvider: Zeotap
+    code: zc
+    name: zc
+    description: Registers data on visitors from multiple visits and on multiple websites. This information is used to measure the efficiency of advertisement on websites.
+    provenance: 
+    category: marketing
+    domain: zeotap.com
+    duration: persistent
+-
+    serviceProvider: Trustpilot
+    code: amplitude_id
+    name: amplitude_id
+    description: These cookies are used by the TrustPilot service to identify you and enable you to leave reviews of our products and services.
+    provenance: 
+    category: marketing
+    domain: trustpilot.com
+    duration: persistent
+-
+    serviceProvider: Trustpilot
+    code: csrf-canary
+    name: csrf-canary
+    description: These cookies are used by the TrustPilot service to identify you and enable you to leave reviews of our products and services.
+    provenance: 
+    category: functional
+    domain: trustpilot.com
+    duration: session
+-
+    serviceProvider: ID5
+    code: 3pi
+    name: 3pi
+    description: Sets a unique ID for the visitor, that allows third party advertisers to target the visitor with relevant advertisement. This pairing service is provided by third party advertisement hubs, which facilitates real-time bidding for advertisers.
+    provenance: 
+    category: marketing
+    domain: id5-sync.com
+    duration: persistent
+-
+    serviceProvider: Admixer
+    code: am-uid
+    name: am-uid
+    description: This cookie is used to identify the visitor and optimize ad-relevance by collecting visitor data from multiple websites â€“ this exchange of visitor data is normally provided by a third-party data-center or ad-exchange.
+    provenance: 
+    category: marketing
+    domain: admixer.net
+    duration: persistent
+-
+    serviceProvider: Lotame
+    code: _cc_dc
+    name: _cc_dc
+    description: "Collects anonymous statistical data related to the user's website visits, such as the number of visits, average time spent on the website and what pages have been loaded. The purpose is to segment the website's users according to factors such as demographics and geographical location, in order to enable media and marketing agencies to structure and understand their target groups to enable customised online advertising."
+    provenance: 
+    category: marketing
+    domain: crwdcntrl.net
+    duration: session
+-
+    serviceProvider: Oracle
+    code: bkpa
+    name: bkpa
+    description: Used to present the visitor with relevant content and advertisement - The service is provided by third party advertisement hubs, which facilitate real-time bidding for advertisers.
+    provenance: 
+    category: marketing
+    domain: bluekai.com
+    duration: persistent
+-
+    serviceProvider: SOVRN
+    code: _ljtrtb_
+    name: _ljtrtb_
+    description: These cookies are used temporarily when multiple partners pass us their ID simultaneously. To avoid technical conflicts that arise from accessing the ljtrtb cookie for multiple partners at the same time, we store each partnerâ€™s ID in a separate cookie and then consolidate these IDs into the ljtrtb cookie when itâ€™s available.
+    provenance: 
+    category: marketing
+    domain: lijit.com
+    duration: persistent
+-
+    serviceProvider: SOVRN
+    code: ljtrtb
+    name: ljtrtb
+    description: Enables us to help our advertising partners make decisions about displaying an advertisement to you. We store the ID that each partner uses to identify you and pass that information to the partner when a website requests an advertisement from us.
+    provenance: 
+    category: marketing
+    domain: lijit.com
+    duration: persistent
+-
+    serviceProvider: MediaMath
+    code: uuid
+    name: uuid
+    description: "Collects data on the user's visits to the website, such as what pages have been loaded. The registered data is used for targeted ads."
+    provenance: 
+    category: marketing
+    domain: mathtag.com
+    duration: persistent
+-
+    serviceProvider: Pinterest
+    code: _pinterest_cm
+    name: _pinterest_cm
+    description: "Pinterest cookie ensures that you can share our website pages via Pinterest by means of the 'share' button"
+    provenance: 
+    category: functional
+    domain: pinterest.com
+    duration: persistent
+-
+    serviceProvider: Pinterest
+    code: _pinterest_sess
+    name: _pinterest_sess
+    description: "session cookie (expires after your session) which collects anonymous data about a user's visit to the website, such as the number of visits, average time spent on the site and which pages have been loaded in order to personalise and improve the Pinterest service."
+    provenance: 
+    category: functional
+    domain: pinterest.com
+    duration: session
+-
+    serviceProvider: Pinterest
+    code: _pin_unauth
+    name: _pin_unauth
+    description: Registers a unique ID that identifies and recognizes the user. Is used for targeted advertising.
+    provenance: 
+    category: marketing
+    domain: pinterest.com
+    duration: persistent
+-
+    serviceProvider: Pinterest
+    code: sessionFunnelEventLogged
+    name: sessionFunnelEventLogged
+    description: A generic technical cookie used for storing user session identifier in web applications
+    provenance: 
+    category: marketing
+    domain: pinterest.com
+    duration: persistent
+-
+    serviceProvider: Pinterest
+    code: _routing_id
+    name: _routing_id
+    description: Allows users to share pictures via Pinterest / the Pin It button. Pinterest can collect statistical information about usage of their service.
+    provenance: 
+    category: marketing
+    domain: pinterest.com
+    duration: persistent
+-
+    serviceProvider: nopCommerce
+    code: Nop.customer
+    name: Nop.customer
+    description: Customer cookie. Used to identifier guest customers.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: nopCommerce
+    code: NopCommerce.RecentlyViewedProducts
+    name: NopCommerce.RecentlyViewedProducts
+    description: Recently viewed products cookie. Stores a list of the recently viewed products
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: nopCommerce
+    code: NOPCOMMERCE.AUTH
+    name: NOPCOMMERCE.AUTH
+    description: Forms authentication cookie. Used for authenticating registered customers.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: FeedbackCompany
+    code: tsrvid
+    name: tsrvid
+    description: Feedback company review cookie
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Google
+    code: SEARCH_SAMESITE
+    name: SEARCH_SAMESITE
+    description: SameSite prevents the browser from sending this cookie along with cross-site requests. The main goal is mitigate the risk of cross-origin information leakage. It also provides some protection against cross-site request forgery attacks.
+    provenance: 
+    category: functional
+    domain: google.com
+    duration: session
+-
+    serviceProvider: Google
+    code: AID
+    name: AID
+    description: Download certain Google Tools and save certain preferences, for example the number of search results per page or activation of the SafeSearch Filter. Adjusts the ads that appear in Google Search.
+    provenance: 
+    category: marketing
+    domain: google.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: SID
+    name: SID
+    description: Download certain Google Tools and save certain preferences, for example the number of search results per page or activation of the SafeSearch Filter. Adjusts the ads that appear in Google Search.
+    provenance: 
+    category: marketing
+    domain: google.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: HSID
+    name: HSID
+    description: Download certain Google Tools and save certain preferences, for example the number of search results per page or activation of the SafeSearch Filter. Adjusts the ads that appear in Google Search.
+    provenance: 
+    category: marketing
+    domain: google.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: APISID
+    name: APISID
+    description: Download certain Google Tools and save certain preferences, for example the number of search results per page or activation of the SafeSearch Filter. Adjusts the ads that appear in Google Search.
+    provenance: 
+    category: marketing
+    domain: google.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: SAPISID
+    name: SAPISID
+    description: Download certain Google Tools and save certain preferences, for example the number of search results per page or activation of the SafeSearch Filter. Adjusts the ads that appear in Google Search.
+    provenance: 
+    category: marketing
+    domain: google.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: SSID
+    name: SSID
+    description: Download certain Google Tools and save certain preferences, for example the number of search results per page or activation of the SafeSearch Filter. Adjusts the ads that appear in Google Search.
+    provenance: 
+    category: marketing
+    domain: google.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: SIDCC
+    name: SIDCC
+    description: Download certain Google Tools and save certain preferences, for example the number of search results per page or activation of the SafeSearch Filter. Adjusts the ads that appear in Google Search.
+    provenance: 
+    category: marketing
+    domain: google.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: OTZ
+    name: OTZ
+    description: Aggregate analysis of website visitors
+    provenance: 
+    category: marketing
+    domain: google.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: ANID
+    name: ANID
+    description: Google uses this cookies to make advertising more engaging to users and more valuable to publishers and advertisers
+    provenance: 
+    category: marketing
+    domain: google.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: DV
+    name: DV
+    description: This cookies is used to collect website statistics and track conversion rates and Google ad personalisation
+    provenance: 
+    category: marketing
+    domain: google.com
+    duration: persistent
+-
+    serviceProvider: Google
+    code: NID
+    name: NID
+    description: This cookies is used to collect website statistics and track conversion rates and Google ad personalisation
+    provenance: 
+    category: marketing
+    domain: google.com
+    duration: persistent
+-
+    serviceProvider: Magento
+    code: form_key
+    name: form_key
+    description: A security measure that appends a random string to all form submissions to protect the data from Cross-Site Request Forgery (CSRF).
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: mage-cache-sessid
+    name: mage-cache-sessid
+    description: The value of this cookie triggers the cleanup of local cache storage. When the cookie is removed by the backend application, the Admin cleans up local storage, and sets the cookie value to true.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: mage-cache-storage
+    name: mage-cache-storage
+    description: Local storage of visitor-specific content that enables ecommerce functions.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: mage-cache-storage-section-invalidation
+    name: mage-cache-storage-section-invalidation
+    description: Forces local storage of specific content sections that should be invalidated.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: mage-messages
+    name: mage-messages
+    description: Tracks error messages and other notifications that are shown to the user, such as the cookie consent message, and various error messages. The message is deleted from the cookie after it is shown to the shopper.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Magento
+    code: mage-translation-file-version
+    name: mage-translation-file-version
+    description: Tracks the version of translations in local storage. Used when Translation Strategy is configured as Dictionary (Translation on Storefront side).
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: mage-translation-storage
+    name: mage-translation-storage
+    description: Stores translated content when requested by the shopper. Used when Translation Strategy is configured as Dictionary (Translation on Storefront side).
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: product_data_storage
+    name: product_data_storage
+    description: Stores configuration for product data related to Recently Viewed / Compared Products.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: recently_compared_product
+    name: recently_compared_product
+    description: Stores product IDs of recently compared products.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: recently_compared_product_previous
+    name: recently_compared_product_previous
+    description: Stores product IDs of previously compared products for easy navigation.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: recently_viewed_product
+    name: recently_viewed_product
+    description: Stores product IDs of recently viewed products for easy navigation.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: recently_viewed_product_previous
+    name: recently_viewed_product_previous
+    description: Stores product IDs of recently previously viewed products for easy navigation.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: user_allowed_save_cookie
+    name: user_allowed_save_cookie
+    description: Indicates if a customer is allowed to use cookies.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: external_no_cache
+    name: external_no_cache
+    description: A flag that indicates if caching is disabled.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: persistent_shopping_cart
+    name: persistent_shopping_cart
+    description: Stores the key (ID) of persistent cart to make it possible to restore the cart for an anonymous shopper.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: stf
+    name: stf
+    description: Records the time messages are sent by the SendFriend (Email a Friend) module.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: pollN
+    name: pollN
+    description: A poll ID that indicates if a vote has occurred.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: frontend
+    name: frontend
+    description: Session ID
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: guest-view
+    name: guest-view
+    description: Allows guests to edit their orders.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: mage-banners-cache-storage
+    name: mage-banners-cache-storage
+    description: Stores banner content locally to improve performance.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Magento
+    code: searchReport-log
+    name: searchReport-log
+    description: Magento, used to log information about searching
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Magento
+    code: private_content_version
+    name: private_content_version
+    description: Appends a random, unique number and time to pages with customer content to prevent them from being cached on the server.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Magento
+    code: X-Magento-Vary
+    name: X-Magento-Vary
+    description: X-Magento-Vary cookie is used by Magento 2 system to highlight that version of a page requested by a user has been changed. It allows having different versions of the same page stored in cache e.g. Varnish.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Magento
+    code: section_data_ids
+    name: section_data_ids
+    description: Stores customer-specific information related to shopper-initiated actions such as display wish list, checkout information, etc.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: PowerLinks Media Limited
+    code: "dsps:"
+    name: "dsps:"
+    description: Service to display targeted advertising to visitors.
+    provenance: 
+    category: marketing
+    domain: px.powerlinks.com
+    duration: persistent
+-
+    serviceProvider: Tapad
+    code: TapAd_3WAY_SYNCS
+    name: TapAd_3WAY_SYNCS
+    description: Pending
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Vuble
+    code: _mb
+    name: _mb
+    description: Used in context with video-advertisement. The cookie limits the number of times a visitor is shown the same advertisement-content. The cookie is also used to ensure relevance of the video-advertisement to the specific visitor.
+    provenance: 
+    category: marketing
+    domain: vuble.tv
+    duration: session
+-
+    serviceProvider: Wordpress
+    code: wordpress_test_cookie
+    name: wordpress_test_cookie
+    description: Cookie set by WordPress to check if the cookies are enabled on the browser to provide appropriate user experience to the users
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Joomla!
+    code: componentType
+    name: componentType
+    description: componentType is a session cookie, used for correct recording the type of the page (frontpage, single page, blog etc)
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Joomla!
+    code: componentStyle
+    name: componentStyle
+    description: componentStyle is a session cookie, used for setting the proper template in compliance with visited type of the page
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Joomla!
+    code: nrid
+    name: nrid
+    description: "This cookie is used to remember a user's choice about cookies on the website. Where users have previously indicated a preference, that userâ€™s preference will be stored in this cookie."
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Adobe
+    code: sat_track
+    name: sat_track
+    description: The sat_track cookie is a part of Adobe Analytics. It controls the enabling and disabling of cookies and whether they are loaded onto the site.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Osano
+    code: cookieconsent_status
+    name: cookieconsent_status
+    description: This cookie is used to remember if you have consented to the use of cookies on this website.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Osano
+    code: cookieconsent_page
+    name: cookieconsent_page
+    description: Page where the user complies to the cookie consent
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Sharpspring
+    code: koitk
+    name: koitk
+    description: Collects data on visitors behavior and interaction - This is used to optimize the website and make advertisement on the website more relevant.
+    provenance: 
+    category: marketing
+    domain: .marketingautomation.services
+    duration: persistent
+-
+    serviceProvider: Sharpspring
+    code: __ss_referrer
+    name: __ss_referrer
+    description: This cookie contains information about where the visitor came from, called the source for the visit.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Sharpspring
+    code: __ss_tk
+    name: __ss_tk
+    description: This is Sharspringâ€™s token cookie which enables user tracking. It ensures that the visit to website is connected to the user independent of the session and the source.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Sharpspring
+    code: __ss
+    name: __ss
+    description: This cookie is storing the session ID for your visit. It is used in combination with _ss_tk to group website visits in reports for a single user.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Matomo
+    code: _pk_id
+    name: _pk_id
+    description: Used to store a few details about the user such as the unique visitor ID
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Matomo
+    code: _pk_ref
+    name: _pk_ref
+    description: Used to store the attribution information, the referrer initially used to visit the website
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Matomo
+    code: _pk_ses
+    name: _pk_ses
+    description: Short lived cookies used to temporarily store data for the visit
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Matomo
+    code: _pk_cvar
+    name: _pk_cvar
+    description: Short lived cookies used to temporarily store data for the visit
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Matomo
+    code: _pk_hsr
+    name: _pk_hsr
+    description: Short lived cookies used to temporarily store data for the visit
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Matomo
+    code: _pk_testcookie
+    name: _pk_testcookie
+    description: Cookie is created and should be then directly deleted (used to check whether the visitorâ€™s browser supports cookies)
+    provenance: 
+    category: analytics
+    domain: 
+    duration: session
+-
+    serviceProvider: Matomo
+    code: mtm_consent
+    name: mtm_consent
+    description: Cookie is created with no expiry date to forever remember that consent was given by the user.
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: WePublish
+    code: _wepublishGa
+    name: _wepublishGa
+    description: ID used to identify users
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: WePublish
+    code: _wepublishGa_gid
+    name: _wepublishGa_gid
+    description: ID used to identify users for 24 hours after last activity 24 hours
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: OneTrust
+    code: OptanonConsent
+    name: OptanonConsent
+    description: This cookie is set by the cookie compliance solution from OneTrust. It stores information about the categories of cookies the site uses and whether visitors have given or withdrawn consent for the use of each category. This enables site owners to prevent cookies in each category from being set in the userâ€™s browser, when consent is not given. The cookie has a normal lifespan of one year, so that returning visitors to the site will have their preferences remembered. It contains no information that can identify the site visitor.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Optimizely
+    code: optimizelyEndUserId
+    name: optimizelyEndUserId
+    description: "Stores a visitor's unique Optimizely identifier. It's a combination of a timestamp and random number. No other information about you or your visitors is stored inside."
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Optimizely
+    code: optimizelyRedirectData
+    name: optimizelyRedirectData
+    description: After Optimizely has executed a redirect experiment, stores various data from the original page so that Optimizely still has access to it on the new page.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Optimizely
+    code: optimizelyDomainTestCookie
+    name: optimizelyDomainTestCookie
+    description: When Optimizely loads a URL, the snippet places the cookie to get the current domain, for the purpose of whether cross-domain syncing is possible. If successful, the cookie is immediately removed.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Optimizely
+    code: optimizelyOptOut
+    name: optimizelyOptOut
+    description: Stores a boolean indicating whether the visitor has opted out of participating in Optimizely-powered experimentation.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Channel.me
+    code: wwwchannelme_z_sid
+    name: wwwchannelme_z_sid
+    description: The cookie is used when using the co-browsing feature.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Ortec
+    code: app_ts
+    name: app_ts
+    description: Used by adscience.nl to display remarketing campaigns.
+    provenance: 
+    category: marketing
+    domain: adscience.nl
+    duration: persistent
+-
+    serviceProvider: Ortec
+    code: viewer
+    name: viewer
+    description: Used by adscience.nl to measure visitor numbers and information and use it to optimize marketing campaigns.
+    provenance: 
+    category: marketing
+    domain: adscience.nl
+    duration: persistent
+-
+    serviceProvider: Ortec
+    code: spx_ts
+    name: spx_ts
+    description: These cookies ensure that relevant advertisements are displayed on external websites.
+    provenance: 
+    category: marketing
+    domain: adscience.nl
+    duration: persistent
+-
+    serviceProvider: Ortec
+    code: adx_ts
+    name: adx_ts
+    description: These cookies ensure that relevant advertisements are displayed on external websites.
+    provenance: 
+    category: marketing
+    domain: adscience.nl
+    duration: persistent
+-
+    serviceProvider: Ortec
+    code: id_ts
+    name: id_ts
+    description: These cookies ensure that relevant advertisements are displayed on external websites.
+    provenance: 
+    category: marketing
+    domain: adscience.nl
+    duration: persistent
+-
+    serviceProvider: LiveRamp
+    code: euconsent
+    name: euconsent
+    description: Cookie compliance check
+    provenance: 
+    category: marketing
+    domain: faktor.io
+    duration: persistent
+-
+    serviceProvider: Wix.com
+    code: SSR-caching
+    name: SSR-caching
+    description: Indicates how a site was rendered
+    provenance: 
+    category: functional
+    domain: wix.com
+    duration: session
+-
+    serviceProvider: Wix.com
+    code: smSession
+    name: smSession
+    description: Identifies logged in site members
+    provenance: 
+    category: functional
+    domain: wix.com
+    duration: persistent
+-
+    serviceProvider: Wix.com
+    code: svSession
+    name: svSession
+    description: Identifies unique visitors and tracks a visitorâ€™s sessions on a site
+    provenance: 
+    category: marketing
+    domain: wix.com
+    duration: persistent
+-
+    serviceProvider: Wix.com
+    code: ForceFlashSite
+    name: ForceFlashSite
+    description: When viewing a mobile site (old mobile under m.domain.com) it will force the server to display the non-mobile version and avoid redirecting to the mobile site
+    provenance: 
+    category: functional
+    domain: wix.com
+    duration: session
+-
+    serviceProvider: Wix.com
+    code: hs
+    name: hs
+    description: Security
+    provenance: 
+    category: functional
+    domain: wix.com
+    duration: session
+-
+    serviceProvider: Wix.com
+    code: bSession
+    name: bSession
+    description: Used for system effectiveness measurement
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: _ab
+    name: _ab
+    description: Used in connection with access to admin.
+    provenance: 
+    category: functional
+    domain: shopify.com
+    duration: session
+-
+    serviceProvider: Shopify.com
+    code: _secure_session_id
+    name: _secure_session_id
+    description: Used in connection with navigation through a storefront.
+    provenance: 
+    category: functional
+    domain: shopify.com
+    duration: session
+-
+    serviceProvider: Shopify.com
+    code: Cart
+    name: Cart
+    description: Used in connection with shopping cart.
+    provenance: 
+    category: functional
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: cart_sig
+    name: cart_sig
+    description: Used in connection with shopping cart.
+    provenance: 
+    category: functional
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: cart_ts
+    name: cart_ts
+    description: Used in connection with checkout.
+    provenance: 
+    category: functional
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: checkout_token
+    name: checkout_token
+    description: Used in connection with checkout.
+    provenance: 
+    category: functional
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: Secret
+    name: Secret
+    description: Used in connection with checkout.
+    provenance: 
+    category: functional
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: Secure_customer_sig
+    name: Secure_customer_sig
+    description: Used in connection with customer login.
+    provenance: 
+    category: functional
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: storefront_digest
+    name: storefront_digest
+    description: Used in connection with customer login.
+    provenance: 
+    category: functional
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: _shopify_u
+    name: _shopify_u
+    description: Used to facilitate updating customer account information.
+    provenance: 
+    category: functional
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: _tracking_consent
+    name: _tracking_consent
+    description: Tracking preferences.
+    provenance: 
+    category: marketing
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: _landing_page
+    name: _landing_page
+    description: Track landing pages.
+    provenance: 
+    category: marketing
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: _orig_referrer
+    name: _orig_referrer
+    description: Track landing pages.
+    provenance: 
+    category: marketing
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: _s
+    name: _s
+    description: Shopify analytics.
+    provenance: 
+    category: analytics
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: _shopify_fs
+    name: _shopify_fs
+    description: Shopify analytics.
+    provenance: 
+    category: analytics
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: _shopify_s
+    name: _shopify_s
+    description: Shopify analytics.
+    provenance: 
+    category: analytics
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: _shopify_sa_p
+    name: _shopify_sa_p
+    description: Shopify analytics relating to marketing & referrals.
+    provenance: 
+    category: marketing
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: _shopify_sa_t
+    name: _shopify_sa_t
+    description: Shopify analytics relating to marketing & referrals.
+    provenance: 
+    category: marketing
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: _shopify_uniq
+    name: _shopify_uniq
+    description: Shopify analytics.
+    provenance: 
+    category: analytics
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: _shopify_visit
+    name: _shopify_visit
+    description: Shopify analytics.
+    provenance: 
+    category: analytics
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: _shopify_y
+    name: _shopify_y
+    description: Shopify analytics.
+    provenance: 
+    category: analytics
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: _y
+    name: _y
+    description: Shopify analytics.
+    provenance: 
+    category: analytics
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: tracked_start_checkout
+    name: tracked_start_checkout
+    description: Shopify analytics relating to checkout.
+    provenance: 
+    category: analytics
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: ki_r
+    name: ki_r
+    description: Shopify analytics.
+    provenance: 
+    category: analytics
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: ki_t
+    name: ki_t
+    description: Shopify analytics.
+    provenance: 
+    category: analytics
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: Shopify.com
+    code: _Brochure_session
+    name: _Brochure_session
+    description: Used in connection with browsing through site.
+    provenance: 
+    category: analytics
+    domain: shopify.com
+    duration: persistent
+-
+    serviceProvider: HubSpot
+    code: __hs_opt_out
+    name: __hs_opt_out
+    description: This cookie is used by the opt-in privacy policy to remember not to ask the visitor to accept cookies again.
+    provenance: 
+    category: functional
+    domain: hubspot.com
+    duration: persistent
+-
+    serviceProvider: HubSpot
+    code: __hs_do_not_track
+    name: __hs_do_not_track
+    description: This cookie can be set to prevent the tracking code from sending any information to HubSpot.
+    provenance: 
+    category: functional
+    domain: hubspot.com
+    duration: persistent
+-
+    serviceProvider: HubSpot
+    code: __hs_initial_opt_in
+    name: __hs_initial_opt_in
+    description: This cookie is used to prevent the banner from always displaying when visitors are browsing in strict mode.
+    provenance: 
+    category: functional
+    domain: hubspot.com
+    duration: persistent
+-
+    serviceProvider: HubSpot
+    code: hs_ab_test
+    name: hs_ab_test
+    description: This cookie is used to consistently serve visitors the same version of an A/B test page theyâ€™ve seen before.
+    provenance: 
+    category: functional
+    domain: hubspot.com
+    duration: session
+-
+    serviceProvider: HubSpot
+    code: hs-messages-is-open
+    name: hs-messages-is-open
+    description: This cookie is used to determine and save whether the chat widget is open for future visits.
+    provenance: 
+    category: functional
+    domain: hubspot.com
+    duration: persistent
+-
+    serviceProvider: HubSpot
+    code: hs-messages-hide-welcome-message
+    name: hs-messages-hide-welcome-message
+    description: This cookie is used to prevent the chat widget welcome message from appearing again for one day after it is dismissed.
+    provenance: 
+    category: functional
+    domain: hubspot.com
+    duration: persistent
+-
+    serviceProvider: HubSpot
+    code: __hsmem
+    name: __hsmem
+    description: This cookie is set when visitors log in to a HubSpot-hosted site.
+    provenance: 
+    category: functional
+    domain: hubspot.com
+    duration: persistent
+-
+    serviceProvider: HubSpot
+    code: hs-membership-csrf
+    name: hs-membership-csrf
+    description: This cookie is used to ensure that content membership logins cannot be forged.
+    provenance: 
+    category: functional
+    domain: hubspot.com
+    duration: session
+-
+    serviceProvider: HubSpot
+    code: hs_langswitcher_choice
+    name: hs_langswitcher_choice
+    description: "This cookie is used to save the visitor's selected language choice when viewing pages in multiple languages."
+    provenance: 
+    category: functional
+    domain: hubspot.com
+    duration: persistent
+-
+    serviceProvider: HubSpot
+    code: __hstc
+    name: __hstc
+    description: The main cookie for tracking visitors.
+    provenance: 
+    category: marketing
+    domain: hubspot.com
+    duration: persistent
+-
+    serviceProvider: HubSpot
+    code: hubspotutk
+    name: hubspotutk
+    description: "This cookie keeps track of a visitor's identity. It is passed to HubSpot on form submission and used when deduplicating contacts."
+    provenance: 
+    category: marketing
+    domain: hubspot.com
+    duration: persistent
+-
+    serviceProvider: HubSpot
+    code: __hssc
+    name: __hssc
+    description: This cookie keeps track of sessions.
+    provenance: 
+    category: marketing
+    domain: hubspot.com
+    duration: persistent
+-
+    serviceProvider: HubSpot
+    code: __hssrc
+    name: __hssrc
+    description: Whenever HubSpot changes the session cookie, this cookie is also set to determine if the visitor has restarted their browser.
+    provenance: 
+    category: marketing
+    domain: hubspot.com
+    duration: session
+-
+    serviceProvider: HubSpot
+    code: messagesUtk
+    name: messagesUtk
+    description: "This cookie is used to recognize visitors who chat with you via the chatflows tool. If the visitor leaves your site before they're added as a contact, they will have this cookie associated with their browser."
+    provenance: 
+    category: marketing
+    domain: hubspot.com
+    duration: persistent
+-
+    serviceProvider: Salesforce
+    code: renderCtx
+    name: renderCtx
+    description: "Used to deliver requested pages and content based on a user's navigation."
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: session
+-
+    serviceProvider: Salesforce
+    code: pctrk
+    name: pctrk
+    description: Used to count page views by unauthenticated users against license usage.
+    provenance: 
+    category: analytics
+    domain: salesforce.com
+    duration: session
+-
+    serviceProvider: Salesforce
+    code: force-stream
+    name: force-stream
+    description: Used to properly route server requests within Salesforce infrastructure for sticky sessions.
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: persistent
+-
+    serviceProvider: Salesforce
+    code: sfdc-stream
+    name: sfdc-stream
+    description: Used to properly route server requests within Salesforce infrastructure for sticky sessions.
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: persistent
+-
+    serviceProvider: Salesforce
+    code: BrowserId_sec
+    name: BrowserId_sec
+    description: Used to log secure browser sessions/visits for internal-only product analytics.
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: persistent
+-
+    serviceProvider: Salesforce
+    code: force-proxy-stream
+    name: force-proxy-stream
+    description: Used to ensure client requests hit the same proxy hosts and are more likely to retrieve content from cache.
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: persistent
+-
+    serviceProvider: Salesforce
+    code: BrowserId
+    name: BrowserId
+    description: Used to log browser sessions/visits for internal-only product analytics.
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: persistent
+-
+    serviceProvider: Salesforce
+    code: QCQQ
+    name: QCQQ
+    description: Used to detect the official login page for Forced Login POST detection.
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: session
+-
+    serviceProvider: Salesforce
+    code: sid_Client
+    name: sid_Client
+    description: Used to validate orgid and userid on the client side.
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: session
+-
+    serviceProvider: Salesforce
+    code: idccsrf
+    name: idccsrf
+    description: Used for SSO authentication as CSRF protection.
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: persistent
+-
+    serviceProvider: Salesforce
+    code: rsid
+    name: rsid
+    description: "Used for an admin user to 'log in as' one of their org user."
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: session
+-
+    serviceProvider: Salesforce
+    code: rsid2
+    name: rsid2
+    description: "Used for an admin user to 'log in as' one of their org portal user."
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: session
+-
+    serviceProvider: Salesforce
+    code: RRetURL
+    name: RRetURL
+    description: "Used for 'log in as' to return to original page."
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: session
+-
+    serviceProvider: Salesforce
+    code: RRetURL2
+    name: RRetURL2
+    description: "Used for portal 'log in as' to return to original page."
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: session
+-
+    serviceProvider: Salesforce
+    code: alohaEpt
+    name: alohaEpt
+    description: Used to log page load EPT (Experience Page Time) for Visualforce (Classic UI) pages.
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: persistent
+-
+    serviceProvider: Salesforce
+    code: clientSrc
+    name: clientSrc
+    description: Used to validate the IP from where a user logs in.
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: session
+-
+    serviceProvider: Salesforce
+    code: oinfo
+    name: oinfo
+    description: "Used to track the State, Edition and orgID of a customer's org."
+    provenance: 
+    category: marketing
+    domain: salesforce.com
+    duration: persistent
+-
+    serviceProvider: Salesforce
+    code: autocomplete
+    name: autocomplete
+    description: Used to determine whether the browser remembers a userâ€™s login username.
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: persistent
+-
+    serviceProvider: Salesforce
+    code: inst
+    name: inst
+    description: "Used to optimize routing to the user's instance."
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: session
+-
+    serviceProvider: Salesforce
+    code: expid_
+    name: expid_
+    description: Used to render pages based on specified brand.
+    provenance: 
+    category: marketing
+    domain: salesforce.com
+    duration: session
+-
+    serviceProvider: Salesforce
+    code: disco
+    name: disco
+    description: Used to verify the last Salesforce org that was accessed on the same browser for session discovery.
+    provenance: 
+    category: marketing
+    domain: salesforce.com
+    duration: session
+-
+    serviceProvider: Salesforce
+    code: oid
+    name: oid
+    description: Used to redirect a user to the correct Salesforce org and assist the user for the next login.
+    provenance: 
+    category: functional
+    domain: salesforce.com
+    duration: persistent
+-
+    serviceProvider: Vimeo
+    code: vuid
+    name: vuid
+    description: This first party cookie created by Vimeo is used to assign a Vimeo Analytics unique id.
+    provenance: 
+    category: analytics
+    domain: vimeo.com
+    duration: persistent
+-
+    serviceProvider: Vimeo
+    code: Player
+    name: Player
+    description: This first party cookie created by Vimeo is used to remember userâ€™s player mode preferences.
+    provenance: 
+    category: functional
+    domain: vimeo.com
+    duration: persistent
+-
+    serviceProvider: Stripe
+    code: __stripe_mid
+    name: __stripe_mid
+    description: Fraud prevention and detection
+    provenance: 
+    category: functional
+    domain: stripe.com
+    duration: persistent
+-
+    serviceProvider: Stripe
+    code: __stripe_sid
+    name: __stripe_sid
+    description: Fraud prevention and detection
+    provenance: 
+    category: functional
+    domain: stripe.com
+    duration: persistent
+-
+    serviceProvider: Snapwidget
+    code: _gat_pro
+    name: _gat_pro
+    description: Allows Snapwidget to offer anonymous analytics about how the visitors are using your widgets
+    provenance: 
+    category: functional
+    domain: snapwidget.com
+    duration: persistent
+-
+    serviceProvider: WooCommerce
+    code: woocommerce_cart_hash
+    name: woocommerce_cart_hash
+    description: Helps WooCommerce determine when cart contents/data changes.
+    provenance: 
+    category: functional
+    domain: woocommerce.com
+    duration: session
+-
+    serviceProvider: WooCommerce
+    code: woocommerce_items_in_cart
+    name: woocommerce_items_in_cart
+    description: Helps WooCommerce determine when cart contents/data changes.
+    provenance: 
+    category: functional
+    domain: woocommerce.com
+    duration: session
+-
+    serviceProvider: WooCommerce
+    code: wp_woocommerce_session_
+    name: wp_woocommerce_session_
+    description: Contains a unique code for each customer so that it knows where to find the cart data in the database for each customer.
+    provenance: 
+    category: functional
+    domain: woocommerce.com
+    duration: persistent
+-
+    serviceProvider: WooCommerce
+    code: woocommerce_recently_viewed
+    name: woocommerce_recently_viewed
+    description: Powers the Recent Viewed Products widget
+    provenance: 
+    category: functional
+    domain: woocommerce.com
+    duration: session
+-
+    serviceProvider: Reddit
+    code: edgebucket
+    name: edgebucket
+    description: Used by Reddit to deliver advertising
+    provenance: 
+    category: marketing
+    domain: reddit.com
+    duration: persistent
+-
+    serviceProvider: Reddit
+    code: initref
+    name: initref
+    description: Used by Reddit to deliver advertising
+    provenance: 
+    category: marketing
+    domain: reddit.com
+    duration: session
+-
+    serviceProvider: Imperva
+    code: incap_ses_
+    name: incap_ses_
+    description: "This cookie is set to allow a visitor to receive site content from one out of multiple servers as the visitor browses the site. This allows the visitor's session to be maintained."
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Imperva
+    code: nlbi_
+    name: nlbi_
+    description: 'Incapsula DDoS Protection and Web Application Firewall: Load balancing cookie. To ensure requests by a client are sent to the same origin server.'
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Imperva
+    code: visid_incap_
+    name: visid_incap_
+    description: This cookie is from the incapsula CDN and helps us with reliability, security and the performance of our site.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Spotify
+    code: sp_t
+    name: sp_t
+    description: Required to ensure the functionality of the integrated Spotify plugin. This does not result in any cross-site functionality.
+    provenance: 
+    category: functional
+    domain: spotify.com
+    duration: persistent
+-
+    serviceProvider: Spotify
+    code: sp_landing
+    name: sp_landing
+    description: Required to ensure the functionality of the integrated Spotify plugin. This does not result in any cross-site functionality.
+    provenance: 
+    category: functional
+    domain: spotify.com
+    duration: persistent
+-
+    serviceProvider: Xandr
+    code: anj
+    name: anj
+    description: The anj cookie contains data denoting whether a cookie ID is synced with our partners. ID syncing enables our partners to use their data from outside the Platform on the Platform.
+    provenance: 
+    category: marketing
+    domain: adnxs.com
+    duration: persistent
+-
+    serviceProvider: Xandr
+    code: uuid2
+    name: uuid2
+    description: This cookie contains a unique randomly-generated value that enables the Platform to distinguish browsers and devices.
+    provenance: 
+    category: marketing
+    domain: adnxs.com
+    duration: persistent
+-
+    serviceProvider: Intershop
+    code: cc-
+    name: cc-
+    description: References a cart for anonymous users
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Intershop
+    code: pgid-org-
+    name: pgid-org-
+    description: Hash of personalization information. Used to cache pages or snippets for users with same personalization information
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Intershop
+    code: SecureSessionID-
+    name: SecureSessionID-
+    description: Reference to authenticated user
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Kentico
+    code: CMSCsrfCookie
+    name: CMSCsrfCookie
+    description: "Store's a security token that the system uses to validate all form data submitted via POST requests. Helps protect against Cross site request forgery."
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Kentico
+    code: CMSCookieLevel
+    name: CMSCookieLevel
+    description: Specifies which cookies are allowed by the visitor.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Kentico
+    code: CMSLandingPageLoaded
+    name: CMSLandingPageLoaded
+    description: Indicates that the landing page has already been visited and the Landing page activity is not logged again for the current visitor. Expires after 20 minutes and the expiration period of the key is renewed every time the website is accessed again.
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Kentico
+    code: CMSPreferredCulture
+    name: CMSPreferredCulture
+    description: "Stores the visitor's preferred content culture."
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Kentico
+    code: CMSUserPage
+    name: CMSUserPage
+    description: Stores the IDs (DocumentID, NodeID) of the last visited page. Used for logging landing and exit page web analytics and activities.
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Kentico
+    code: CurrentContact
+    name: CurrentContact
+    description: Stores the GUID of the contact related to the current site visitor. Used to track activities on the website.
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Kentico
+    code: VisitorStatus
+    name: VisitorStatus
+    description: Indicates if the visitor is new or returning. Used for tracking the visitors statistic in Web analytics.
+    provenance: 
+    category: analytics
+    domain: 
+    duration: persistent
+-
+    serviceProvider: SnapChat
+    code: sc_at
+    name: sc_at
+    description: Used to identify a visitor across multiple domains.
+    provenance: 
+    category: marketing
+    domain: forbusiness.snapchat.com
+    duration: persistent
+-
+    serviceProvider: SnapChat
+    code: _scid
+    name: _scid
+    description: Used to help identify a visitor.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: sc-static.net
+    code: X-AB
+    name: X-AB
+    description: This cookie is used by the websiteâ€™s operator in context with multi-variate testing. This is a tool used to combine or change content on the website. This allows the website to find the best variation/edition of the site.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Visual Website Optimizer
+    code: _vwo_uuid_v2
+    name: _vwo_uuid_v2
+    description: Used to track visitor movements anonymously.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: ZOHO
+    code: zc_consent
+    name: zc_consent
+    description: Determines whether the user has accepted the cookie consent box.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: ZOHO
+    code: ZCAMPAIGN_CSRF_TOKEN
+    name: ZCAMPAIGN_CSRF_TOKEN
+    description: This cookie is used to distinguish between humans and bots.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: ZOHO
+    code: zc_show
+    name: zc_show
+    description: "Collects data on visitor's preferences and behaviour on the website - This information is used make content and advertisement more relevant to the specific visitor."
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: ZOHO
+    code: zc_cu_exp
+    name: zc_cu_exp
+    description: Contains the expiration date for the cookie with its name.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: ZOHO
+    code: zc_loc
+    name: zc_loc
+    description: Collects information on user preferences and/or interaction with web-campaign content - This is used on CRM-campaign-platform used by website owners for promoting events or products.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: session
+-
+    serviceProvider: WhatsApp
+    code: wa_ul
+    name: wa_ul
+    description: Used to access the service it provides.
+    provenance: 
+    category: functional
+    domain: whatsapp.com
+    duration: session
+-
+    serviceProvider: WhatsApp
+    code: wa_lang_pref
+    name: wa_lang_pref
+    description: Used by WhatsApp to save language preferences
+    provenance: 
+    category: functional
+    domain: whatsapp.com
+    duration: persistent
+-
+    serviceProvider: Perfect Audience
+    code: pa_rubicon_ts
+    name: pa_rubicon_ts
+    description: This cookie is set by Perfect Audience and is used for advertising purposes based on user behavior data.
+    provenance: 
+    category: marketing
+    domain: prfct.co
+    duration: persistent
+-
+    serviceProvider: Perfect Audience
+    code: pa_google_ts
+    name: pa_google_ts
+    description: This cookie is set by Perfect Audience and is used for advertising purposes based on user behavior data.
+    provenance: 
+    category: marketing
+    domain: prfct.co
+    duration: persistent
+-
+    serviceProvider: Perfect Audience
+    code: pa_twitter_ts
+    name: pa_twitter_ts
+    description: This cookie is set by Perfect Audience and is used for advertising purposes based on user behavior data.
+    provenance: 
+    category: marketing
+    domain: prfct.co
+    duration: persistent
+-
+    serviceProvider: Perfect Audience
+    code: pa_yahoo_ts
+    name: pa_yahoo_ts
+    description: This cookie is set by Perfect Audience and is used for advertising purposes based on user behavior data.
+    provenance: 
+    category: marketing
+    domain: prfct.co
+    duration: persistent
+-
+    serviceProvider: Perfect Audience
+    code: pa_openx_ts
+    name: pa_openx_ts
+    description: This cookie is set by Perfect Audience and is used for advertising purposes based on user behavior data.
+    provenance: 
+    category: marketing
+    domain: prfct.co
+    duration: persistent
+-
+    serviceProvider: Perfect Audience
+    code: pa_uid
+    name: pa_uid
+    description: This cookie is set by Perfect Audience and is used for advertising purposes based on user behavior data.
+    provenance: 
+    category: marketing
+    domain: prfct.co
+    duration: persistent
+-
+    serviceProvider: MailMunch
+    code: mailmunch_second_pageview
+    name: mailmunch_second_pageview
+    description: Used for tracking by the Mailmunch mailing list software
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: MailMunch
+    code: _mailmunch_visitor_id
+    name: _mailmunch_visitor_id
+    description: This cookie is set by MailMunch which is email collection and email marketing platform.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Jetpack
+    code: tk_ai
+    name: tk_ai
+    description: Stores a randomly generated, anonymous ID. It is only used in the admin area and is used for general analytics tracking.
+    provenance: 
+    category: analytics
+    domain: 
+    duration: session
+-
+    serviceProvider: Partnerize
+    code: tPHG-PS
+    name: tPHG-PS
+    description: "Partnerizeâ€™s tracking cookie, deployed either upon a userâ€™s clicking of a link on a partner website, or upon the loading of a customer's image to a partner website."
+    provenance: 
+    category: marketing
+    domain: prf.hn
+    duration: persistent
+-
+    serviceProvider: Digital Audience
+    code: digitalAudience
+    name: digitalAudience
+    description: Digital Audience uses cookies to improve the effectiveness of digital platforms, thanks to online recognition mechanisms.
+    provenance: 
+    category: marketing
+    domain: digitalaudience.io
+    duration: persistent
+-
+    serviceProvider: Drupal CMS
+    code: has_js
+    name: has_js
+    description: Drupal uses this cookie to indicate whether or not the visitors browser has JavaScript enabled.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Optinmonster
+    code: _omappvs
+    name: _omappvs
+    description: Cookie is used to identify returning visitors
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Optinmonster
+    code: _omappvp
+    name: _omappvp
+    description: Cookie is used to identify returning visitors
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Leadfeeder
+    code: _lfa
+    name: _lfa
+    description: Leadfeeder cookie collects the behavioral data of all website visitors. This includes; pages viewed, visitor source and time spent on the site
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: SnapEngage
+    code: SnapABugHistory
+    name: SnapABugHistory
+    description: This cookie is associated with live chat software from SnapEngage. It identifies a visitor to enable a history of engagement to be recorded.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: SnapEngage
+    code: SnapABugUserAlias
+    name: SnapABugUserAlias
+    description: Stores a unique ID string for each chat-box session. This allows the website-support to see previous issues and reconnect with the previous supporter.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: SnapEngage
+    code: SnapABugVisit
+    name: SnapABugVisit
+    description: This cookie is associated with live chat software from SnapEngage. It identifies a new user session.
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: SnapEngage
+    code: SnapABugRef
+    name: SnapABugRef
+    description: This cookie is associated with live chat software from SnapEngage. It records the landing page and origin of a visitor.
+    provenance: 
+    category: marketing
+    domain: 
+    duration: persistent
+-
+    serviceProvider: SpotX
+    code: audience
+    name: audience
+    description: Sync audience data between buyers and sellers.
+    provenance: 
+    category: marketing
+    domain: spotxchange.com
+    duration: persistent
+-
+    serviceProvider: Yithemes.com
+    code: yith_wcwl_session_
+    name: yith_wcwl_session_
+    description: YITH WooCommerce Wishlist plugin uses cookies in order to correctly store user wishlists
+    provenance: 
+    category: functional
+    domain: 
+    duration: persistent
+-
+    serviceProvider: Yahoo
+    code: A3
+    name: A3
+    description: Ads targeting cookie for Yahoo
+    provenance: 
+    category: marketing
+    domain: yahoo.com
+    duration: persistent
+-
+    serviceProvider: NGINX
+    code: INGRESSCOOKIE
+    name: INGRESSCOOKIE
+    description: Registers which server-cluster is serving the visitor. This is used in context with load balancing, in order to optimize user experience.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Radware
+    code: AlteonP
+    name: AlteonP
+    description: This cookie is set by the load balancers and allows us to evenly balance the number of users across the web servers that we use.
+    provenance: 
+    category: functional
+    domain: 
+    duration: session
+-
+    serviceProvider: Quantcast
+    code: cref
+    name: cref
+    description: Contains data on user navigation, interaction and time spent on the website and its sub-pages â€“ This data is used to optimise the relevance of advertisements and for statistical purposes.
+    provenance: 
+    category: marketing
+    domain: quantserve.com
+    duration: persistent
+-
+    serviceProvider: Quantcast
+    code: mc
+    name: mc
+    description: Tracking of users and measure and improve performance and supports personalisation
+    provenance: 
+    category: marketing
+    domain: quantserve.com
+    duration: persistent
+-
+    serviceProvider: Issuu
+    code: iutk
+    name: iutk
+    description: "Recognises the user's device and what Issuu documents have been read."
+    provenance: 
+    category: marketing
+    domain: issuu.com
+    duration: persistent
