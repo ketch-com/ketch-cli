@@ -390,6 +390,7 @@ type Cookie struct {
 	Provenance      int32  `json:"provenance,omitempty"`
 	Category        int32  `json:"category,omitempty"`
 	ServiceProvider string `json:"serviceProvider,omitempty"`
+	AppCode         string `json:"appCode,omitempty"`
 }
 
 type AppConfigPurpose struct {
@@ -675,6 +676,7 @@ type ManifestInputs struct {
 	Activities             []*AppConfigWorkflowActivityDefinition `yaml:"activities,flow,omitempty" json:"activities,omitempty"`
 	ChildWorkflows         []*AppConfigWorkflowActivityDefinition `yaml:"childWorkflows,flow,omitempty" json:"childWorkflows,omitempty"`
 	Tcf                    *Tcf                                   `yaml:"tcf,flow,omitempty" json:"tcf,omitempty"`
+	Cookies                []*AppConfigCookie                     `yaml:"cookies,flow,omitempty" json:"cookies,omitempty"`
 	PurposeTemplates       []*PurposeTemplate                     `yaml:"purposeTemplateCollections,flow,omitempty" json:"purposeTemplateCollections,omitempty"`
 	Purposes               []*AppConfigPurpose                    `yaml:"purposes,flow,omitempty" json:"purposes,omitempty"`
 	Rights                 []*Right                               `yaml:"rights,flow" json:"rights,omitempty"`
