@@ -99,13 +99,6 @@ func Publish(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	if len(manifestInputs.Cookies) > 0 {
-		err := installCookies(ctx, cfg, token, manifestInputs, app)
-		if err != nil {
-			return err
-		}
-	}
-
 	marketplaceEntry := NewAppMarketplaceEntry(manifestInputs)
 	marketplaceEntry.AppID = app.ID
 
@@ -278,43 +271,6 @@ func publishApp(ctx context.Context, cfg *config.Config, token string, app *App,
 	}
 
 	return a.AppMarketplaceEntry, nil
-}
-
-func installCookies(ctx context.Context, cfg *config.Config, token string, manifestInputs ManifestInputs, app *App) error {
-	createCookieURL := fmt.Sprintf("organizations/%s/cookies", app.OrgCode)
-
-	for _, cookie := range manifestInputs.Cookies {
-		body, err := json.Marshal(&Cookie{
-			Code:            cookie.Code,
-			Name:            cookie.Name,
-			Description:     cookie.Description,
-			Host:            cookie.Host,
-			Duration:        CookieDurationValues[cookie.Duration],
-			Provenance:      CookieProvenanceValues[cookie.Provenance],
-			Category:        CookieCategoryValues[cookie.Category],
-			ServiceProvider: cookie.ServiceProvider,
-			AppCode:         app.Code,
-		})
-		if err != nil {
-			return err
-		}
-
-		resp, err := callRest(ctx, cfg, http.MethodPost, createCookieURL, token, body)
-		if err != nil {
-			return err
-		}
-
-		if resp.StatusCode != http.StatusOK {
-			respErr, err := handleRestResponseError(resp)
-			if err != nil {
-				return err
-			}
-
-			return errors.New(respErr.Message)
-		}
-	}
-
-	return nil
 }
 
 func validateAppConfig(publishAppConfig ManifestInputs) error {

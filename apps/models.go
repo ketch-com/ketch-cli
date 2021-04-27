@@ -730,6 +730,7 @@ type App struct {
 	Regulations            []*Regulation                 `yaml:",flow" json:"regulations,omitempty"`
 	Tcf                    *Tcf                          `json:"tcf,omitempty"`
 	EventTypes             []string                      `json:"eventTypes,omitempty"`
+	Cookies                []*Cookie                     `yaml:"cookies,flow,omitempty" json:"cookies,omitempty"`
 }
 
 type AppMarketplaceEntry struct {
@@ -1003,6 +1004,21 @@ func NewApp(p ManifestInputs) (*App, error) {
 		eventTypes = p.Webhook.Events
 	}
 
+	var cookies []*Cookie
+	for _, cookie := range p.Cookies {
+		cookies = append(cookies, &Cookie{
+			Code:            cookie.Code,
+			Name:            cookie.Name,
+			Description:     cookie.Description,
+			Host:            cookie.Host,
+			Duration:        CookieDurationValues[cookie.Duration],
+			Provenance:      CookieProvenanceValues[cookie.Provenance],
+			Category:        CookieCategoryValues[cookie.Category],
+			ServiceProvider: cookie.ServiceProvider,
+			AppCode:         p.Code,
+		})
+	}
+
 	return &App{
 		ID:                     p.ID,
 		Code:                   p.Code,
@@ -1044,6 +1060,7 @@ func NewApp(p ManifestInputs) (*App, error) {
 		LegalBases:             legalBases,
 		Themes:                 p.Themes,
 		EventTypes:             eventTypes,
+		Cookies:                cookies,
 	}, nil
 }
 
