@@ -112,7 +112,8 @@
           "permitPropagation",
           "permitIngestion",
           "rightPropagation",
-          "rightIngestion"
+          "rightIngestion",
+          "tagOrchestration"
         ]
       }
     },
@@ -376,7 +377,10 @@
               "app.installed",
               "app.refresh",
               "app.uninstalled",
-              "consent.propagated"
+              "consent.propagated",
+              "tag.activate",
+              "tag.deactivate",
+              "tag.requestList"
             ]
           }
         },
