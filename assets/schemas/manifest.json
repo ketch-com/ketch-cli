@@ -1777,7 +1777,8 @@
               "strictlyNecessary",
               "functional",
               "performance",
-              "marketing"
+              "marketing",
+              "analytics"
             ]
           },
           "serviceProvider": {

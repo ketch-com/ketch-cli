@@ -390,6 +390,7 @@ type Cookie struct {
 	Provenance      int32  `json:"provenance,omitempty"`
 	Category        int32  `json:"category,omitempty"`
 	ServiceProvider string `json:"serviceProvider,omitempty"`
+	AppCode         string `json:"appCode,omitempty"`
 }
 
 type AppConfigPurpose struct {
@@ -675,6 +676,7 @@ type ManifestInputs struct {
 	Activities             []*AppConfigWorkflowActivityDefinition `yaml:"activities,flow,omitempty" json:"activities,omitempty"`
 	ChildWorkflows         []*AppConfigWorkflowActivityDefinition `yaml:"childWorkflows,flow,omitempty" json:"childWorkflows,omitempty"`
 	Tcf                    *Tcf                                   `yaml:"tcf,flow,omitempty" json:"tcf,omitempty"`
+	Cookies                []*AppConfigCookie                     `yaml:"cookies,flow,omitempty" json:"cookies,omitempty"`
 	PurposeTemplates       []*PurposeTemplate                     `yaml:"purposeTemplateCollections,flow,omitempty" json:"purposeTemplateCollections,omitempty"`
 	Purposes               []*AppConfigPurpose                    `yaml:"purposes,flow,omitempty" json:"purposes,omitempty"`
 	Rights                 []*Right                               `yaml:"rights,flow" json:"rights,omitempty"`
@@ -728,6 +730,7 @@ type App struct {
 	Regulations            []*Regulation                 `yaml:",flow" json:"regulations,omitempty"`
 	Tcf                    *Tcf                          `json:"tcf,omitempty"`
 	EventTypes             []string                      `json:"eventTypes,omitempty"`
+	Cookies                []*Cookie                     `yaml:"cookies,flow,omitempty" json:"cookies,omitempty"`
 }
 
 type AppMarketplaceEntry struct {
@@ -1001,6 +1004,21 @@ func NewApp(p ManifestInputs) (*App, error) {
 		eventTypes = p.Webhook.Events
 	}
 
+	var cookies []*Cookie
+	for _, cookie := range p.Cookies {
+		cookies = append(cookies, &Cookie{
+			Code:            cookie.Code,
+			Name:            cookie.Name,
+			Description:     cookie.Description,
+			Host:            cookie.Host,
+			Duration:        CookieDurationValues[cookie.Duration],
+			Provenance:      CookieProvenanceValues[cookie.Provenance],
+			Category:        CookieCategoryValues[cookie.Category],
+			ServiceProvider: cookie.ServiceProvider,
+			AppCode:         p.Code,
+		})
+	}
+
 	return &App{
 		ID:                     p.ID,
 		Code:                   p.Code,
@@ -1042,6 +1060,7 @@ func NewApp(p ManifestInputs) (*App, error) {
 		LegalBases:             legalBases,
 		Themes:                 p.Themes,
 		EventTypes:             eventTypes,
+		Cookies:                cookies,
 	}, nil
 }
 
