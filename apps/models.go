@@ -29,6 +29,7 @@ var AppCapabilityValues = map[string]int32{
 	"permitIngestion":            2,
 	"rightPropagation":           3,
 	"rightIngestion":             4,
+	"tagOrchestration":           5,
 }
 
 var AppContactTypeValues = map[string]int32{
