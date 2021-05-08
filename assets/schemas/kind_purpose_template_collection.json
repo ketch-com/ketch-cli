@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "title": "Purpose Template Collection",
+  "required": [
+    "kind",
+    "code",
+    "name"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string",
+      "title": "Kind of custom object",
+      "pattern": "purposeTemplateCollection"
+    },
+    "code": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    }
+  }
+}

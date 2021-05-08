@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "title": "Theme",
+  "required": [
+    "kind",
+    "code",
+    "name",
+    "description"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string",
+      "title": "Kind of custom object",
+      "pattern": "theme"
+    },
+    "code": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "bannerBackgroundColor": {
+      "type": "string"
+    },
+    "lightboxRibbonColor": {
+      "type": "string"
+    },
+    "formHeaderColor": {
+      "type": "string"
+    },
+    "statusColor": {
+      "type": "string"
+    },
+    "highlightColor": {
+      "type": "string"
+    },
+    "feedbackColor": {
+      "type": "string"
+    }
+  }
+}
