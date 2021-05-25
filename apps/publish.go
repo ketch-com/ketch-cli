@@ -225,6 +225,8 @@ func createApp(ctx context.Context, cfg *config.Config, token string, app *App) 
 		return nil, errors.Errorf("app not created. statusCode %v, body %v", resp.StatusCode, string(b))
 	}
 
+	fmt.Printf("app created successfully:\napp: %v", string(body))
+
 	return appResp.App, nil
 }
 
