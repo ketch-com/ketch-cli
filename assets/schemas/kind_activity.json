@@ -1,0 +1,152 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "title": "Activity",
+  "required": [
+    "kind",
+    "code",
+    "name",
+    "icon",
+    "fn"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string",
+      "title": "Kind of custom object",
+      "pattern": "activity"
+    },
+    "code": {
+      "type": "string",
+      "title": "human-readable identifier for the object"
+    },
+    "name": {
+      "type": "string",
+      "title": "name of the Activity as shown to the user"
+    },
+    "icon": {
+      "type": "string",
+      "title": "filename of the icon to show"
+    },
+    "fn": {
+      "type": "string",
+      "title": "the function to be executed"
+    },
+    "options": {
+      "type": ["object", "null"],
+      "title": "the options for the workflow object",
+      "additionalProperties": false,
+      "properties": {
+        "task_queue": {
+          "type": "string",
+          "default": ""
+        },
+        "workflow_execution_timeout": {
+          "type": "integer",
+          "format": "int64",
+          "default": 0
+        },
+        "workflow_run_timeout": {
+          "type": "integer",
+          "format": "int64",
+          "default": 0
+        },
+        "workflow_task_timeout": {
+          "type": "integer",
+          "format": "int64",
+          "default": 0
+        },
+        "wait_for_cancellation": {
+          "type": "boolean",
+          "default": false
+        },
+        "schedule_to_close_timeout": {
+          "type": "integer",
+          "format": "int64",
+          "default": 0
+        },
+        "schedule_to_start_timeout": {
+          "type": "integer",
+          "format": "int64",
+          "default": 0
+        },
+        "start_to_close_timeout": {
+          "type": "integer",
+          "format": "int64",
+          "default": 0
+        },
+        "heartbeat_timeout": {
+          "type": "integer",
+          "format": "int64",
+          "default": 0
+        }
+      }
+    },
+    "params": {
+      "type": ["array", "null"],
+      "title": "parameters",
+      "items": {
+        "type": "object",
+        "required": [
+          "code",
+          "name",
+          "type"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "human-readable unique identifier of the parameter"
+          },
+          "name": {
+            "type": "string",
+            "title": "user-friendly name of the parameter"
+          },
+          "type": {
+            "type": "string",
+            "title": "type of the parameter"
+          },
+          "default": {
+            "type": "string",
+            "title": "default value of the parameter"
+          }
+        }
+      }
+    },
+    "outputs": {
+      "type": ["array", "null"],
+      "title": "output values",
+      "items": {
+        "type": "object",
+        "required": [
+          "code",
+          "name",
+          "type"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "human-readable unique identifier of the output"
+          },
+          "name": {
+            "type": "string",
+            "title": "user-friendly name of the output"
+          },
+          "type": {
+            "type": "string",
+            "title": "type of the output"
+          },
+          "default": {
+            "type": "string",
+            "title": "default value of the output"
+          }
+        }
+      }
+    },
+    "config": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

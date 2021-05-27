@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "title": "TCF",
+  "required": [
+    "kind"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string",
+      "title": "Kind of custom object",
+      "pattern": "tcf"
+    },
+    "vendor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "purposes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "specialPurposes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "specialFeatures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "policyUrl": {
+          "type": "string"
+        },
+        "legIntPurposes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "flexiblePurposes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "usesCookies": {
+          "type": "boolean"
+        },
+        "cookieMaxAgeSeconds": {
+          "type": "integer",
+          "format": "int64",
+          "default": 0
+        },
+        "cookieRefresh": {
+          "type": "boolean"
+        },
+        "usesNonCookieAccess": {
+          "type": "boolean"
+        },
+        "deviceStorageDisclosureUrl": {
+          "type": "boolean"
+        }
+      }
+    },
+    "gvlSpecificationVersion": {
+      "type": "string"
+    },
+    "vendorListVersion": {
+      "type": "string"
+    },
+    "tcfPolicyVersion": {
+      "type": "string"
+    }
+  }
+}

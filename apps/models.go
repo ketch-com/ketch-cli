@@ -1,7 +1,11 @@
 package apps
 
 import (
-	"encoding/json"
+	"gopkg.in/yaml.v3"
+	"io/fs"
+	"io/ioutil"
+	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -92,12 +96,6 @@ var CookieCategoryValues = map[string]int32{
 	"functional":                  2,
 	"performance":                 3,
 	"marketing":                   4,
-}
-
-var ParentClosePolicyValues = map[string]int32{
-	"terminate":     0,
-	"requestCancel": 1,
-	"abandon":       2,
 }
 
 type SelectData struct {
@@ -204,80 +202,6 @@ type AppConfigImage struct {
 	Height int32  `yaml:"height,omitempty" json:"height,omitempty"`
 }
 
-type AppConfigActivityStep struct {
-	ID          string                        `yaml:"id,omitempty" json:"id,omitempty"`
-	Code        string                        `yaml:"code,omitempty" json:"code,omitempty"`
-	Description string                        `yaml:"description,omitempty" json:"description,omitempty"`
-	Step        string                        `yaml:"step,omitempty" json:"step,omitempty"`
-	Fn          string                        `yaml:"fn,omitempty" json:"fn,omitempty"`
-	Next        string                        `yaml:"next,omitempty" json:"next,omitempty"`
-	Options     *AppConfigActivityStepOptions `yaml:"options,omitempty" json:"options,omitempty"`
-	Params      *json.RawMessage              `yaml:"params,omitempty" json:"params,omitempty"`
-}
-
-type WorkflowStepChildWorkflowOptions struct {
-	TaskQueue                string            `yaml:"taskQueue,omitempty" json:"task_queue,omitempty"`
-	WorkflowExecutionTimeout int64             `yaml:"workflowExecutionTimeout,omitempty" json:"workflow_execution_timeout,omitempty"`
-	WorkflowRunTimeout       int64             `yaml:"workflowRunTimeout,omitempty" json:"workflow_run_timeout,omitempty"`
-	WorkflowTaskTimeout      int64             `yaml:"workflowTaskTimeout,omitempty" json:"workflow_task_timeout,omitempty"`
-	WaitForCancellation      bool              `yaml:"waitForCancellation,omitempty" json:"wait_for_cancellation,omitempty"`
-	ParentClosePolicy        int64             `yaml:"parentClosePolicy,omitempty" json:"parent_close_policy,omitempty"`
-	Memo                     map[string]string `yaml:"memo,omitempty" json:"memo,omitempty"`
-	SearchAttributes         map[string]string `yaml:"searchAttributes,omitempty" json:"search_attributes,omitempty"`
-	RetryPolicy              *RetryPolicy      `yaml:"retryPolicy,omitempty" json:"retry_policy,omitempty"`
-}
-
-type AppConfigChildWorkflowStep struct {
-	ID          string                           `yaml:"id,omitempty" json:"id,omitempty"`
-	Code        string                           `yaml:"code,omitempty" json:"code,omitempty"`
-	Description string                           `yaml:"description,omitempty" json:"description,omitempty"`
-	Step        string                           `yaml:"step,omitempty" json:"step,omitempty"`
-	Fn          string                           `yaml:"fn,omitempty" json:"fn,omitempty"`
-	Next        string                           `yaml:"next,omitempty" json:"next,omitempty"`
-	Options     WorkflowStepChildWorkflowOptions `yaml:"options,omitempty" json:"options,omitempty"`
-	Params      *json.RawMessage                 `yaml:"params,omitempty" json:"params,omitempty"`
-}
-
-type AppConfigGatewayStep struct {
-	ID          string            `yaml:"id,omitempty" json:"id,omitempty"`
-	Code        string            `yaml:"code,omitempty" json:"code,omitempty"`
-	Description string            `yaml:"description,omitempty" json:"description,omitempty"`
-	Mode        string            `yaml:"mode,omitempty" json:"mode,omitempty"`
-	Next        []*StepTransition `yaml:"next,omitempty" json:"next,omitempty"`
-}
-
-type AppConfigActivityOptions struct {
-	TaskQueue                string `yaml:"task_queue,omitempty" json:"task_queue,omitempty"`
-	WorkflowExecutionTimeout int64  `yaml:"workflow_execution_timeout,omitempty" json:"workflow_execution_timeout,omitempty"`
-	WorkflowRunTimeout       int64  `yaml:"workflow_run_timeout,omitempty" json:"workflow_run_timeout,omitempty"`
-	WorkflowTaskTimeout      int64  `yaml:"workflow_task_timeout,omitempty" json:"workflow_task_timeout,omitempty"`
-	WaitForCancellation      bool   `yaml:"wait_for_cancellation,omitempty" json:"wait_for_cancellation,omitempty"`
-	ScheduleToCloseTimeout   int64  `yaml:"schedule_to_close_timeout,omitempty" json:"schedule_to_close_timeout,omitempty"`
-	ScheduleToStartTimeout   int64  `yaml:"schedule_to_start_timeout,omitempty" json:"schedule_to_start_timeout,omitempty"`
-	StartToCloseTimeout      int64  `yaml:"start_to_close_timeout,omitempty" json:"start_to_close_timeout,omitempty"`
-	HeartbeatTimeout         int64  `yaml:"heartbeat_timeout,omitempty" json:"heartbeat_timeout,omitempty"`
-}
-
-type ActivityOptions struct {
-	TaskQueue              string       `json:"task_queue,omitempty"`
-	ScheduleToCloseTimeout int64        `json:"schedule_to_close_timeout,omitempty"`
-	ScheduleToStartTimeout int64        `json:"schedule_to_start_timeout,omitempty"`
-	StartToCloseTimeout    int64        `json:"start_to_close_timeout,omitempty"`
-	HeartbeatTimeout       int64        `json:"heartbeat_timeout,omitempty"`
-	WaitForCancellation    bool         `json:"wait_for_cancellation,omitempty"`
-	RetryPolicy            *RetryPolicy `json:"retry_policy,omitempty"`
-}
-
-type AppConfigActivityStepOptions struct {
-	TaskQueue              string `yaml:"taskQueue,omitempty" json:"task_queue,omitempty"`
-	ScheduleToCloseTimeout int64  `yaml:"scheduleToCloseTimeout,omitempty" json:"schedule_to_close_timeout,omitempty"`
-	ScheduleToStartTimeout int64  `yaml:"scheduleToStartTimeout,omitempty" json:"schedule_to_start_timeout,omitempty"`
-	StartToCloseTimeout    int64  `yaml:"startToCloseTimeout,omitempty" json:"start_to_close_timeout,omitempty"`
-	HeartbeatTimeout       int64  `yaml:"heartbeatTimeout,omitempty" json:"heartbeat_timeout,omitempty"`
-	WaitForCancellation    bool   `yaml:"waitForCancellation,omitempty" json:"wait_for_cancellation,omitempty"`
-	RetryPolicy            string `yaml:"retryPolicy,omitempty" json:"retry_policy,omitempty"`
-}
-
 type ParameterDefinition struct {
 	Code    string `yaml:"code,omitempty" json:"code,omitempty"`
 	Name    string `yaml:"name,omitempty" json:"name,omitempty"`
@@ -285,351 +209,10 @@ type ParameterDefinition struct {
 	Default string `yaml:"default,omitempty" json:"default_value,omitempty"`
 }
 
-type AppConfigWorkflowActivityDefinition struct {
-	Code    string                    `yaml:"code,omitempty" json:"code,omitempty"`
-	Name    string                    `yaml:"name,omitempty" json:"name,omitempty"`
-	Icon    string                    `yaml:"icon,omitempty" json:"icon,omitempty"`
-	Fn      string                    `yaml:"fn,omitempty" json:"fn,omitempty"`
-	Options *AppConfigActivityOptions `yaml:"options,omitempty" json:"options,omitempty"`
-	Params  []*ParameterDefinition    `yaml:"params,omitempty" json:"params,omitempty"`
-	Outputs []*ParameterDefinition    `yaml:"outputs,omitempty" json:"outputs,omitempty"`
-	Config  *json.RawMessage          `yaml:"config,omitempty" json:"config,omitempty"`
-}
-
 type IconDefinition struct {
 	SVG  string `json:"SVG,omitempty"`
 	URL  string `json:"URL,omitempty"`
 	ETag string `json:"ETag,omitempty"`
-}
-
-type ActivityDefinition struct {
-	Options              *ActivityOptions       `json:"options,omitempty"`
-	Params               []*ParameterDefinition `json:"params,omitempty"`
-	Outputs              []*ParameterDefinition `json:"outputs,omitempty"`
-	Config               *json.RawMessage       `json:"config,omitempty"`
-	TemporalFunctionName string                 `json:"temporalFunctionName,omitempty"`
-}
-
-type ChildWorkflowOptions struct {
-	TaskQueue                string            `json:"task_queue,omitempty"`
-	WorkflowExecutionTimeout int64             `json:"workflow_execution_timeout,omitempty"`
-	WorkflowRunTimeout       int64             `json:"workflow_run_timeout,omitempty"`
-	WorkflowTaskTimeout      int64             `json:"workflow_task_timeout,omitempty"`
-	WaitForCancellation      bool              `json:"wait_for_cancellation,omitempty"`
-	Memo                     map[string]string `json:"memo,omitempty"`
-	SearchAttributes         map[string]string `json:"search_attributes,omitempty"`
-	RetryPolicy              *RetryPolicy      `json:"retry_policy,omitempty"`
-}
-
-type ChildWorkflowDefinition struct {
-	Options              *ChildWorkflowOptions  `json:"options,omitempty"`
-	Params               []*ParameterDefinition `json:"params,omitempty"`
-	Outputs              []*ParameterDefinition `json:"outputs,omitempty"`
-	Config               *json.RawMessage       `json:"config,omitempty"`
-	TemporalFunctionName string                 `json:"temporalFunctionName,omitempty"`
-}
-
-type WorkflowActivityDefinition struct {
-	Code     string                   `json:"code,omitempty"`
-	Name     string                   `json:"name,omitempty"`
-	Icon     *IconDefinition          `json:"icon,omitempty"`
-	Activity *ActivityDefinition      `json:"activity,omitempty"`
-	Workflow *ChildWorkflowDefinition `json:"workflow,omitempty"`
-}
-
-type PurposeTemplate struct {
-	Code                  string `yaml:"code,omitempty" json:"code,omitempty"`
-	Name                  string `yaml:"name,omitempty" json:"name,omitempty"`
-	Description           string `yaml:"description,omitempty" json:"description,omitempty"`
-	TcfID                 int    `yaml:"tcfId,omitempty" json:"tcfId,omitempty"`
-	TcfType               string `yaml:"tcfType,omitempty" json:"tcfType,omitempty"`
-	Editable              bool   `yaml:"editable,omitempty" json:"editable,omitempty"`
-	LegalBasisRestriction string `yaml:"legalBasisRestriction,omitempty" json:"legalBasisRestriction,omitempty"`
-}
-
-type Vendor struct {
-	Id                         string   `yaml:"id,omitempty" json:"id,omitempty"`
-	Name                       string   `yaml:"name,omitempty" json:"name,omitempty"`
-	Purposes                   []string `yaml:"purposes,omitempty" json:"purposes,omitempty"`
-	SpecialPurposes            []string `yaml:"specialPurposes,omitempty" json:"specialPurposes,omitempty"`
-	Features                   []string `yaml:"features,omitempty" json:"features,omitempty"`
-	SpecialFeatures            []string `yaml:"specialFeatures,omitempty" json:"specialFeatures,omitempty"`
-	PolicyUrl                  string   `yaml:"policyUrl,omitempty" json:"policyUrl,omitempty"`
-	LegIntPurposes             []string `yaml:"legIntPurposes,omitempty" json:"legIntPurposes,omitempty"`
-	FlexiblePurposes           []string `yaml:"flexiblePurposes,omitempty" json:"flexiblePurposes,omitempty"`
-	UsesCookies                bool     `yaml:"usesCookies,omitempty" json:"usesCookies,omitempty"`
-	CookieMaxAgeSeconds        int64    `yaml:"cookieMaxAgeSeconds,omitempty" json:"cookieMaxAgeSeconds,omitempty"`
-	CookieRefresh              bool     `yaml:"cookieRefresh,omitempty" json:"cookieRefresh,omitempty"`
-	UsesNonCookieAccess        bool     `yaml:"usesNonCookieAccess,omitempty" json:"usesNonCookieAccess,omitempty"`
-	DeviceStorageDisclosureUrl string   `yaml:"deviceStorageDisclosureUrl,omitempty" json:"deviceStorageDisclosureUrl,omitempty"`
-}
-
-type Tcf struct {
-	Vendor                  Vendor `yaml:"vendor,omitempty" json:"vendor,omitempty"`
-	GvlSpecificationVersion string `yaml:"gvlSpecificationVersion,omitempty" json:"gvlSpecificationVersion,omitempty"`
-	VendorListVersion       string `yaml:"vendorListVersion,omitempty" json:"vendorListVersion,omitempty"`
-	TcfPolicyVersion        string `yaml:"tcfPolicyVersion,omitempty" json:"tcfPolicyVersion,omitempty"`
-}
-
-type AppConfigCookie struct {
-	Code            string `yaml:"code,omitempty" json:"code,omitempty"`
-	Name            string `yaml:"name,omitempty" json:"name,omitempty"`
-	Description     string `yaml:"description,omitempty" json:"description,omitempty"`
-	Host            string `yaml:"host,omitempty" json:"host,omitempty"`
-	Duration        string `yaml:"duration,omitempty" json:"duration,omitempty"`
-	Provenance      string `yaml:"provenance,omitempty" json:"provenance,omitempty"`
-	Category        string `yaml:"category,omitempty" json:"category,omitempty"`
-	ServiceProvider string `yaml:"serviceProvider,omitempty" json:"serviceProvider,omitempty"`
-}
-
-type Cookie struct {
-	Code            string `json:"code,omitempty"`
-	Name            string `json:"name,omitempty"`
-	Description     string `json:"description,omitempty"`
-	Host            string `json:"host,omitempty"`
-	Duration        int32  `json:"duration,omitempty"`
-	Provenance      int32  `json:"provenance,omitempty"`
-	Category        int32  `json:"category,omitempty"`
-	ServiceProvider string `json:"serviceProvider,omitempty"`
-	AppCode         string `json:"appCode,omitempty"`
-}
-
-type AppConfigPurpose struct {
-	Code                  string             `yaml:"code,omitempty" json:"code,omitempty"`
-	Name                  string             `yaml:"name,omitempty" json:"name,omitempty"`
-	Description           string             `yaml:"description,omitempty" json:"description,omitempty"`
-	TcfID                 int                `yaml:"tcfId,omitempty" json:"tcfId,omitempty"`
-	TcfType               string             `yaml:"tcfType,omitempty" json:"tcfType,omitempty"`
-	Editable              bool               `yaml:"editable,omitempty" json:"editable,omitempty"`
-	LegalBasisRestriction string             `yaml:"legalBasisRestriction,omitempty" json:"legalBasisRestriction,omitempty"`
-	DisplayName           string             `yaml:"displayName,omitempty" json:"displayName,omitempty"`
-	DisplayDescription    string             `yaml:"displayDescription,omitempty" json:"displayDescription,omitempty"`
-	ProcessingPurpose     string             `yaml:"processingPurpose,omitempty" json:"processingPurpose,omitempty"`
-	LegalBasis            map[string]string  `yaml:"legalBasis,omitempty" json:"legalBasis,omitempty"`
-	Cookies               []*AppConfigCookie `yaml:"cookies,omitempty" json:"cookies,omitempty"`
-	CanonicalPurposes     []string           `yaml:"canonicalPurposes,omitempty" json:"canonicalPurposes,omitempty"`
-	Translations          map[string]string  `yaml:"translations,omitempty" json:"translations,omitempty"`
-	DataSubjectRole       string             `yaml:"dataSubjectRole,omitempty" json:"dataSubjectRole,omitempty"`
-	DataRole              string             `yaml:"dataRole,omitempty" json:"dataRole,omitempty"`
-}
-
-type Purpose struct {
-	Code                  string            `json:"code,omitempty"`
-	Name                  string            `json:"name,omitempty"`
-	Description           string            `json:"description,omitempty"`
-	TcfID                 int               `json:"tcfId,omitempty"`
-	TcfType               string            `json:"tcfType,omitempty"`
-	Editable              bool              `json:"editable,omitempty"`
-	LegalBasisRestriction string            `json:"legalBasisRestriction,omitempty"`
-	DisplayName           string            `json:"displayName,omitempty"`
-	DisplayDescription    string            `json:"displayDescription,omitempty"`
-	ProcessingPurpose     string            `json:"processingPurpose,omitempty"`
-	LegalBasis            map[string]string `json:"legalBasis,omitempty"`
-	Cookies               []*Cookie         `json:"cookies,omitempty"`
-	CanonicalPurposes     []string          `json:"canonicalPurposes,omitempty"`
-	Translations          map[string]string `json:"translations,omitempty"`
-	DataSubjectRole       int32             `json:"dataSubjectRole,omitempty"`
-	DataRole              int32             `json:"dataRole,omitempty"`
-}
-
-type RightTranslation struct {
-	Name        string `yaml:"name,omitempty" json:"name,omitempty"`
-	Description string `yaml:"description,omitempty" json:"description,omitempty"`
-}
-
-type CanonicalRight struct {
-	Code        string `yaml:"code,omitempty" json:"code,omitempty"`
-	Name        string `yaml:"name,omitempty" json:"name,omitempty"`
-	Description string `yaml:"description,omitempty" json:"description,omitempty"`
-}
-
-type Right struct {
-	Code            string                       `yaml:"code,omitempty" json:"code,omitempty"`
-	Name            string                       `yaml:"name,omitempty" json:"name,omitempty"`
-	Description     string                       `yaml:"description,omitempty" json:"description,omitempty"`
-	Translations    map[string]*RightTranslation `yaml:"translations,omitempty" json:"translations,omitempty"`
-	CanonicalRights []*CanonicalRight            `yaml:"canonicalRights,omitempty" json:"canonicalRights,omitempty"`
-}
-
-type Regulation struct {
-	Code              string              `yaml:"code,omitempty" json:"code,omitempty"`
-	Name              string              `yaml:"name,omitempty" json:"name,omitempty"`
-	Description       string              `yaml:"description,omitempty" json:"description,omitempty"`
-	RightsFulfillment []*RightFulfillment `yaml:"rightsFulfillment,omitempty" json:"rightsFulfillment,omitempty"`
-}
-
-type LegalBasisRestriction struct {
-	Regulation string   `yaml:"regulation,omitempty" json:"regulation,omitempty"`
-	LegalBasis []string `yaml:"legalBasis,omitempty" json:"legalBasis,omitempty"`
-}
-
-type AppConfigPolicyScope struct {
-	Code        string           `yaml:"code,omitempty" json:"code,omitempty"`
-	Name        string           `yaml:"name,omitempty" json:"name,omitempty"`
-	Description string           `yaml:"description,omitempty" json:"description,omitempty"`
-	Regions     []string         `yaml:"regions,omitempty" json:"regions,omitempty"`
-	Regulations []string         `yaml:"regulations,omitempty" json:"regulations,omitempty"`
-	Fulfillment map[string]int64 `yaml:"fulfillment,omitempty" json:"fulfillment,omitempty"`
-}
-
-type RightFulfillment struct {
-	RightCode   string `json:"rightCode,omitempty"`
-	Fulfillment int64  `json:"fulfillment,omitempty"`
-}
-
-type PolicyScope struct {
-	Code              string              `json:"code,omitempty"`
-	Name              string              `json:"name,omitempty"`
-	Description       string              `json:"description,omitempty"`
-	RegionCodes       []string            `json:"regionCodes,omitempty"`
-	RegulationCodes   []string            `json:"regulationCodes,omitempty"`
-	RightsFulfillment []*RightFulfillment `json:"rightsFulfillment,omitempty"`
-}
-
-type AppConfigLegalBasis struct {
-	Code                  string `yaml:"code,omitempty" json:"code,omitempty"`
-	Name                  string `yaml:"name,omitempty" json:"name,omitempty"`
-	Description           string `yaml:"description,omitempty" json:"description,omitempty"`
-	RequiresOptIn         bool   `yaml:"requiresOptIn,omitempty" json:"requiresOptIn,omitempty"`
-	AllowOptOut           bool   `yaml:"allowOptOut,omitempty" json:"allowOptOut,omitempty"`
-	RequiresPrivacyPolicy bool   `yaml:"requiresPrivacyPolicy,omitempty" json:"requiresPrivacyPolicy,omitempty"`
-}
-
-type LegalBasis struct {
-	Code                  string   `json:"code,omitempty"`
-	Name                  string   `json:"name,omitempty"`
-	Description           string   `json:"description,omitempty"`
-	RequiresOptIn         bool     `json:"requiresOptIn,omitempty"`
-	AllowOptOut           bool     `json:"allowOptOut,omitempty"`
-	RequiresPrivacyPolicy bool     `json:"requiresPrivacyPolicy,omitempty"`
-	RegulationCodes       []string `json:"regulationCodes,omitempty"`
-}
-
-type Theme struct {
-	Code                  string `yaml:"code,omitempty" json:"code,omitempty"`
-	Name                  string `yaml:"name,omitempty" json:"name,omitempty"`
-	Description           string `yaml:"description,omitempty" json:"description,omitempty"`
-	BannerBackgroundColor string `yaml:"bannerBackgroundColor,omitempty" json:"bannerBackgroundColor,omitempty"`
-	LightboxRibbonColor   string `yaml:"lightboxRibbonColor,omitempty" json:"lightboxRibbonColor,omitempty"`
-	FormHeaderColor       string `yaml:"formHeaderColor,omitempty" json:"formHeaderColor,omitempty"`
-	StatusColor           string `yaml:"statusColor,omitempty" json:"statusColor,omitempty"`
-	HighlightColor        string `yaml:"highlightColor,omitempty" json:"highlightColor,omitempty"`
-	FeedbackColor         string `yaml:"feedbackColor,omitempty" json:"feedbackColor,omitempty"`
-}
-
-type RetryPolicy struct {
-	InitialInterval          int64    `yaml:"initialInterval,omitempty" json:"initial_interval,omitempty"`
-	BackoffCoefficient       float64  `yaml:"backoffCoefficient,omitempty" json:"backoff_coefficient,omitempty"`
-	MaximumInterval          int64    `yaml:"maximumInterval,omitempty" json:"maximum_interval,omitempty"`
-	MaximumAttempts          int64    `yaml:"maximumAttempts,omitempty" json:"maximum_attempts,omitempty"`
-	NonRetryableErrorReasons []string `yaml:"nonRetryableErrorReasons,omitempty" json:"non_retriable_error_reasons,omitempty"`
-}
-
-type WorkflowOptions struct {
-	TaskQueue                string            `yaml:"taskQueue,omitempty" json:"task_queue,omitempty"`
-	WorkflowExecutionTimeout int64             `yaml:"workflowExecutionTimeout,omitempty" json:"workflow_execution_timeout,omitempty"`
-	WorkflowRunTimeout       int64             `yaml:"workflowRunTimeout,omitempty" json:"workflow_run_timeout,omitempty"`
-	WorkflowTaskTimeout      int64             `yaml:"workflowTaskTimeout,omitempty" json:"workflow_task_timeout,omitempty"`
-	Memo                     map[string]string `yaml:"memo,omitempty" json:"memo,omitempty"`
-	SearchAttributes         map[string]string `yaml:"searchAttributes,omitempty" json:"search_attributes,omitempty"`
-	RetryPolicy              *RetryPolicy      `yaml:"retryPolicy,omitempty" json:"retry_policy,omitempty"`
-}
-
-type AppConfigStep struct {
-	Activity      *AppConfigActivityStep      `yaml:"activity,omitempty" json:"activity,omitempty"`
-	ChildWorkflow *AppConfigChildWorkflowStep `yaml:"childWorkflow,omitempty" json:"childWorkflow,omitempty"`
-	Gateway       *AppConfigGatewayStep       `yaml:"gateway,omitempty" json:"gateway,omitempty"`
-	Start         *AppConfigStartStep         `yaml:"start,omitempty" json:"start,omitempty"`
-	Finish        *AppConfigFinishStep        `yaml:"finish,omitempty" json:"finish,omitempty"`
-}
-
-type AppConfigStartStep struct {
-	ID          string           `yaml:"id,omitempty" json:"id,omitempty"`
-	Code        string           `yaml:"code,omitempty" json:"code,omitempty"`
-	Description string           `yaml:"description,omitempty" json:"description,omitempty"`
-	Next        string           `yaml:"next,omitempty" json:"next,omitempty"`
-	Params      *json.RawMessage `yaml:"params,omitempty" json:"params,omitempty"`
-}
-
-type AppConfigFinishStep struct {
-	ID          string           `yaml:"id,omitempty" json:"id,omitempty"`
-	Code        string           `yaml:"code,omitempty" json:"code,omitempty"`
-	Description string           `yaml:"description,omitempty" json:"description,omitempty"`
-	Params      *json.RawMessage `yaml:"params,omitempty" json:"params,omitempty"`
-}
-
-type StepTransition struct {
-	ID       string `yaml:"id,omitempty" json:"id,omitempty"`
-	Name     string `yaml:"name,omitempty" json:"name,omitempty"`
-	Variable string `yaml:"variable,omitempty" json:"variable,omitempty"`
-	Operator string `yaml:"operator,omitempty" json:"operator,omitempty"`
-	Operand  string `yaml:"operand,omitempty" json:"operand,omitempty"`
-}
-
-type AppConfigWorkflowDefinition struct {
-	Code     string           `yaml:"code,omitempty" json:"code,omitempty"`
-	Name     string           `yaml:"name,omitempty" json:"name,omitempty"`
-	Readonly bool             `yaml:"readonly,omitempty" json:"readonly,omitempty"`
-	Options  *WorkflowOptions `yaml:"options,omitempty" json:"options,omitempty"`
-	Steps    []*AppConfigStep `yaml:"steps,omitempty" json:"steps,omitempty"`
-}
-
-type ActivityStep struct {
-	Code                 string           `json:"code,omitempty"`
-	Options              *ActivityOptions `json:"options,omitempty"`
-	Params               *json.RawMessage `json:"params,omitempty"`
-	Transition           string           `json:"transition,omitempty"`
-	TemporalFunctionName string           `json:"temporalFunctionName,omitempty"`
-}
-
-type ChildWorkflowStep struct {
-	Code                 string                `json:"code,omitempty"`
-	Options              *ChildWorkflowOptions `json:"options,omitempty"`
-	Params               *json.RawMessage      `json:"params,omitempty"`
-	Transition           string                `json:"transition,omitempty"`
-	TemporalFunctionName string                `json:"temporalFunctionName,omitempty"`
-}
-
-var GatewayStepModeValues = map[string]int32{
-	"invalid": 0,
-	"split":   1,
-	"join":    2,
-	"single":  3,
-	"multi":   4,
-}
-
-type GatewayStep struct {
-	Mode        int32             `json:"mode,omitempty"`
-	Transitions []*StepTransition `json:"transitions,omitempty"`
-}
-
-type StartStep struct {
-	Transition string           `json:"transition,omitempty"`
-	Params     *json.RawMessage `json:"params,omitempty"`
-}
-
-type FinishStep struct {
-	Params *json.RawMessage `json:"params,omitempty"`
-}
-
-type Step struct {
-	ID          string             `json:"ID,omitempty"`
-	Code        string             `json:"code,omitempty"`
-	Name        string             `json:"name,omitempty"`
-	Description string             `json:"description,omitempty"`
-	Activity    *ActivityStep      `json:"activity,omitempty"`
-	Workflow    *ChildWorkflowStep `json:"workflow,omitempty"`
-	Gateway     *GatewayStep       `json:"gateway,omitempty"`
-	Start       *StartStep         `json:"start,omitempty"`
-	Finish      *FinishStep        `json:"finish,omitempty"`
-}
-
-type WorkflowDefinition struct {
-	Code     string           `yaml:"code,omitempty" json:"code,omitempty"`
-	Name     string           `yaml:"name,omitempty" json:"name,omitempty"`
-	Readonly bool             `yaml:"readonly,omitempty" json:"readonly,omitempty"`
-	Options  *WorkflowOptions `yaml:"options,omitempty" json:"options,omitempty"`
-	Steps    []*Step          `yaml:"steps,omitempty" json:"steps,omitempty"`
 }
 
 type ManifestInputs struct {
@@ -673,19 +256,15 @@ type ManifestInputs struct {
 	Webhook                *Webhook                               `yaml:"webhook,omitempty" json:"webhook,omitempty"`
 	Form                   []*FormComponent                       `yaml:"form,omitempty" json:"form,omitempty"`
 	IdentitySpaces         []*IdentitySpace                       `yaml:"identitySpaces,omitempty" json:"identitySpaces,omitempty"`
-	Workflows              []*AppConfigWorkflowDefinition         `yaml:"workflows,flow,omitempty" json:"workflows,omitempty"`
-	Activities             []*AppConfigWorkflowActivityDefinition `yaml:"activities,flow,omitempty" json:"activities,omitempty"`
-	ChildWorkflows         []*AppConfigWorkflowActivityDefinition `yaml:"childWorkflows,flow,omitempty" json:"childWorkflows,omitempty"`
-	Tcf                    *Tcf                                   `yaml:"tcf,flow,omitempty" json:"tcf,omitempty"`
-	Cookies                []*AppConfigCookie                     `yaml:"cookies,flow,omitempty" json:"cookies,omitempty"`
-	PurposeTemplates       []*PurposeTemplate                     `yaml:"purposeTemplateCollections,flow,omitempty" json:"purposeTemplateCollections,omitempty"`
-	Purposes               []*AppConfigPurpose                    `yaml:"purposes,flow,omitempty" json:"purposes,omitempty"`
-	Rights                 []*Right                               `yaml:"rights,flow" json:"rights,omitempty"`
-	Regulations            []*Regulation                          `yaml:"regulations,flow" json:"regulations,omitempty"`
-	LegalBasisRestrictions []*LegalBasisRestriction               `yaml:"legalBasisRestrictions,flow,omitempty" json:"legalBasisRestrictions,omitempty"`
-	PolicyScopes           []*AppConfigPolicyScope                `yaml:"policyScopes,flow,omitempty" json:"policyScopes,omitempty"`
-	LegalBases             []*AppConfigLegalBasis                 `yaml:"legalBases,flow,omitempty" json:"legalBases,omitempty"`
-	Themes                 []*Theme                               `yaml:"themes,flow,omitempty" json:"themes,omitempty"`
+	TagPluginScript        string                                 `yaml:"tagPlugin,omitempty" json:"tagPlugin,omitempty"`
+	AssetsDir              string                                 `yaml:"assetsDir,omitempty" json:"assetsDir,omitempty"`
+	CustomObjectsDir       string                                 `yaml:"customObjectsDir,omitempty" json:"customObjectsDir,omitempty"`
+}
+
+type NamedBlob struct {
+	Name        string `json:"name"`
+	ContentType string `json:"contentType"`
+	Data        []byte `json:"data"`
 }
 
 type App struct {
@@ -718,20 +297,10 @@ type App struct {
 	Readme                 string                        `json:"readme,omitempty"`
 	Form                   []*FormComponent              `yaml:",flow"`
 	IdentitySpaces         []*IdentitySpace              `yaml:",flow" json:"identitySpaces,omitempty"`
-	Purposes               []*Purpose                    `yaml:",flow" json:"purposes,omitempty"`
-	Workflows              []*WorkflowDefinition         `json:"workflows,omitempty"`
-	Activities             []*WorkflowActivityDefinition `json:"activities,omitempty"`
-	ChildWorkflows         []*WorkflowActivityDefinition `json:"childWorkflows,omitempty"`
-	PurposeTemplates       []*PurposeTemplate            `json:"purposeTemplates,omitempty"`
-	LegalBasisRestrictions []*LegalBasisRestriction      `json:"legalBasisRestrictions,omitempty"`
-	PolicyScopes           []*PolicyScope                `json:"policyScopes,omitempty"`
-	LegalBases             []*LegalBasis                 `json:"legalBases,omitempty"`
-	Themes                 []*Theme                      `json:"themes,omitempty"`
-	Rights                 []*Right                      `yaml:",flow" json:"rights,omitempty"`
-	Regulations            []*Regulation                 `yaml:",flow" json:"regulations,omitempty"`
-	Tcf                    *Tcf                          `json:"tcf,omitempty"`
 	EventTypes             []string                      `json:"eventTypes,omitempty"`
-	Cookies                []*Cookie                     `yaml:"cookies,flow,omitempty" json:"cookies,omitempty"`
+	TagPluginScript        *NamedBlob                    `json:"tagPlugin,omitempty"`
+	Assets                 []*NamedBlob                  `json:"assets,omitempty"`
+	CustomObjects          []interface{}                 `json:"customObjects,omitempty"`
 }
 
 type AppMarketplaceEntry struct {
@@ -784,6 +353,8 @@ type PutAppResponse struct {
 }
 
 func NewApp(p ManifestInputs) (*App, error) {
+	var err error
+
 	var appCapabilities []int32
 	for _, capability := range p.Capabilities {
 		if appCapability, ok := AppCapabilityValues[capability]; ok {
@@ -800,268 +371,111 @@ func NewApp(p ManifestInputs) (*App, error) {
 		refreshIntervalHours = int64(refreshIntervalNanoseconds / time.Hour)
 	}
 
-	var policyScopes []*PolicyScope
-	for _, policyScope := range p.PolicyScopes {
-		var rightsFulfillment []*RightFulfillment
-		for rightCode, fulfillment := range policyScope.Fulfillment {
-			rightsFulfillment = append(rightsFulfillment, &RightFulfillment{
-				RightCode:   rightCode,
-				Fulfillment: fulfillment,
-			})
-		}
-
-		policyScopes = append(policyScopes, &PolicyScope{
-			Code:              policyScope.Code,
-			Name:              policyScope.Name,
-			Description:       policyScope.Description,
-			RegionCodes:       policyScope.Regions,
-			RegulationCodes:   policyScope.Regulations,
-			RightsFulfillment: rightsFulfillment,
-		})
-	}
-
-	var legalBases []*LegalBasis
-	for _, legalBasis := range p.LegalBases {
-		legalBases = append(legalBases, &LegalBasis{
-			Code:                  legalBasis.Code,
-			Name:                  legalBasis.Name,
-			Description:           legalBasis.Description,
-			RequiresOptIn:         legalBasis.RequiresOptIn,
-			AllowOptOut:           legalBasis.AllowOptOut,
-			RequiresPrivacyPolicy: legalBasis.RequiresPrivacyPolicy,
-		})
-	}
-
-	var purposes []*Purpose
-	for _, purpose := range p.Purposes {
-		var cookies []*Cookie
-		for _, cookie := range purpose.Cookies {
-			cookies = append(cookies, &Cookie{
-				Code:            cookie.Code,
-				Name:            cookie.Name,
-				Description:     cookie.Description,
-				Host:            cookie.Host,
-				Duration:        CookieDurationValues[cookie.Duration],
-				Provenance:      CookieProvenanceValues[cookie.Provenance],
-				Category:        CookieCategoryValues[cookie.Category],
-				ServiceProvider: cookie.ServiceProvider,
-			})
-		}
-
-		purposes = append(purposes, &Purpose{
-			Code:                  purpose.Code,
-			Name:                  purpose.Name,
-			Description:           purpose.Description,
-			TcfID:                 purpose.TcfID,
-			TcfType:               purpose.TcfType,
-			Editable:              purpose.Editable,
-			LegalBasisRestriction: purpose.LegalBasisRestriction,
-			DisplayName:           purpose.DisplayName,
-			DisplayDescription:    purpose.DisplayDescription,
-			ProcessingPurpose:     purpose.ProcessingPurpose,
-			LegalBasis:            purpose.LegalBasis,
-			Cookies:               cookies,
-			CanonicalPurposes:     purpose.CanonicalPurposes,
-			Translations:          purpose.Translations,
-			DataSubjectRole:       DataSubjectRoleValues[purpose.DataSubjectRole],
-			DataRole:              DataRoleValues[purpose.DataRole],
-		})
-	}
-
-	var workflows []*WorkflowDefinition
-	for _, workflow := range p.Workflows {
-		var steps []*Step
-		for _, appConfigStep := range workflow.Steps {
-			step := &Step{}
-
-			if appConfigStep.Start != nil {
-				step.ID = appConfigStep.Start.ID
-				step.Code = appConfigStep.Start.Code
-				step.Description = appConfigStep.Start.Description
-				step.Start = &StartStep{
-					Transition: appConfigStep.Start.Next,
-					Params:     appConfigStep.Start.Params,
-				}
-			} else if appConfigStep.Finish != nil {
-				step.ID = appConfigStep.Finish.ID
-				step.Code = appConfigStep.Finish.Code
-				step.Description = appConfigStep.Finish.Description
-				step.Finish = &FinishStep{
-					Params: appConfigStep.Finish.Params,
-				}
-			} else if appConfigStep.Activity != nil {
-				step.ID = appConfigStep.Activity.ID
-				step.Code = appConfigStep.Activity.Code
-				step.Description = appConfigStep.Activity.Description
-				step.Activity = &ActivityStep{
-					Code: appConfigStep.Activity.Code,
-					Options: &ActivityOptions{
-						TaskQueue:              appConfigStep.Activity.Options.TaskQueue,
-						ScheduleToCloseTimeout: appConfigStep.Activity.Options.ScheduleToCloseTimeout,
-						ScheduleToStartTimeout: appConfigStep.Activity.Options.ScheduleToStartTimeout,
-						StartToCloseTimeout:    appConfigStep.Activity.Options.StartToCloseTimeout,
-						HeartbeatTimeout:       appConfigStep.Activity.Options.HeartbeatTimeout,
-						WaitForCancellation:    appConfigStep.Activity.Options.WaitForCancellation,
-					},
-					Params:               appConfigStep.Activity.Params,
-					Transition:           appConfigStep.Activity.Next,
-					TemporalFunctionName: appConfigStep.Activity.Fn,
-				}
-			} else if appConfigStep.ChildWorkflow != nil {
-				step.ID = appConfigStep.ChildWorkflow.ID
-				step.Code = appConfigStep.ChildWorkflow.Code
-				step.Description = appConfigStep.ChildWorkflow.Description
-				step.Workflow = &ChildWorkflowStep{
-					Code: appConfigStep.ChildWorkflow.Code,
-					Options: &ChildWorkflowOptions{
-						TaskQueue:                appConfigStep.ChildWorkflow.Options.TaskQueue,
-						WorkflowExecutionTimeout: appConfigStep.ChildWorkflow.Options.WorkflowExecutionTimeout,
-						WorkflowRunTimeout:       appConfigStep.ChildWorkflow.Options.WorkflowRunTimeout,
-						WorkflowTaskTimeout:      appConfigStep.ChildWorkflow.Options.WorkflowTaskTimeout,
-						WaitForCancellation:      appConfigStep.ChildWorkflow.Options.WaitForCancellation,
-						Memo:                     appConfigStep.ChildWorkflow.Options.Memo,
-						SearchAttributes:         appConfigStep.ChildWorkflow.Options.SearchAttributes,
-						RetryPolicy:              appConfigStep.ChildWorkflow.Options.RetryPolicy,
-					},
-					Params:               appConfigStep.ChildWorkflow.Params,
-					Transition:           appConfigStep.ChildWorkflow.Next,
-					TemporalFunctionName: appConfigStep.ChildWorkflow.Fn,
-				}
-			} else if appConfigStep.Gateway != nil {
-				step.ID = appConfigStep.Gateway.ID
-				step.Code = appConfigStep.Gateway.Code
-				step.Description = appConfigStep.Gateway.Description
-				step.Gateway = &GatewayStep{
-					Mode:        GatewayStepModeValues[appConfigStep.Gateway.Mode],
-					Transitions: appConfigStep.Gateway.Next,
-				}
-			}
-
-			steps = append(steps, step)
-		}
-
-		workflows = append(workflows, &WorkflowDefinition{
-			Code:     workflow.Code,
-			Name:     workflow.Name,
-			Readonly: workflow.Readonly,
-			Options:  workflow.Options,
-			Steps:    steps,
-		})
-	}
-
-	var activities []*WorkflowActivityDefinition
-	for _, activity := range p.Activities {
-		// TODO: Upload icon
-		icon := &IconDefinition{}
-
-		activities = append(activities, &WorkflowActivityDefinition{
-			Code: activity.Code,
-			Name: activity.Name,
-			Icon: icon,
-			Activity: &ActivityDefinition{
-				Options: &ActivityOptions{
-					TaskQueue:              activity.Options.TaskQueue,
-					ScheduleToCloseTimeout: activity.Options.ScheduleToCloseTimeout,
-					ScheduleToStartTimeout: activity.Options.ScheduleToStartTimeout,
-					StartToCloseTimeout:    activity.Options.StartToCloseTimeout,
-					HeartbeatTimeout:       activity.Options.HeartbeatTimeout,
-					WaitForCancellation:    activity.Options.WaitForCancellation,
-				},
-				Params:               activity.Params,
-				Outputs:              activity.Outputs,
-				Config:               activity.Config,
-				TemporalFunctionName: activity.Fn,
-			},
-		})
-	}
-
-	var childWorkflows []*WorkflowActivityDefinition
-	for _, childWorkflow := range p.ChildWorkflows {
-		// TODO: Upload icon
-		icon := &IconDefinition{}
-
-		childWorkflows = append(childWorkflows, &WorkflowActivityDefinition{
-			Code: childWorkflow.Code,
-			Name: childWorkflow.Name,
-			Icon: icon,
-			Workflow: &ChildWorkflowDefinition{
-				Options: &ChildWorkflowOptions{
-					TaskQueue:                childWorkflow.Options.TaskQueue,
-					WorkflowExecutionTimeout: childWorkflow.Options.WorkflowExecutionTimeout,
-					WorkflowRunTimeout:       childWorkflow.Options.WorkflowRunTimeout,
-					WorkflowTaskTimeout:      childWorkflow.Options.WorkflowTaskTimeout,
-					WaitForCancellation:      childWorkflow.Options.WaitForCancellation,
-				},
-				Params:               childWorkflow.Params,
-				Outputs:              childWorkflow.Outputs,
-				Config:               childWorkflow.Config,
-				TemporalFunctionName: childWorkflow.Fn,
-			},
-		})
-	}
-
 	var eventTypes []string
 	if p.Webhook != nil {
 		eventTypes = p.Webhook.Events
 	}
 
-	var cookies []*Cookie
-	for _, cookie := range p.Cookies {
-		cookies = append(cookies, &Cookie{
-			Code:            cookie.Code,
-			Name:            cookie.Name,
-			Description:     cookie.Description,
-			Host:            cookie.Host,
-			Duration:        CookieDurationValues[cookie.Duration],
-			Provenance:      CookieProvenanceValues[cookie.Provenance],
-			Category:        CookieCategoryValues[cookie.Category],
-			ServiceProvider: cookie.ServiceProvider,
-			AppCode:         p.Code,
-		})
+	var tagPluginScript *NamedBlob
+	if len(p.TagPluginScript) > 0 {
+		tagPluginScript, err = getNamedBlob(p.TagPluginScript)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	var assets []*NamedBlob
+	if len(p.AssetsDir) > 0 {
+		if p.AssetsDir, err = filepath.Abs(p.AssetsDir); err != nil {
+			return nil, err
+		}
+
+		p.AssetsDir = p.AssetsDir + "/"
+
+		if err = filepath.Walk(p.AssetsDir, func(path string, info fs.FileInfo, err error) error {
+			if err != nil {
+				return nil
+			}
+
+			if path, err = filepath.Abs(path); err != nil {
+				return err
+			}
+
+			blob, err := getNamedBlob(path)
+			if err != nil {
+				return err
+			}
+
+			blob.Name = strings.TrimPrefix(blob.Name, p.AssetsDir)
+
+			assets = append(assets, blob)
+			return nil
+		}); err != nil {
+			return nil, err
+		}
+	}
+
+	var customObjects []interface{}
+	if len(p.CustomObjectsDir) > 0 {
+		if err = filepath.Walk(p.CustomObjectsDir, func(path string, info fs.FileInfo, err error) error {
+			if err != nil {
+				return nil
+			}
+
+			ext := filepath.Ext(path)
+			if ext != ".yml" && ext != ".yaml" {
+				return nil
+			}
+
+			blob, err := ioutil.ReadFile(path)
+			if err != nil {
+				return err
+			}
+
+			var obj interface{}
+			if err = yaml.Unmarshal(blob, obj); err != nil {
+				return err
+			}
+
+			customObjects = append(customObjects, obj)
+			return nil
+		}); err != nil {
+			return nil, err
+		}
 	}
 
 	return &App{
-		ID:                     p.ID,
-		Code:                   p.Code,
-		OrgCode:                p.OrgCode,
-		Name:                   p.Name,
-		Version:                p.Version,
-		Depends:                p.Depends,
-		Provides:               p.Provides,
-		Type:                   AppTypeValues[p.Type],
-		AutoUpgrade:            p.AutoUpgrade,
-		Instances:              AppAllowedInstancesValues[p.Instances],
-		Rules:                  p.Rules,
-		Capabilities:           appCapabilities,
-		SupportedLanguages:     p.SupportedLanguages,
-		SupportedPurposes:      p.SupportedPurposes,
-		SupportedRights:        p.SupportedRights,
-		PermissionNote:         p.PermissionNote,
-		Permissions:            p.Permissions,
-		InfoUrl:                p.InfoUrl,
-		SetupUrl:               p.SetupUrl,
-		HomepageUrl:            p.HomepageUrl,
-		ExpireUserTokens:       p.ExpireUserTokens,
-		RefreshInterval:        refreshIntervalHours,
-		RequestUserAuth:        p.RequestUserAuth,
-		UserAuthCallbackUrl:    p.UserAuthCallbackUrl,
-		RedirectOnUpdate:       p.RedirectOnUpdate,
-		Form:                   p.Form,
-		IdentitySpaces:         p.IdentitySpaces,
-		Purposes:               purposes,
-		Rights:                 p.Rights,
-		Regulations:            p.Regulations,
-		Tcf:                    p.Tcf,
-		Workflows:              workflows,
-		Activities:             activities,
-		ChildWorkflows:         childWorkflows,
-		PurposeTemplates:       p.PurposeTemplates,
-		LegalBasisRestrictions: p.LegalBasisRestrictions,
-		PolicyScopes:           policyScopes,
-		LegalBases:             legalBases,
-		Themes:                 p.Themes,
-		EventTypes:             eventTypes,
-		Cookies:                cookies,
+		ID:                  p.ID,
+		Code:                p.Code,
+		OrgCode:             p.OrgCode,
+		Name:                p.Name,
+		Version:             p.Version,
+		Depends:             p.Depends,
+		Provides:            p.Provides,
+		Type:                AppTypeValues[p.Type],
+		AutoUpgrade:         p.AutoUpgrade,
+		Instances:           AppAllowedInstancesValues[p.Instances],
+		Rules:               p.Rules,
+		Capabilities:        appCapabilities,
+		SupportedLanguages:  p.SupportedLanguages,
+		SupportedPurposes:   p.SupportedPurposes,
+		SupportedRights:     p.SupportedRights,
+		PermissionNote:      p.PermissionNote,
+		Permissions:         p.Permissions,
+		InfoUrl:             p.InfoUrl,
+		SetupUrl:            p.SetupUrl,
+		HomepageUrl:         p.HomepageUrl,
+		ExpireUserTokens:    p.ExpireUserTokens,
+		RefreshInterval:     refreshIntervalHours,
+		RequestUserAuth:     p.RequestUserAuth,
+		UserAuthCallbackUrl: p.UserAuthCallbackUrl,
+		RedirectOnUpdate:    p.RedirectOnUpdate,
+		Form:                p.Form,
+		IdentitySpaces:      p.IdentitySpaces,
+		EventTypes:          eventTypes,
+		TagPluginScript:     tagPluginScript,
+		Assets:              assets,
+		CustomObjects:       customObjects,
 	}, nil
 }
 

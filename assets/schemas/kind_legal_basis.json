@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "title": "Legal Basis",
+  "required": [
+    "kind",
+    "code",
+    "name"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string",
+      "title": "Kind of custom object",
+      "pattern": "legalBasis"
+    },
+    "code": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "requiresOptIn": {
+      "type": "boolean"
+    },
+    "allowOptOut": {
+      "type": "boolean"
+    },
+    "requiresPrivacyPolicy": {
+      "type": "boolean"
+    }
+  }
+}
