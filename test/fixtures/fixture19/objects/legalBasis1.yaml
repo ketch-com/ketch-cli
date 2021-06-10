@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: LegalBasis
+metadata:
+  code: disclosure
+  name: Disclosure
+data:
+  requiresOptIn: true

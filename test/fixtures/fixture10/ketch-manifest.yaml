@@ -1,0 +1,114 @@
+apiversion: v1
+kind: App
+metadata:
+  code: fixture
+  name: Fixture
+  description: Fixture description
+data:
+  assets: []
+  autoupgrade: true
+  capabilities:
+    - capability
+  contacts:
+    - email: support@example.com
+      name: Support
+      type: support
+  customobjects: []
+  customersupporturl: https://support
+  depends: a, b, c
+  detaileddescription: detailed desc
+  docurl: https://docs
+  expireusertokens: true
+  form:
+    - data: null
+      default: ""
+      description: ""
+      editable: false
+      maxlength: 0
+      minlength: 0
+      multiple: false
+      name: ""
+      pattern: ""
+      placeholder: ""
+      required: false
+      showonview: false
+      showvalueonedit: false
+      spellcheck: false
+      type: ""
+  homepageurl: https://homepage
+  identityspaces:
+    - linked:
+        code: linked
+        description: linked identity
+        filters:
+          - format: raw
+            type: idfa
+        name: linked idfa
+      managed: null
+    - linked: null
+      managed:
+        code: managed
+        description: managed identity
+        format: raw
+        name: managed aaid
+        type: aaid
+        variable:
+          jwt:
+            key: key
+            location: claims
+          location: cookie
+          name: myjwt
+  infourl: https://info
+  instances: single
+  logo:
+    code: logo
+    contenttype: image/png
+    contents: []
+    height: 234
+    link: images/logo.png
+    title: Logo
+    width: 345
+  permissions:
+    - scope1
+  previews:
+    - code: preview
+      contenttype: image/png
+      contents: []
+      height: 123
+      link: images/preview1.png
+      title: Preview 1
+      width: 456
+  primarycategory: privacy
+  privacypolicyurl: https://privacy
+  provides:
+    - sku1
+    - sku2
+  redirectonupdate: true
+  refreshinterval: 2h
+  requestuserauth: true
+  rules:
+    install: to install
+    view: to view
+  secondarycategory: privacy
+  setupurl: https://setup
+  shortdescription: short description
+  statusurl: https://status
+  supportedlanguages:
+    - en
+  supportedpurposes:
+    - analytics
+  supportedrights:
+    - erasure
+  tosurl: https://tos
+  type: custom
+  userauthcallbackurl: https://auth
+  version: 0.0.0
+  webhook:
+    authorization: ""
+    events:
+      - permit
+    maxqps: 0
+    secret: []
+    tls:
+      insecure: true
+    url: https://webhook

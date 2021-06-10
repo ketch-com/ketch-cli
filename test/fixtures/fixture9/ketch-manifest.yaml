@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: App
+metadata:
+  code: fixture
+  name: Fixture
+  description: Fixture description
+data:
+  primaryCategory: privacy
+  secondaryCategory: privacy
