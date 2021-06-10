@@ -15,7 +15,7 @@ var rootCmd = &cobra.Command{
 	Short:            version.Description,
 	Version:          version.String(),
 	TraverseChildren: true,
-	PreRunE: func(cmd *cobra.Command, args []string) error {
+	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 		homeDir, err := os.UserHomeDir()
 		if err != nil {
 			return err
@@ -28,7 +28,7 @@ var rootCmd = &cobra.Command{
 
 		envFiles := []string{".env", path.Join(homeDir, ".ketchrc"), ".ketchrc", configFile}
 		for _, file := range envFiles {
-			if _, err := os.Stat(file); err == nil {
+			if f, err := os.Stat(file); err == nil && !f.IsDir() {
 				_ = godotenv.Overload(file)
 			}
 		}
