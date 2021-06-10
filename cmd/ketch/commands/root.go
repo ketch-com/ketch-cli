@@ -2,11 +2,12 @@ package commands
 
 import (
 	"context"
+	"github.com/joho/godotenv"
 	"github.com/spf13/cobra"
-	"go.ketch.com/cli/ketch-cli/config"
 	"go.ketch.com/cli/ketch-cli/flags"
 	"go.ketch.com/cli/ketch-cli/version"
 	"os"
+	"path"
 )
 
 var rootCmd = &cobra.Command{
@@ -14,10 +15,30 @@ var rootCmd = &cobra.Command{
 	Short:            version.Description,
 	Version:          version.String(),
 	TraverseChildren: true,
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		homeDir, err := os.UserHomeDir()
+		if err != nil {
+			return err
+		}
+
+		configFile, err := cmd.Flags().GetString(flags.Config)
+		if err != nil {
+			return err
+		}
+
+		envFiles := []string{".env", path.Join(homeDir, ".ketchrc"), ".ketchrc", configFile}
+		for _, file := range envFiles {
+			if _, err := os.Stat(file); err == nil {
+				_ = godotenv.Overload(file)
+			}
+		}
+
+		return nil
+	},
 }
 
 // Execute executes the command.
-func Execute(ctx context.Context, cfg *config.Config) error {
+func Execute(ctx context.Context) error {
 	rootCmd.SetHelpCommand(&cobra.Command{
 		Use:   "help [command]",
 		Short: "help about any command",
@@ -37,9 +58,9 @@ Simply type ` + rootCmd.Name() + ` help [path to command] for full details.`,
 	})
 
 	rootCmd.PersistentFlags().String(flags.Token, os.Getenv("KETCH_TOKEN"), "auth token")
+	rootCmd.PersistentFlags().String(flags.Config, ".ketchrc", "environment file")
 	rootCmd.SilenceUsage = true
 
-	ctx = config.AddToContext(ctx, cfg)
 	if err := rootCmd.ExecuteContext(ctx); err != nil {
 		return err
 	}

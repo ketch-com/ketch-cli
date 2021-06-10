@@ -14,7 +14,7 @@ func init() {
 		Short: "publish an app",
 	}
 
-	publish.Flags().StringP(flags.File, "f", "ketch-manifest.yml", "app config name")
+	publish.Flags().StringP(flags.File, "f", "ketch-manifest.yml", "app manifest filename")
 	publish.Flags().String(flags.Version, os.Getenv("KETCH_VERSION"), "app version")
 	publish.Flags().String(flags.Token, os.Getenv("KETCH_TOKEN"), "token for Ketch API")
 	publish.Flags().String(flags.URL, os.Getenv("KETCH_URL"), "url to Ketch API")

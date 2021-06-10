@@ -10,6 +10,7 @@ import (
 	"go.ketch.com/cli/ketch-cli/assets"
 	"go.ketch.com/cli/ketch-cli/config"
 	"go.ketch.com/cli/ketch-cli/flags"
+	"go.ketch.com/cli/ketch-cli/version"
 	"go.ketch.com/lib/orlop"
 	"go.ketch.com/lib/orlop/errors"
 	"gopkg.in/yaml.v3"
@@ -76,11 +77,14 @@ func Publish(cmd *cobra.Command, args []string) error {
 		manifestInputs.Version = versionCliArg
 	}
 
-	if err := validateAppConfig(manifestInputs); err != nil {
+	if err = validateAppConfig(manifestInputs); err != nil {
 		return err
 	}
 
-	cfg := config.GetFromContext(ctx)
+	cfg := &config.Config{}
+	if err = orlop.Unmarshal(version.Name, cfg); err != nil {
+		return err
+	}
 
 	cfg.URL = rootUrl
 	cfg.TLS = *t
