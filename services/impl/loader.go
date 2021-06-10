@@ -22,7 +22,7 @@ import (
 )
 
 const (
-	currentVersion    = "v1"
+	currentVersion    = app.CurrentVersion
 	defaultPlugin     = "plugin/plugin.js"
 	defaultObjectsDir = "objects/"
 	defaultAssetsDir  = "assets/"
