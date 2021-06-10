@@ -59,11 +59,12 @@ Simply type ` + rootCmd.Name() + ` help [path to command] for full details.`,
 
 	publish.Flags().StringP(flags.File, "f", "ketch-manifest.yml", "app object file")
 	publish.Flags().String(flags.Version, os.Getenv("KETCH_VERSION"), "app version")
-	publish.Flags().String(flags.Token, os.Getenv("KETCH_TOKEN"), "token for Ketch API")
-	publish.Flags().String(flags.URL, os.Getenv("KETCH_URL"), "url to Ketch API")
 	publish.Flags().String(flags.Plugin, os.Getenv("KETCH_PLUGIN"), "path to the plugin.js file")
 	publish.Flags().String(flags.Objects, os.Getenv("KETCH_OBJECTS"), "path to the objects directory")
 	publish.Flags().String(flags.Assets, os.Getenv("KETCH_ASSETS"), "path to the assets directory")
+	publish.Flags().StringToStringP(flags.Env, "E", nil, "environment variables")
+	publish.Flags().String(flags.Token, os.Getenv("KETCH_TOKEN"), "token for Ketch API")
+	publish.Flags().String(flags.URL, os.Getenv("KETCH_URL"), "url to Ketch API")
 
 	tlsFlags(publish.Flags())
 
@@ -76,6 +77,7 @@ Simply type ` + rootCmd.Name() + ` help [path to command] for full details.`,
 	}
 
 	validate.Flags().StringP(flags.File, "f", "ketch-manifest.yml", "app object file")
+	validate.Flags().StringToStringP(flags.Env, "E", nil, "environment variables")
 
 	rootCmd.AddCommand(validate)
 

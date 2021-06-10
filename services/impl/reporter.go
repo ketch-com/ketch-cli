@@ -6,7 +6,7 @@ import (
 	"go.ketch.com/cli/ketch-cli/services"
 )
 
-type reporter struct {}
+type reporter struct{}
 
 func NewReporter() services.Reporter {
 	return &reporter{}
@@ -16,7 +16,7 @@ func (reporter) Report(ctx context.Context, format string, args ...interface{}) 
 	fmt.Println(fmt.Sprintf(format, args...))
 }
 
-type nilReporter struct {}
+type nilReporter struct{}
 
 func NewNilReporter() services.Reporter {
 	return &nilReporter{}

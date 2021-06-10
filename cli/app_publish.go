@@ -36,6 +36,10 @@ func PublishApp(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	if loaderConfig.Env, err = cmd.Flags().GetStringToString(flags.Env); err != nil {
+		return err
+	}
+
 	publisherConfig := &config.PublisherConfig{}
 
 	if publisherConfig.AccessToken, err = cmd.Flags().GetString(flags.Token); err != nil {
@@ -67,4 +71,3 @@ func PublishApp(cmd *cobra.Command, args []string) error {
 
 	return nil
 }
-

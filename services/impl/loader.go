@@ -29,14 +29,14 @@ const (
 )
 
 type loader struct {
-	reporter  services.Reporter
-	client    *http.Client
+	reporter services.Reporter
+	client   *http.Client
 }
 
 func NewLoader(reporter services.Reporter, client *http.Client) services.Loader {
 	return &loader{
-		reporter:  reporter,
-		client:    client,
+		reporter: reporter,
+		client:   client,
 	}
 }
 
@@ -120,6 +120,12 @@ func (l *loader) Load(ctx context.Context, cfg *config.LoaderConfig) (*app.App, 
 		return nil, err
 	}
 
+	if len(cfg.Env) > 0 {
+		b = []byte(os.Expand(string(b), func(s string) string {
+			return cfg.Env[s]
+		}))
+	}
+
 	b = []byte(os.ExpandEnv(string(b)))
 
 	manifest := &app.App{}
@@ -198,7 +204,7 @@ func (l *loader) LoadExternalFiles(ctx context.Context, cfg *config.LoaderConfig
 				return err
 			}
 
-			relativePath := strings.TrimPrefix(path, cfg.ObjectsDir + "/")
+			relativePath := strings.TrimPrefix(path, cfg.ObjectsDir+"/")
 
 			b, err := os.ReadFile(path)
 			if err != nil {
@@ -271,7 +277,7 @@ func (l *loader) LoadExternalFiles(ctx context.Context, cfg *config.LoaderConfig
 
 			manifest.Data.Assets = append(manifest.Data.Assets, &app.AppAsset{
 				Link: path,
-				Name: strings.TrimPrefix(path, cfg.AssetsDir + "/"),
+				Name: strings.TrimPrefix(path, cfg.AssetsDir+"/"),
 			})
 			return nil
 		})
@@ -364,4 +370,3 @@ func (l *loader) isRemoteLink(link string) bool {
 
 	return true
 }
-

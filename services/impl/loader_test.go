@@ -279,7 +279,7 @@ func TestLoadExternalFiles(t *testing.T) {
 		{
 			Name:   "fixture10",
 			Config: &config.LoaderConfig{},
-			Error: errors.New("open images/logo.png: no such file or directory"),
+			Error:  errors.New("open images/logo.png: no such file or directory"),
 		},
 		{
 			Name:   "fixture11",
@@ -323,31 +323,187 @@ func TestLoadExternalFiles(t *testing.T) {
 		{
 			Name:   "fixture14",
 			Config: &config.LoaderConfig{},
-			Error: errors.New("custom object 'legalBasis1.yaml' is empty"),
+			Error:  errors.New("custom object 'legalBasis1.yaml' is empty"),
 		},
 		{
 			Name:   "fixture15",
 			Config: &config.LoaderConfig{},
-			Error: errors.New("custom object 'legalBasis1.yaml' is invalid - apiVersion must be 'v1'"),
+			Error:  errors.New("custom object 'legalBasis1.yaml' is invalid - apiVersion must be 'v1'"),
 		},
 		{
 			Name:   "fixture16",
 			Config: &config.LoaderConfig{},
-			Error: errors.New("custom object 'legalBasis1.yaml' is invalid - kind is empty"),
+			Error:  errors.New("custom object 'legalBasis1.yaml' is invalid - kind is empty"),
 		},
 		{
 			Name:   "fixture17",
 			Config: &config.LoaderConfig{},
-			Error: errors.New("custom object 'legalBasis1.yaml' is invalid - metadata is empty"),
+			Error:  errors.New("custom object 'legalBasis1.yaml' is invalid - metadata is empty"),
 		},
 		{
 			Name:   "fixture18",
 			Config: &config.LoaderConfig{},
-			Error: errors.New("custom object 'legalBasis1.yaml' is invalid - data is empty"),
+			Error:  errors.New("custom object 'legalBasis1.yaml' is invalid - data is empty"),
 		},
 		{
 			Name:   "fixture19",
 			Config: &config.LoaderConfig{},
+			Expected: copyApp(baseApp, func(a *app.App) {
+				a.Data.Logo.Contents = []byte("logo\n")
+				a.Data.Previews[0].Contents = []byte("preview1\n")
+				a.Data.Assets = append(a.Data.Assets, &app.AppAsset{
+					ContentType: "application/javascript",
+					Contents:    []byte("alert(1);\n"),
+					Name:        "plugin.js",
+				})
+				a.Data.Assets = append(a.Data.Assets, &app.AppAsset{
+					ContentType: "image/png",
+					Name:        "image.png",
+					Contents:    []byte("image\n"),
+				})
+				a.Data.CustomObjects = append(a.Data.CustomObjects, &app.AppObject{
+					ApiVersion: "v1",
+					Kind:       "LegalBasis",
+					Metadata: &app.AppMetadata{
+						Code: "disclosure",
+						Name: "Disclosure",
+					},
+					Data: &types.Struct{
+						Fields: map[string]*types.Value{
+							"requiresOptIn": {
+								Kind: &types.Value_BoolValue{
+									BoolValue: true,
+								},
+							},
+						},
+					},
+				})
+			}),
+		},
+		{
+			Name: "fixture20",
+			Config: &config.LoaderConfig{
+				PluginFilename: "alt_plugin/plugin.js",
+			},
+			Expected: copyApp(baseApp, func(a *app.App) {
+				a.Data.Logo.Contents = []byte("logo\n")
+				a.Data.Previews[0].Contents = []byte("preview1\n")
+				a.Data.Assets = append(a.Data.Assets, &app.AppAsset{
+					ContentType: "application/javascript",
+					Contents:    []byte("alert(1);\n"),
+					Name:        "plugin.js",
+				})
+				a.Data.Assets = append(a.Data.Assets, &app.AppAsset{
+					ContentType: "image/png",
+					Name:        "image.png",
+					Contents:    []byte("image\n"),
+				})
+				a.Data.CustomObjects = append(a.Data.CustomObjects, &app.AppObject{
+					ApiVersion: "v1",
+					Kind:       "LegalBasis",
+					Metadata: &app.AppMetadata{
+						Code: "disclosure",
+						Name: "Disclosure",
+					},
+					Data: &types.Struct{
+						Fields: map[string]*types.Value{
+							"requiresOptIn": {
+								Kind: &types.Value_BoolValue{
+									BoolValue: true,
+								},
+							},
+						},
+					},
+				})
+			}),
+		},
+		{
+			Name: "fixture21",
+			Config: &config.LoaderConfig{
+				PluginFilename: "alt_plugin/plugin.js",
+				AssetsDir:      "alt_assets",
+			},
+			Expected: copyApp(baseApp, func(a *app.App) {
+				a.Data.Logo.Contents = []byte("logo\n")
+				a.Data.Previews[0].Contents = []byte("preview1\n")
+				a.Data.Assets = append(a.Data.Assets, &app.AppAsset{
+					ContentType: "application/javascript",
+					Contents:    []byte("alert(1);\n"),
+					Name:        "plugin.js",
+				})
+				a.Data.Assets = append(a.Data.Assets, &app.AppAsset{
+					ContentType: "image/png",
+					Name:        "image.png",
+					Contents:    []byte("image\n"),
+				})
+				a.Data.CustomObjects = append(a.Data.CustomObjects, &app.AppObject{
+					ApiVersion: "v1",
+					Kind:       "LegalBasis",
+					Metadata: &app.AppMetadata{
+						Code: "disclosure",
+						Name: "Disclosure",
+					},
+					Data: &types.Struct{
+						Fields: map[string]*types.Value{
+							"requiresOptIn": {
+								Kind: &types.Value_BoolValue{
+									BoolValue: true,
+								},
+							},
+						},
+					},
+				})
+			}),
+		},
+		{
+			Name: "fixture22",
+			Config: &config.LoaderConfig{
+				PluginFilename: "alt_plugin/plugin.js",
+				AssetsDir:      "alt_assets",
+				ObjectsDir:     "alt_objects",
+			},
+			Expected: copyApp(baseApp, func(a *app.App) {
+				a.Data.Logo.Contents = []byte("logo\n")
+				a.Data.Previews[0].Contents = []byte("preview1\n")
+				a.Data.Assets = append(a.Data.Assets, &app.AppAsset{
+					ContentType: "application/javascript",
+					Contents:    []byte("alert(1);\n"),
+					Name:        "plugin.js",
+				})
+				a.Data.Assets = append(a.Data.Assets, &app.AppAsset{
+					ContentType: "image/png",
+					Name:        "image.png",
+					Contents:    []byte("image\n"),
+				})
+				a.Data.CustomObjects = append(a.Data.CustomObjects, &app.AppObject{
+					ApiVersion: "v1",
+					Kind:       "LegalBasis",
+					Metadata: &app.AppMetadata{
+						Code: "disclosure",
+						Name: "Disclosure",
+					},
+					Data: &types.Struct{
+						Fields: map[string]*types.Value{
+							"requiresOptIn": {
+								Kind: &types.Value_BoolValue{
+									BoolValue: true,
+								},
+							},
+						},
+					},
+				})
+			}),
+		},
+		{
+			Name: "fixture23",
+			Config: &config.LoaderConfig{
+				PluginFilename: "alt_plugin/plugin.js",
+				AssetsDir:      "alt_assets",
+				ObjectsDir:     "alt_objects",
+				Env: map[string]string{
+					"APP_NAME": "Fixture",
+				},
+			},
 			Expected: copyApp(baseApp, func(a *app.App) {
 				a.Data.Logo.Contents = []byte("logo\n")
 				a.Data.Previews[0].Contents = []byte("preview1\n")

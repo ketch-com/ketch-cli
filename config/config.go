@@ -1,7 +1,6 @@
 package config
 
 type ValidatorConfig struct {
-
 }
 
 type LoaderConfig struct {
@@ -10,6 +9,7 @@ type LoaderConfig struct {
 	PluginFilename string
 	ObjectsDir     string
 	AssetsDir      string
+	Env            map[string]string
 }
 
 type PublisherConfig struct {

@@ -9,6 +9,7 @@ const (
 	Plugin        = "plugin"
 	Objects       = "objects"
 	Assets        = "assets"
+	Env           = "env"
 	Version       = "version"
 	TLSInsecure   = "insecure"
 	TLSCert       = "tls-cert"

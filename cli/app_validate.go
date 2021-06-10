@@ -23,6 +23,10 @@ func ValidateApp(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	if loaderConfig.Env, err = cmd.Flags().GetStringToString(flags.Env); err != nil {
+		return err
+	}
+
 	reporter := impl.NewReporter()
 
 	loader := impl.NewLoader(reporter, &http.Client{})

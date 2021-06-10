@@ -21,8 +21,8 @@ func TestValidate(t *testing.T) {
 	p := NewValidator(cfg, NewReporter())
 
 	for _, testCase := range []struct {
-		Name     string
-		Error    error
+		Name  string
+		Error error
 	}{
 		{
 			Name:  "fixture2",
