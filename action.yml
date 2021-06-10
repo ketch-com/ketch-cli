@@ -9,6 +9,10 @@ inputs:
     description: 'Configuration filename'
     required: false
     default: 'ketch-manifest.yml'
+  config:
+    description: 'Environment filename'
+    required: false
+    default: '.ketchrc'
   token:
     description: 'Ketch token'
     required: true
@@ -16,10 +20,6 @@ inputs:
     description: 'URL to Ketch Rest'
     required: false
     default: 'https://global.ketchapi.com/rest'
-  create:
-    description: 'Flag indicating app create'
-    required: false
-    default: 'false'
 runs:
   using: 'docker'
   image: "docker://ghcr.io/ketch-com/ketch-cli:latest"
@@ -27,6 +27,8 @@ runs:
     KETCH_TOKEN: ${{ inputs.token }}
   args:
     - ${{ inputs.command }}
+    - "--config"
+    - ${{ inputs.config }}
     - "-f"
     - ${{ inputs.filename }}
     - "--token"

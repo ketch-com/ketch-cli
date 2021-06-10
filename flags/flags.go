@@ -3,6 +3,7 @@ package flags
 const (
 	File          = "file"
 	Token         = "token"
+	Config        = "config"
 	Org           = "org"
 	AppID         = "app-id"
 	URL           = "url"
