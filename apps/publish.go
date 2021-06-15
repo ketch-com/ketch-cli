@@ -103,6 +103,11 @@ func Publish(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	// do not publish app to marketplace if not custom type
+	if manifestInputs.Type != AppTypeCustom {
+		return nil
+	}
+
 	marketplaceEntry := NewAppMarketplaceEntry(manifestInputs)
 	marketplaceEntry.AppID = app.ID
 
