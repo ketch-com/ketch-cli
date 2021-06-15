@@ -443,7 +443,7 @@ func validateAppConfig(publishAppConfig ManifestInputs) error {
 }
 
 func isEntityCodeValid(appCode, entityCode string) bool {
-	if strings.HasPrefix(appCode, entityCode+".") {
+	if strings.HasPrefix(entityCode, appCode+".") {
 		return true
 	}
 
