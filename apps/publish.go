@@ -75,7 +75,6 @@ func Publish(cmd *cobra.Command, args []string) error {
 	}
 
 	for _, manifest := range manifests {
-		fmt.Println(manifest)
 		b, err := ioutil.ReadFile(manifest)
 		if err != nil {
 			return err
