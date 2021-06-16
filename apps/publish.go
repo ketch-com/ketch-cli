@@ -63,6 +63,10 @@ func Publish(cmd *cobra.Command, args []string) error {
 
 	var manifests []string
 	info, err := os.Stat(appConfig)
+	if err != nil {
+		return err
+	}
+
 	if info.IsDir(){
 		files, _ := ioutil.ReadDir(appConfig)
 		for _, file := range files {
