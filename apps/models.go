@@ -347,6 +347,11 @@ type PurposeTemplate struct {
 	LegalBasisRestriction string `yaml:"legalBasisRestriction,omitempty" json:"legalBasisRestriction,omitempty"`
 }
 
+type PurposeTemplateCollection struct {
+	Code string `yaml:"code,omitempty" json:"code,omitempty"`
+	Name string `yaml:"name,omitempty" json:"name,omitempty"`
+}
+
 type Vendor struct {
 	Id                         string   `yaml:"id,omitempty" json:"id,omitempty"`
 	Name                       string   `yaml:"name,omitempty" json:"name,omitempty"`
@@ -633,105 +638,107 @@ type WorkflowDefinition struct {
 }
 
 type ManifestInputs struct {
-	ID                     string                                 `yaml:"ID,omitempty" json:"ID,omitempty"`
-	Code                   string                                 `yaml:"code,omitempty" json:"code,omitempty"`
-	OrgCode                string                                 `yaml:"org,omitempty" json:"org,omitempty"`
-	Name                   string                                 `yaml:"name,omitempty" json:"name,omitempty"`
-	Version                string                                 `yaml:"version,omitempty" json:"version,omitempty"`
-	Depends                string                                 `yaml:"depends,omitempty" json:"depends,omitempty"`
-	Provides               []string                               `yaml:"provides,omitempty" json:"provides,omitempty"`
-	Type                   AppType                                `yaml:"type,omitempty" json:"type,omitempty"`
-	AutoUpgrade            bool                                   `yaml:"autoUpgrade,omitempty" json:"autoUpgrade,omitempty"`
-	Instances              string                                 `yaml:"instances,omitempty" json:"instances,omitempty"`
-	PrimaryCategory        string                                 `yaml:"primaryCategory,omitempty" json:"primaryCategory,omitempty"`
-	SecondaryCategory      string                                 `yaml:"secondaryCategory,omitempty" json:"secondaryCategory,omitempty"`
-	Rules                  map[string]string                      `yaml:"rules" json:"rules,omitempty"`
-	Capabilities           []string                               `yaml:"capabilities,omitempty" json:"capabilities,omitempty"`
-	SupportedLanguages     []string                               `yaml:"supportedLanguages,omitempty" json:"supportedLanguages,omitempty"`
-	SupportedPurposes      []string                               `yaml:"supportedPurposes,omitempty" json:"supportedPurposes,omitempty"`
-	SupportedRights        []string                               `yaml:"supportedRights,omitempty" json:"supportedRights,omitempty"`
-	ShortDescription       string                                 `yaml:"shortDescription,omitempty" json:"shortDescription,omitempty"`
-	DetailedDescription    string                                 `yaml:"detailedDescription,omitempty" json:"detailedDescription,omitempty"`
-	PermissionNote         string                                 `yaml:"permissionNote,omitempty" json:"permissionNote,omitempty"`
-	Permissions            []string                               `yaml:"permissions,omitempty" json:"permissions,omitempty"`
-	InfoUrl                string                                 `yaml:"infoURL,omitempty" json:"infoURL,omitempty"`
-	SetupUrl               string                                 `yaml:"setupURL,omitempty" json:"setupURL,omitempty"`
-	HomepageUrl            string                                 `yaml:"homepageURL,omitempty" json:"homepageURL,omitempty"`
-	CustomerSupportUrl     string                                 `yaml:"customerSupportURL,omitempty" json:"customerSupportURL,omitempty"`
-	PrivacyPolicyUrl       string                                 `yaml:"privacyPolicyURL,omitempty" json:"privacyPolicyURL,omitempty"`
-	StatusUrl              string                                 `yaml:"statusURL,omitempty" json:"statusURL,omitempty"`
-	TosUrl                 string                                 `yaml:"tosURL,omitempty" json:"tosURL,omitempty"`
-	DocUrl                 string                                 `yaml:"docURL,omitempty" json:"docURL,omitempty"`
-	Logo                   *AppConfigImage                        `yaml:"logo,omitempty" json:"logo,omitempty"`
-	Previews               []*AppConfigImage                      `yaml:"previews,omitempty" json:"previews,omitempty"`
-	Contacts               []*AppConfigContact                    `yaml:"contacts,omitempty" json:"contacts,omitempty"`
-	ExpireUserTokens       bool                                   `yaml:"expireUserTokens,omitempty" json:"expireUserTokens,omitempty"`
-	RefreshInterval        string                                 `yaml:"refreshInterval,omitempty" json:"refreshInterval,omitempty"`
-	RequestUserAuth        bool                                   `yaml:"requestUserAuth,omitempty" json:"requestUserAuth,omitempty"`
-	UserAuthCallbackUrl    string                                 `yaml:"userAuthCallbackURL,omitempty" json:"userAuthCallbackURL,omitempty"`
-	RedirectOnUpdate       bool                                   `yaml:"redirectOnUpdate,omitempty" json:"redirectOnUpdate,omitempty"`
-	Webhook                *Webhook                               `yaml:"webhook,omitempty" json:"webhook,omitempty"`
-	Form                   []*FormComponent                       `yaml:"form,omitempty" json:"form,omitempty"`
-	IdentitySpaces         []*IdentitySpace                       `yaml:"identitySpaces,omitempty" json:"identitySpaces,omitempty"`
-	Workflows              []*AppConfigWorkflowDefinition         `yaml:"workflows,flow,omitempty" json:"workflows,omitempty"`
-	Activities             []*AppConfigWorkflowActivityDefinition `yaml:"activities,flow,omitempty" json:"activities,omitempty"`
-	ChildWorkflows         []*AppConfigWorkflowActivityDefinition `yaml:"childWorkflows,flow,omitempty" json:"childWorkflows,omitempty"`
-	Tcf                    *Tcf                                   `yaml:"tcf,flow,omitempty" json:"tcf,omitempty"`
-	Cookies                []*AppConfigCookie                     `yaml:"cookies,flow,omitempty" json:"cookies,omitempty"`
-	PurposeTemplates       []*PurposeTemplate                     `yaml:"purposeTemplateCollections,flow,omitempty" json:"purposeTemplateCollections,omitempty"`
-	Purposes               []*AppConfigPurpose                    `yaml:"purposes,flow,omitempty" json:"purposes,omitempty"`
-	Rights                 []*Right                               `yaml:"rights,flow" json:"rights,omitempty"`
-	Regulations            []*Regulation                          `yaml:"regulations,flow" json:"regulations,omitempty"`
-	LegalBasisRestrictions []*LegalBasisRestriction               `yaml:"legalBasisRestrictions,flow,omitempty" json:"legalBasisRestrictions,omitempty"`
-	PolicyScopes           []*AppConfigPolicyScope                `yaml:"policyScopes,flow,omitempty" json:"policyScopes,omitempty"`
-	LegalBases             []*AppConfigLegalBasis                 `yaml:"legalBases,flow,omitempty" json:"legalBases,omitempty"`
-	Themes                 []*Theme                               `yaml:"themes,flow,omitempty" json:"themes,omitempty"`
+	ID                         string                                 `yaml:"ID,omitempty" json:"ID,omitempty"`
+	Code                       string                                 `yaml:"code,omitempty" json:"code,omitempty"`
+	OrgCode                    string                                 `yaml:"org,omitempty" json:"org,omitempty"`
+	Name                       string                                 `yaml:"name,omitempty" json:"name,omitempty"`
+	Version                    string                                 `yaml:"version,omitempty" json:"version,omitempty"`
+	Depends                    string                                 `yaml:"depends,omitempty" json:"depends,omitempty"`
+	Provides                   []string                               `yaml:"provides,omitempty" json:"provides,omitempty"`
+	Type                       AppType                                `yaml:"type,omitempty" json:"type,omitempty"`
+	AutoUpgrade                bool                                   `yaml:"autoUpgrade,omitempty" json:"autoUpgrade,omitempty"`
+	Instances                  string                                 `yaml:"instances,omitempty" json:"instances,omitempty"`
+	PrimaryCategory            string                                 `yaml:"primaryCategory,omitempty" json:"primaryCategory,omitempty"`
+	SecondaryCategory          string                                 `yaml:"secondaryCategory,omitempty" json:"secondaryCategory,omitempty"`
+	Rules                      map[string]string                      `yaml:"rules" json:"rules,omitempty"`
+	Capabilities               []string                               `yaml:"capabilities,omitempty" json:"capabilities,omitempty"`
+	SupportedLanguages         []string                               `yaml:"supportedLanguages,omitempty" json:"supportedLanguages,omitempty"`
+	SupportedPurposes          []string                               `yaml:"supportedPurposes,omitempty" json:"supportedPurposes,omitempty"`
+	SupportedRights            []string                               `yaml:"supportedRights,omitempty" json:"supportedRights,omitempty"`
+	ShortDescription           string                                 `yaml:"shortDescription,omitempty" json:"shortDescription,omitempty"`
+	DetailedDescription        string                                 `yaml:"detailedDescription,omitempty" json:"detailedDescription,omitempty"`
+	PermissionNote             string                                 `yaml:"permissionNote,omitempty" json:"permissionNote,omitempty"`
+	Permissions                []string                               `yaml:"permissions,omitempty" json:"permissions,omitempty"`
+	InfoUrl                    string                                 `yaml:"infoURL,omitempty" json:"infoURL,omitempty"`
+	SetupUrl                   string                                 `yaml:"setupURL,omitempty" json:"setupURL,omitempty"`
+	HomepageUrl                string                                 `yaml:"homepageURL,omitempty" json:"homepageURL,omitempty"`
+	CustomerSupportUrl         string                                 `yaml:"customerSupportURL,omitempty" json:"customerSupportURL,omitempty"`
+	PrivacyPolicyUrl           string                                 `yaml:"privacyPolicyURL,omitempty" json:"privacyPolicyURL,omitempty"`
+	StatusUrl                  string                                 `yaml:"statusURL,omitempty" json:"statusURL,omitempty"`
+	TosUrl                     string                                 `yaml:"tosURL,omitempty" json:"tosURL,omitempty"`
+	DocUrl                     string                                 `yaml:"docURL,omitempty" json:"docURL,omitempty"`
+	Logo                       *AppConfigImage                        `yaml:"logo,omitempty" json:"logo,omitempty"`
+	Previews                   []*AppConfigImage                      `yaml:"previews,omitempty" json:"previews,omitempty"`
+	Contacts                   []*AppConfigContact                    `yaml:"contacts,omitempty" json:"contacts,omitempty"`
+	ExpireUserTokens           bool                                   `yaml:"expireUserTokens,omitempty" json:"expireUserTokens,omitempty"`
+	RefreshInterval            string                                 `yaml:"refreshInterval,omitempty" json:"refreshInterval,omitempty"`
+	RequestUserAuth            bool                                   `yaml:"requestUserAuth,omitempty" json:"requestUserAuth,omitempty"`
+	UserAuthCallbackUrl        string                                 `yaml:"userAuthCallbackURL,omitempty" json:"userAuthCallbackURL,omitempty"`
+	RedirectOnUpdate           bool                                   `yaml:"redirectOnUpdate,omitempty" json:"redirectOnUpdate,omitempty"`
+	Webhook                    *Webhook                               `yaml:"webhook,omitempty" json:"webhook,omitempty"`
+	Form                       []*FormComponent                       `yaml:"form,omitempty" json:"form,omitempty"`
+	IdentitySpaces             []*IdentitySpace                       `yaml:"identitySpaces,omitempty" json:"identitySpaces,omitempty"`
+	Workflows                  []*AppConfigWorkflowDefinition         `yaml:"workflows,flow,omitempty" json:"workflows,omitempty"`
+	Activities                 []*AppConfigWorkflowActivityDefinition `yaml:"activities,flow,omitempty" json:"activities,omitempty"`
+	ChildWorkflows             []*AppConfigWorkflowActivityDefinition `yaml:"childWorkflows,flow,omitempty" json:"childWorkflows,omitempty"`
+	Tcf                        *Tcf                                   `yaml:"tcf,flow,omitempty" json:"tcf,omitempty"`
+	Cookies                    []*AppConfigCookie                     `yaml:"cookies,flow,omitempty" json:"cookies,omitempty"`
+	PurposeTemplates           []*PurposeTemplate                     `yaml:"purposeTemplates,flow,omitempty" json:"purposeTemplates,omitempty"`
+	PurposeTemplateCollections []*PurposeTemplateCollection           `yaml:"purposeTemplateCollections,flow,omitempty" json:"purposeTemplateCollections,omitempty"`
+	Purposes                   []*AppConfigPurpose                    `yaml:"purposes,flow,omitempty" json:"purposes,omitempty"`
+	Rights                     []*Right                               `yaml:"rights,flow" json:"rights,omitempty"`
+	Regulations                []*Regulation                          `yaml:"regulations,flow" json:"regulations,omitempty"`
+	LegalBasisRestrictions     []*LegalBasisRestriction               `yaml:"legalBasisRestrictions,flow,omitempty" json:"legalBasisRestrictions,omitempty"`
+	PolicyScopes               []*AppConfigPolicyScope                `yaml:"policyScopes,flow,omitempty" json:"policyScopes,omitempty"`
+	LegalBases                 []*AppConfigLegalBasis                 `yaml:"legalBases,flow,omitempty" json:"legalBases,omitempty"`
+	Themes                     []*Theme                               `yaml:"themes,flow,omitempty" json:"themes,omitempty"`
 }
 
 type App struct {
-	ID                     string                        `json:"id,omitempty"`
-	Code                   string                        `json:"code,omitempty"`
-	OrgCode                string                        `yaml:"orgCode" json:"orgCode,omitempty"`
-	Name                   string                        `json:"name,omitempty"`
-	Version                string                        `json:"version,omitempty"`
-	Depends                string                        `json:"depends,omitempty"`
-	Provides               []string                      `json:"provides,omitempty"`
-	Type                   int32                         `json:"type,omitempty"`
-	AutoUpgrade            bool                          `json:"autoUpgrade,omitempty"`
-	Instances              int32                         `json:"instances,omitempty"`
-	Rules                  map[string]string             `yaml:",flow" json:"rules,omitempty"`
-	Capabilities           []int32                       `yaml:",flow" json:"capabilities,omitempty"`
-	SupportedLanguages     []string                      `yaml:",flow" json:"supportedLanguages,omitempty"`
-	SupportedPurposes      []string                      `yaml:",flow" json:"supportedPurposes,omitempty"`
-	SupportedRights        []string                      `yaml:",flow" json:"supportedRights,omitempty"`
-	PermissionNote         string                        `json:"permissionNode,omitempty"`
-	Permissions            []string                      `yaml:",flow"`
-	InfoUrl                string                        `json:"infoURL,omitempty"`
-	SetupUrl               string                        `json:"setupURL,omitempty"`
-	HomepageUrl            string                        `json:"homepageURL,omitempty"`
-	ExpireUserTokens       bool                          `json:"expireUserTokens,omitempty"`
-	RefreshInterval        int64                         `yaml:"refreshInterval" json:"refreshInterval,omitempty"`
-	RequestUserAuth        bool                          `json:"requestUserAuth,omitempty"`
-	UserAuthCallbackUrl    string                        `json:"userAuthCallbackURL,omitempty"`
-	RedirectOnUpdate       bool                          `json:"redirectOnUpdate,omitempty"`
-	WebhookId              string                        `json:"webhookID,omitempty"`
-	Readme                 string                        `json:"readme,omitempty"`
-	Form                   []*FormComponent              `yaml:",flow"`
-	IdentitySpaces         []*IdentitySpace              `yaml:",flow" json:"identitySpaces,omitempty"`
-	Purposes               []*Purpose                    `yaml:",flow" json:"purposes,omitempty"`
-	Workflows              []*WorkflowDefinition         `json:"workflows,omitempty"`
-	Activities             []*WorkflowActivityDefinition `json:"activities,omitempty"`
-	ChildWorkflows         []*WorkflowActivityDefinition `json:"childWorkflows,omitempty"`
-	PurposeTemplates       []*PurposeTemplate            `json:"purposeTemplates,omitempty"`
-	LegalBasisRestrictions []*LegalBasisRestriction      `json:"legalBasisRestrictions,omitempty"`
-	PolicyScopes           []*PolicyScope                `json:"policyScopes,omitempty"`
-	LegalBases             []*LegalBasis                 `json:"legalBases,omitempty"`
-	Themes                 []*Theme                      `json:"themes,omitempty"`
-	Rights                 []*Right                      `yaml:",flow" json:"rights,omitempty"`
-	Regulations            []*Regulation                 `yaml:",flow" json:"regulations,omitempty"`
-	Tcf                    *Tcf                          `json:"tcf,omitempty"`
-	EventTypes             []string                      `json:"eventTypes,omitempty"`
-	Cookies                []*Cookie                     `yaml:"cookies,flow,omitempty" json:"cookies,omitempty"`
+	ID                         string                        `json:"id,omitempty"`
+	Code                       string                        `json:"code,omitempty"`
+	OrgCode                    string                        `yaml:"orgCode" json:"orgCode,omitempty"`
+	Name                       string                        `json:"name,omitempty"`
+	Version                    string                        `json:"version,omitempty"`
+	Depends                    string                        `json:"depends,omitempty"`
+	Provides                   []string                      `json:"provides,omitempty"`
+	Type                       int32                         `json:"type,omitempty"`
+	AutoUpgrade                bool                          `json:"autoUpgrade,omitempty"`
+	Instances                  int32                         `json:"instances,omitempty"`
+	Rules                      map[string]string             `yaml:",flow" json:"rules,omitempty"`
+	Capabilities               []int32                       `yaml:",flow" json:"capabilities,omitempty"`
+	SupportedLanguages         []string                      `yaml:",flow" json:"supportedLanguages,omitempty"`
+	SupportedPurposes          []string                      `yaml:",flow" json:"supportedPurposes,omitempty"`
+	SupportedRights            []string                      `yaml:",flow" json:"supportedRights,omitempty"`
+	PermissionNote             string                        `json:"permissionNode,omitempty"`
+	Permissions                []string                      `yaml:",flow"`
+	InfoUrl                    string                        `json:"infoURL,omitempty"`
+	SetupUrl                   string                        `json:"setupURL,omitempty"`
+	HomepageUrl                string                        `json:"homepageURL,omitempty"`
+	ExpireUserTokens           bool                          `json:"expireUserTokens,omitempty"`
+	RefreshInterval            int64                         `yaml:"refreshInterval" json:"refreshInterval,omitempty"`
+	RequestUserAuth            bool                          `json:"requestUserAuth,omitempty"`
+	UserAuthCallbackUrl        string                        `json:"userAuthCallbackURL,omitempty"`
+	RedirectOnUpdate           bool                          `json:"redirectOnUpdate,omitempty"`
+	WebhookId                  string                        `json:"webhookID,omitempty"`
+	Readme                     string                        `json:"readme,omitempty"`
+	Form                       []*FormComponent              `yaml:",flow"`
+	IdentitySpaces             []*IdentitySpace              `yaml:",flow" json:"identitySpaces,omitempty"`
+	Purposes                   []*Purpose                    `yaml:",flow" json:"purposes,omitempty"`
+	Workflows                  []*WorkflowDefinition         `json:"workflows,omitempty"`
+	Activities                 []*WorkflowActivityDefinition `json:"activities,omitempty"`
+	ChildWorkflows             []*WorkflowActivityDefinition `json:"childWorkflows,omitempty"`
+	PurposeTemplates           []*PurposeTemplate            `json:"purposeTemplates,omitempty"`
+	PurposeTemplateCollections []*PurposeTemplateCollection  `json:"purposeTemplateCollections,omitempty"`
+	LegalBasisRestrictions     []*LegalBasisRestriction      `json:"legalBasisRestrictions,omitempty"`
+	PolicyScopes               []*PolicyScope                `json:"policyScopes,omitempty"`
+	LegalBases                 []*LegalBasis                 `json:"legalBases,omitempty"`
+	Themes                     []*Theme                      `json:"themes,omitempty"`
+	Rights                     []*Right                      `yaml:",flow" json:"rights,omitempty"`
+	Regulations                []*Regulation                 `yaml:",flow" json:"regulations,omitempty"`
+	Tcf                        *Tcf                          `json:"tcf,omitempty"`
+	EventTypes                 []string                      `json:"eventTypes,omitempty"`
+	Cookies                    []*Cookie                     `yaml:"cookies,flow,omitempty" json:"cookies,omitempty"`
 }
 
 type AppMarketplaceEntry struct {
@@ -1021,47 +1028,48 @@ func NewApp(p ManifestInputs) (*App, error) {
 	}
 
 	return &App{
-		ID:                     p.ID,
-		Code:                   p.Code,
-		OrgCode:                p.OrgCode,
-		Name:                   p.Name,
-		Version:                p.Version,
-		Depends:                p.Depends,
-		Provides:               p.Provides,
-		Type:                   AppTypeValues[p.Type],
-		AutoUpgrade:            p.AutoUpgrade,
-		Instances:              AppAllowedInstancesValues[p.Instances],
-		Rules:                  p.Rules,
-		Capabilities:           appCapabilities,
-		SupportedLanguages:     p.SupportedLanguages,
-		SupportedPurposes:      p.SupportedPurposes,
-		SupportedRights:        p.SupportedRights,
-		PermissionNote:         p.PermissionNote,
-		Permissions:            p.Permissions,
-		InfoUrl:                p.InfoUrl,
-		SetupUrl:               p.SetupUrl,
-		HomepageUrl:            p.HomepageUrl,
-		ExpireUserTokens:       p.ExpireUserTokens,
-		RefreshInterval:        refreshIntervalHours,
-		RequestUserAuth:        p.RequestUserAuth,
-		UserAuthCallbackUrl:    p.UserAuthCallbackUrl,
-		RedirectOnUpdate:       p.RedirectOnUpdate,
-		Form:                   p.Form,
-		IdentitySpaces:         p.IdentitySpaces,
-		Purposes:               purposes,
-		Rights:                 p.Rights,
-		Regulations:            p.Regulations,
-		Tcf:                    p.Tcf,
-		Workflows:              workflows,
-		Activities:             activities,
-		ChildWorkflows:         childWorkflows,
-		PurposeTemplates:       p.PurposeTemplates,
-		LegalBasisRestrictions: p.LegalBasisRestrictions,
-		PolicyScopes:           policyScopes,
-		LegalBases:             legalBases,
-		Themes:                 p.Themes,
-		EventTypes:             eventTypes,
-		Cookies:                cookies,
+		ID:                         p.ID,
+		Code:                       p.Code,
+		OrgCode:                    p.OrgCode,
+		Name:                       p.Name,
+		Version:                    p.Version,
+		Depends:                    p.Depends,
+		Provides:                   p.Provides,
+		Type:                       AppTypeValues[p.Type],
+		AutoUpgrade:                p.AutoUpgrade,
+		Instances:                  AppAllowedInstancesValues[p.Instances],
+		Rules:                      p.Rules,
+		Capabilities:               appCapabilities,
+		SupportedLanguages:         p.SupportedLanguages,
+		SupportedPurposes:          p.SupportedPurposes,
+		SupportedRights:            p.SupportedRights,
+		PermissionNote:             p.PermissionNote,
+		Permissions:                p.Permissions,
+		InfoUrl:                    p.InfoUrl,
+		SetupUrl:                   p.SetupUrl,
+		HomepageUrl:                p.HomepageUrl,
+		ExpireUserTokens:           p.ExpireUserTokens,
+		RefreshInterval:            refreshIntervalHours,
+		RequestUserAuth:            p.RequestUserAuth,
+		UserAuthCallbackUrl:        p.UserAuthCallbackUrl,
+		RedirectOnUpdate:           p.RedirectOnUpdate,
+		Form:                       p.Form,
+		IdentitySpaces:             p.IdentitySpaces,
+		Purposes:                   purposes,
+		Rights:                     p.Rights,
+		Regulations:                p.Regulations,
+		Tcf:                        p.Tcf,
+		Workflows:                  workflows,
+		Activities:                 activities,
+		ChildWorkflows:             childWorkflows,
+		PurposeTemplates:           p.PurposeTemplates,
+		PurposeTemplateCollections: p.PurposeTemplateCollections,
+		LegalBasisRestrictions:     p.LegalBasisRestrictions,
+		PolicyScopes:               policyScopes,
+		LegalBases:                 legalBases,
+		Themes:                     p.Themes,
+		EventTypes:                 eventTypes,
+		Cookies:                    cookies,
 	}, nil
 }
 

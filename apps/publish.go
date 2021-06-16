@@ -61,89 +61,105 @@ func Publish(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	b, err := ioutil.ReadFile(appConfig)
-	if err != nil {
-		return err
-	}
-
-	b = []byte(os.ExpandEnv(string(b)))
-
-	var manifestInputs ManifestInputs
-	if err := yaml.Unmarshal(b, &manifestInputs); err != nil {
-		return err
-	}
-
-	if len(versionCliArg) > 0 {
-		manifestInputs.Version = versionCliArg
-	}
-
-	if err = validateAppConfig(manifestInputs); err != nil {
-		return err
-	}
-
-	cfg := &config.Config{}
-	if err = orlop.Unmarshal(version.Name, cfg); err != nil {
-		return err
-	}
-
-	cfg.URL = rootUrl
-	cfg.TLS = *t
-
-	app, err := NewApp(manifestInputs)
-	if err != nil {
-		return err
-	}
-
-	if len(app.Version) == 0 {
-		return errors.New("app version must be specified via cli --version or via manifest")
-	}
-
-	app, err = createApp(ctx, cfg, token, app)
-	if err != nil {
-		return err
-	}
-
-	marketplaceEntry := NewAppMarketplaceEntry(manifestInputs)
-	marketplaceEntry.AppID = app.ID
-
-	if len(manifestInputs.Logo.Link) > 0 {
-		marketplaceEntry.Logo = Image{
-			Title:  manifestInputs.Logo.Title,
-			Width:  manifestInputs.Logo.Width,
-			Height: manifestInputs.Logo.Height,
+	var manifests []string
+	info, err := os.Stat(appConfig)
+	if info.IsDir(){
+		files, _ := ioutil.ReadDir(appConfig)
+		for _, file := range files {
+			if !file.IsDir() {
+				manifests = append(manifests, fmt.Sprintf("%s/%s", appConfig, file.Name()))
+			}
 		}
+	} else {
+		manifests = []string{appConfig}
+	}
 
-		if marketplaceEntry.Logo.Data, err = getFileData(manifestInputs.Logo.Link); err != nil {
+	for _, manifest := range manifests {
+		fmt.Println(manifest)
+		b, err := ioutil.ReadFile(manifest)
+		if err != nil {
 			return err
 		}
-	}
 
-	if len(manifestInputs.Previews) > 0 {
-		var previews []*Image
+		b = []byte(os.ExpandEnv(string(b)))
 
-		for _, preview := range manifestInputs.Previews {
-			previewImage := &Image{
-				Title:  preview.Title,
-				Width:  preview.Width,
-				Height: preview.Height,
-			}
-
-			if previewImage.Data, err = getFileData(preview.Link); err != nil {
-				return err
-			}
-
-			previews = append(previews, previewImage)
+		var manifestInputs ManifestInputs
+		if err := yaml.Unmarshal(b, &manifestInputs); err != nil {
+			return err
 		}
 
-		marketplaceEntry.Previews = previews
-	}
+		if len(versionCliArg) > 0 {
+			manifestInputs.Version = versionCliArg
+		}
 
-	published, err := publishApp(ctx, cfg, token, app, marketplaceEntry, manifestInputs.Webhook)
-	if err != nil {
-		return err
-	}
+		if err = validateAppConfig(manifestInputs); err != nil {
+			return err
+		}
 
-	fmt.Printf("app published successfully:\nappCode: %s\nappID: %s\nappVersion: %s\n", app.Code, app.ID, published.Version)
+		cfg := &config.Config{}
+		if err = orlop.Unmarshal(version.Name, cfg); err != nil {
+			return err
+		}
+
+		cfg.URL = rootUrl
+		cfg.TLS = *t
+
+		app, err := NewApp(manifestInputs)
+		if err != nil {
+			return err
+		}
+
+		if len(app.Version) == 0 {
+			return errors.New("app version must be specified via cli --version or via manifest")
+		}
+
+		app, err = createApp(ctx, cfg, token, app)
+		if err != nil {
+			return err
+		}
+
+		marketplaceEntry := NewAppMarketplaceEntry(manifestInputs)
+		marketplaceEntry.AppID = app.ID
+
+		if len(manifestInputs.Logo.Link) > 0 {
+			marketplaceEntry.Logo = Image{
+				Title:  manifestInputs.Logo.Title,
+				Width:  manifestInputs.Logo.Width,
+				Height: manifestInputs.Logo.Height,
+			}
+
+			if marketplaceEntry.Logo.Data, err = getFileData(manifestInputs.Logo.Link); err != nil {
+				return err
+			}
+		}
+
+		if len(manifestInputs.Previews) > 0 {
+			var previews []*Image
+
+			for _, preview := range manifestInputs.Previews {
+				previewImage := &Image{
+					Title:  preview.Title,
+					Width:  preview.Width,
+					Height: preview.Height,
+				}
+
+				if previewImage.Data, err = getFileData(preview.Link); err != nil {
+					return err
+				}
+
+				previews = append(previews, previewImage)
+			}
+
+			marketplaceEntry.Previews = previews
+		}
+
+		published, err := publishApp(ctx, cfg, token, app, marketplaceEntry, manifestInputs.Webhook)
+		if err != nil {
+			return err
+		}
+
+		fmt.Printf("app published successfully:\nappCode: %s\nappID: %s\nappVersion: %s\n", app.Code, app.ID, published.Version)
+	}
 
 	return nil
 }
@@ -317,6 +333,40 @@ func validateAppConfig(publishAppConfig ManifestInputs) error {
 			}
 
 			codes[identitySpace.Code] = struct{}{}
+		}
+	}
+
+	if len(publishAppConfig.Cookies) > 0 {
+		codes := make(map[string]interface{}, len(publishAppConfig.Cookies))
+		for _, cookie := range publishAppConfig.Cookies {
+			if _, ok := codes[cookie.Code]; ok {
+				return errors.New(fmt.Sprintf("app config invalid: %s",
+					"cookies.code "+cookie.Code+" is not unique"))
+			}
+
+			if !isEntityCodeValid(publishAppConfig.Code, cookie.Code) {
+				return errors.New(fmt.Sprintf("app config invalid: %s",
+					"cookies.code must start with \""+publishAppConfig.Code+".\""))
+			}
+
+			codes[cookie.Code] = struct{}{}
+		}
+	}
+
+	if len(publishAppConfig.PurposeTemplateCollections) > 0 {
+		codes := make(map[string]interface{}, len(publishAppConfig.PurposeTemplateCollections))
+		for _, purposeTemplateCollection := range publishAppConfig.PurposeTemplateCollections {
+			if _, ok := codes[purposeTemplateCollection.Code]; ok {
+				return errors.New(fmt.Sprintf("app config invalid: %s",
+					"purposeTemplateCollections.code "+purposeTemplateCollection.Code+" is not unique"))
+			}
+
+			if !isEntityCodeValid(publishAppConfig.Code, purposeTemplateCollection.Code) {
+				return errors.New(fmt.Sprintf("app config invalid: %s",
+					"purposeTemplateCollections.code must start with \""+publishAppConfig.Code+".\""))
+			}
+
+			codes[purposeTemplateCollection.Code] = struct{}{}
 		}
 	}
 
