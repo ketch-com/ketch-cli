@@ -195,7 +195,7 @@ func callRest(ctx context.Context, cfg *config.Config, method, urlPath, token st
 	req.Header.Add("Content-Type", "application/json")
 
 	tp := http.DefaultTransport.(*http.Transport).Clone()
-	tp.TLSClientConfig, err = orlop.NewClientTLSConfigContext(ctx, cfg.TLS, cfg.Vault)
+	tp.TLSClientConfig, err = orlop.NewClientTLSConfig(ctx, cfg.TLS, cfg.Vault)
 	if err != nil {
 		return nil, err
 	}
