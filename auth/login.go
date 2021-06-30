@@ -68,7 +68,7 @@ func Login(cmd *cobra.Command, args []string) error {
 	buf := bytes.NewReader([]byte(codeRequest.Encode()))
 
 	tp := http.DefaultTransport.(*http.Transport).Clone()
-	if tp.TLSClientConfig, err = orlop.NewClientTLSConfigContext(ctx, cfg.TLS, cfg.Vault); err != nil {
+	if tp.TLSClientConfig, err = orlop.NewClientTLSConfig(ctx, cfg.TLS, cfg.Vault); err != nil {
 		return err
 	}
 
@@ -118,7 +118,7 @@ func Login(cmd *cobra.Command, args []string) error {
 				buf := bytes.NewReader([]byte(codeRequest.Encode()))
 
 				tp := http.DefaultTransport.(*http.Transport).Clone()
-				if tp.TLSClientConfig, err = orlop.NewClientTLSConfigContext(ctx, cfg.TLS, cfg.Vault); err != nil {
+				if tp.TLSClientConfig, err = orlop.NewClientTLSConfig(ctx, cfg.TLS, cfg.Vault); err != nil {
 					return err
 				}
 
