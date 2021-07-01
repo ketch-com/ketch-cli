@@ -428,6 +428,25 @@ type AppConfigPurpose struct {
 	DataRole              string             `yaml:"dataRole,omitempty" json:"dataRole,omitempty"`
 }
 
+type AppConfigPurposeTemplate struct {
+	Code                  string             `yaml:"code,omitempty" json:"code,omitempty"`
+	Name                  string             `yaml:"name,omitempty" json:"name,omitempty"`
+	Description           string             `yaml:"description,omitempty" json:"description,omitempty"`
+	TcfID                 int                `yaml:"tcfId,omitempty" json:"tcfId,omitempty"`
+	TcfType               string             `yaml:"tcfType,omitempty" json:"tcfType,omitempty"`
+	Editable              bool               `yaml:"editable,omitempty" json:"editable,omitempty"`
+	LegalBasisRestriction string             `yaml:"legalBasisRestriction,omitempty" json:"legalBasisRestriction,omitempty"`
+	DisplayName           string             `yaml:"displayName,omitempty" json:"displayName,omitempty"`
+	DisplayDescription    string             `yaml:"displayDescription,omitempty" json:"displayDescription,omitempty"`
+	ProcessingPurpose     string             `yaml:"processingPurpose,omitempty" json:"processingPurpose,omitempty"`
+	LegalBasis            map[string]string  `yaml:"legalBasis,omitempty" json:"legalBasis,omitempty"`
+	Cookies               []*AppConfigCookie `yaml:"cookies,omitempty" json:"cookies,omitempty"`
+	CanonicalPurposes     []string           `yaml:"canonicalPurposes,omitempty" json:"canonicalPurposes,omitempty"`
+	Translations          map[string]string  `yaml:"translations,omitempty" json:"translations,omitempty"`
+	DataSubjectRole       string             `yaml:"dataSubjectRole,omitempty" json:"dataSubjectRole,omitempty"`
+	DataRole              string             `yaml:"dataRole,omitempty" json:"dataRole,omitempty"`
+}
+
 type Purpose struct {
 	Code                  string            `json:"code,omitempty"`
 	Name                  string            `json:"name,omitempty"`
@@ -693,7 +712,7 @@ type ManifestInputs struct {
 	ChildWorkflows             []*AppConfigWorkflowActivityDefinition `yaml:"childWorkflows,flow,omitempty" json:"childWorkflows,omitempty"`
 	Tcf                        *Tcf                                   `yaml:"tcf,flow,omitempty" json:"tcf,omitempty"`
 	Cookies                    []*AppConfigCookie                     `yaml:"cookies,flow,omitempty" json:"cookies,omitempty"`
-	PurposeTemplates           []*PurposeTemplate                     `yaml:"purposeTemplates,flow,omitempty" json:"purposeTemplates,omitempty"`
+	PurposeTemplates           []*AppConfigPurposeTemplate            `yaml:"purposeTemplates,flow,omitempty" json:"purposeTemplates,omitempty"`
 	PurposeTemplateCollections []*PurposeTemplateCollection           `yaml:"purposeTemplateCollections,flow,omitempty" json:"purposeTemplateCollections,omitempty"`
 	Purposes                   []*AppConfigPurpose                    `yaml:"purposes,flow,omitempty" json:"purposes,omitempty"`
 	Rights                     []*Right                               `yaml:"rights,flow" json:"rights,omitempty"`
@@ -885,6 +904,41 @@ func NewApp(p ManifestInputs) (*App, error) {
 		})
 	}
 
+	var purposeTemplates []*PurposeTemplate
+	for _, purposeTemplate := range p.PurposeTemplates {
+		var cookies []*Cookie
+		for _, cookie := range purposeTemplate.Cookies {
+			cookies = append(cookies, &Cookie{
+				Code:            cookie.Code,
+				Name:            cookie.Name,
+				Description:     cookie.Description,
+				Host:            cookie.Host,
+				Duration:        CookieDurationValues[cookie.Duration],
+				Provenance:      CookieProvenanceValues[cookie.Provenance],
+				Category:        CookieCategoryValues[cookie.Category],
+				ServiceProvider: cookie.ServiceProvider,
+			})
+		}
+
+		purposeTemplates = append(purposeTemplates, &PurposeTemplate{
+			Code:                  purposeTemplate.Code,
+			Name:                  purposeTemplate.Name,
+			Description:           purposeTemplate.Description,
+			TcfID:                 purposeTemplate.TcfID,
+			TcfType:               purposeTemplate.TcfType,
+			Editable:              purposeTemplate.Editable,
+			LegalBasisRestriction: purposeTemplate.LegalBasisRestriction,
+			DisplayName:           purposeTemplate.DisplayName,
+			DisplayDescription:    purposeTemplate.DisplayDescription,
+			LegalBasis:            purposeTemplate.LegalBasis,
+			Cookies:               cookies,
+			CanonicalPurposes:     purposeTemplate.CanonicalPurposes,
+			Translations:          purposeTemplate.Translations,
+			DataSubjectRole:       DataSubjectRoleValues[purposeTemplate.DataSubjectRole],
+			DataRole:              DataRoleValues[purposeTemplate.DataRole],
+		})
+	}
+
 	var workflows []*WorkflowDefinition
 	for _, workflow := range p.Workflows {
 		var steps []*Step
@@ -1072,7 +1126,7 @@ func NewApp(p ManifestInputs) (*App, error) {
 		Workflows:                  workflows,
 		Activities:                 activities,
 		ChildWorkflows:             childWorkflows,
-		PurposeTemplates:           p.PurposeTemplates,
+		PurposeTemplates:           purposeTemplates,
 		PurposeTemplateCollections: p.PurposeTemplateCollections,
 		LegalBasisRestrictions:     p.LegalBasisRestrictions,
 		PolicyScopes:               policyScopes,
