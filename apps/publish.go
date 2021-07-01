@@ -125,7 +125,7 @@ func Publish(cmd *cobra.Command, args []string) error {
 		marketplaceEntry := NewAppMarketplaceEntry(manifestInputs)
 		marketplaceEntry.AppID = app.ID
 
-		if len(manifestInputs.Logo.Link) > 0 {
+		if manifestInputs.Logo != nil && len(manifestInputs.Logo.Link) > 0 {
 			marketplaceEntry.Logo = Image{
 				Title:  manifestInputs.Logo.Title,
 				Width:  manifestInputs.Logo.Width,
