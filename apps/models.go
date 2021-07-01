@@ -338,13 +338,23 @@ type WorkflowActivityDefinition struct {
 }
 
 type PurposeTemplate struct {
-	Code                  string `yaml:"code,omitempty" json:"code,omitempty"`
-	Name                  string `yaml:"name,omitempty" json:"name,omitempty"`
-	Description           string `yaml:"description,omitempty" json:"description,omitempty"`
-	TcfID                 int    `yaml:"tcfId,omitempty" json:"tcfId,omitempty"`
-	TcfType               string `yaml:"tcfType,omitempty" json:"tcfType,omitempty"`
-	Editable              bool   `yaml:"editable,omitempty" json:"editable,omitempty"`
-	LegalBasisRestriction string `yaml:"legalBasisRestriction,omitempty" json:"legalBasisRestriction,omitempty"`
+	Code                       string            `yaml:"code,omitempty" json:"code,omitempty"`
+	Name                       string            `yaml:"name,omitempty" json:"name,omitempty"`
+	Description                string            `yaml:"description,omitempty" json:"description,omitempty"`
+	TcfID                      int               `yaml:"tcfId,omitempty" json:"tcfId,omitempty"`
+	TcfType                    string            `yaml:"tcfType,omitempty" json:"tcfType,omitempty"`
+	Editable                   bool              `yaml:"editable,omitempty" json:"editable,omitempty"`
+	LegalBasisRestriction      string            `yaml:"legalBasisRestriction,omitempty" json:"legalBasisRestriction,omitempty"`
+	Required                   bool              `yaml:"required,omitempty" json:"required,omitempty"`
+	DisplayName                string            `yaml:"displayName,omitempty" json:"displayName,omitempty"`
+	DisplayDescription         string            `yaml:"displayDescription,omitempty" json:"displayDescription,omitempty"`
+	LegalBasis                 map[string]string `yaml:"legalBasis,omitempty" json:"legalBasis,omitempty"`
+	Cookies                    []*Cookie         `yaml:"cookies,omitempty" json:"cookies,omitempty"`
+	CanonicalPurposes          []string          `yaml:"canonicalPurposes,omitempty" json:"canonicalPurposes,omitempty"`
+	Translations               map[string]string `yaml:"translations,omitempty" json:"translations,omitempty"`
+	DataSubjectRole            int32             `yaml:"dataSubjectRole,omitempty" json:"dataSubjectRole,omitempty"`
+	DataRole                   int32             `yaml:"dataRole,omitempty" json:"dataRole,omitempty"`
+	PurposeTemplateCollections []string          `yaml:"collections,omitempty" json:"collections,omitempty"`
 }
 
 type PurposeTemplateCollection struct {
