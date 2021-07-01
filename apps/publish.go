@@ -13,6 +13,7 @@ import (
 	"go.ketch.com/cli/ketch-cli/version"
 	"go.ketch.com/lib/orlop"
 	"go.ketch.com/lib/orlop/errors"
+	"go.ketch.com/lib/orlop/log"
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
 	"net/http"
@@ -241,6 +242,7 @@ func createApp(ctx context.Context, cfg *config.Config, token string, app *App) 
 	var appResp PutAppResponse
 	err = json.Unmarshal(b, &appResp)
 	if err != nil {
+		log.WithField("resp", string(b)).Error(err)
 		return nil, err
 	}
 
@@ -288,6 +290,7 @@ func publishApp(ctx context.Context, cfg *config.Config, token string, app *App,
 	var a PublishAppResponse
 	err = json.Unmarshal(respBody, &a)
 	if err != nil {
+		log.WithField("resp", string(respBody)).Error(err)
 		return nil, err
 	}
 
