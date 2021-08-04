@@ -10,7 +10,7 @@ require (
 	github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb // indirect
 	github.com/xeipuuv/gojsonschema v1.2.0
 	go.ketch.com/lib/oid v1.2.0
-	go.ketch.com/lib/orlop v1.42.1
+	go.ketch.com/lib/orlop v1.43.1
 	go.ketch.com/lib/webhook-client v0.3.2
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )
