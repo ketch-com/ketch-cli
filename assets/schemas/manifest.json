@@ -142,7 +142,8 @@
           "sms_mktg",
           "email_mktg",
           "mail_mktg",
-          "data_broking"
+          "data_broking",
+          "datasales_ccpa"
         ]
       }
     },
@@ -1407,7 +1408,8 @@
                 "sms_mktg",
                 "email_mktg",
                 "mail_mktg",
-                "data_broking"
+                "data_broking",
+                "datasales_ccpa"
               ]
             }
           },
