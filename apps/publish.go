@@ -560,7 +560,6 @@ func remoteFileDataExists(link string) (bool, error) {
 func localFilePathExists(link string) (bool, error) {
 
 	logoFileInfo, err :=  os.Stat(link)
-	//_, err :=  os.Stat(link)
 	if err != nil {
 		return false, err
 	} else if logoFileInfo.IsDir() {
