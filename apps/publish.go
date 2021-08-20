@@ -532,7 +532,6 @@ func getFileData(link string) ([]byte, error) {
 
 func getRemoteFileData(url string) ([]byte, error) {
 	resp, err := http.Get(url)
-	fmt.Printf("%v", resp)
 	if err != nil {
 		return nil, err
 	}
@@ -562,7 +561,8 @@ func localFilePathExists(link string) (bool, error) {
 	logoFileInfo, err :=  os.Stat(link)
 	if err != nil {
 		return false, err
-	} else if logoFileInfo.IsDir() {
+	}
+	if logoFileInfo.IsDir() {
 		return false, errors.New(fmt.Sprintf("app config invalid: logo.link %s is a directory", link))
 	}
 	return true, nil
