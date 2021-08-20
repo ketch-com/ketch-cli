@@ -321,8 +321,10 @@ func validateAppConfig(publishAppConfig ManifestInputs) error {
 		return errors.New(fmt.Sprintf("app config invalid: %s", errs))
 	}
 
-	if publishAppConfig.Type != AppTypeCustom {
-		return nil
+	if publishAppConfig.Logo != nil && len(publishAppConfig.Logo.Link) > 0 {
+		if _, err := filePathExists(publishAppConfig.Logo.Link); err != nil {
+			return err
+		}
 	}
 
 	if len(publishAppConfig.IdentitySpaces) > 0 {
@@ -544,4 +546,31 @@ func getLocalFileData(link string) ([]byte, error) {
 	}
 
 	return ioutil.ReadFile(link)
+}
+
+func remoteFileDataExists(link string) (bool, error) {
+	_, err := getRemoteFileData(link)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+func localFilePathExists(link string) (bool, error) {
+
+	logoFileInfo, err :=  os.Stat(link)
+	if err != nil {
+		return false, err
+	}
+	if logoFileInfo.IsDir() {
+		return false, errors.New(fmt.Sprintf("app config invalid: logo.link %s is a directory", link))
+	}
+	return true, nil
+}
+
+func filePathExists(link string) (bool, error) {
+	if isRemoteLink(link) {
+		return remoteFileDataExists(link)
+	}
+	return localFilePathExists(link)
 }
