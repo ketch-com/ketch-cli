@@ -335,11 +335,6 @@ func validateAppConfig(publishAppConfig ManifestInputs) error {
 					"identitySpaces.code "+identitySpace.Code+" is not unique"))
 			}
 
-			if !isEntityCodeValid(publishAppConfig.Code, identitySpace.Code) {
-				return errors.New(fmt.Sprintf("app config invalid: %s",
-					"identitySpaces.code must start with \""+publishAppConfig.Code+".\""))
-			}
-
 			codes[identitySpace.Code] = struct{}{}
 		}
 	}
