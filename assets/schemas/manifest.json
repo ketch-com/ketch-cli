@@ -113,7 +113,14 @@
           "permitIngestion",
           "rightPropagation",
           "rightIngestion",
-          "tagOrchestration"
+          "tagOrchestration",
+          "orch_permits_external",
+          "orch_rights_external",
+          "orch_permits_internal",
+          "orch_rights_internal",
+          "orch_tags",
+          "introspection_internal",
+          "fortification_internal"
         ]
       }
     },
@@ -401,6 +408,14 @@
         }
       }
     },
+    "formTitle": {
+      "type": "string",
+      "description": "Form title. Defaulted as Configuration"
+    },
+    "formSubtitle": {
+      "type": "string",
+      "description": "Form subtitle"
+    },
     "form": {
       "type": ["array", "null"],
       "items": {
@@ -419,12 +434,17 @@
             "type": "string",
             "description": "The name or title for this component"
           },
+          "description": {
+            "type": "string",
+            "description": "Description of the field before the title and entry"
+          },
           "type": {
             "type": "string",
             "description": "The type property will be used to select which component to render on the frontend. It cannot be an existing field type",
             "enum": [
-              "array",
-              "string"
+              "dropdown",
+              "string",
+              "radioButton"
             ]
           },
           "showOnView": {
@@ -513,6 +533,37 @@
                   "description": "Enter a url with a data source in JSON Array format. This can be used to populate a Select list with external JSON values",
                   "format": "uri",
                   "default": ""
+                },
+                "labelKey": {
+                  "type": "string",
+                  "description": "Key of the label in json object",
+                  "default": ""
+                },
+                "valueKey": {
+                  "type": "string",
+                  "description": "Key of the value in json object",
+                  "default": ""
+                }
+              }
+            }
+          },
+          "conditionForDisplay": {
+            "type": ["array", "null"],
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "value"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of the field to condition upon"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Value of named field for this form element to display"
                 }
               }
             }

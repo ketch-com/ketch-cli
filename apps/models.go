@@ -107,6 +107,17 @@ type SelectData struct {
 	Json string `yaml:"json,omitempty" json:"json,omitempty"`
 	// Enter a url with a data source in JSON Array format. This can be used to populate a Select list with external JSON values
 	Url string `yaml:"url,omitempty" json:"url,omitempty"`
+	// Key of the label in json object
+	LabelKey string `yaml:"labelKey,omitempty" json:"labelKey,omitempty"`
+	// Key of the value in json object
+	ValueKey string `yaml:"valueKey,omitempty" json:"valueKey,omitempty"`
+}
+
+type ConditionForDisplay struct {
+	// Name of the field to condition upon
+	Name string `yaml:"name,omitempty" json:"name,omitempty"`
+	// Value of named field for this form element to display
+	Value string `yaml:"value,omitempty" json:"value,omitempty"`
 }
 
 type SelectDataValue struct {
@@ -120,6 +131,8 @@ type FormComponent struct {
 	Name string `yaml:"name,omitempty" json:"name,omitempty"`
 	// The name or title for this component
 	Title string `yaml:"title,omitempty" json:"title,omitempty"`
+	// The description that will appear before this component
+	Description string `yaml:"description,omitempty" json:"description,omitempty"`
 	// The type property will be used to select which component to render on the frontend. It cannot be an existing field type
 	Type            string `yaml:"type,omitempty" json:"type,omitempty"`
 	ShowOnView      bool   `yaml:"showOnView,omitempty" json:"showOnView,omitempty"`
@@ -144,6 +157,8 @@ type FormComponent struct {
 	// type == "array"
 	// Data is the definition of how data is provided for the dropdown
 	Data *SelectData `yaml:"data,omitempty" json:"data,omitempty"`
+	// The condition for display determines whether this component should be displayed
+	ConditionForDisplay []*ConditionForDisplay `yaml:"conditionForDisplay,omitempty" json:"conditionForDisplay,omitempty"`
 }
 
 type Webhook struct {
@@ -705,6 +720,8 @@ type ManifestInputs struct {
 	UserAuthCallbackUrl        string                                 `yaml:"userAuthCallbackURL,omitempty" json:"userAuthCallbackURL,omitempty"`
 	RedirectOnUpdate           bool                                   `yaml:"redirectOnUpdate,omitempty" json:"redirectOnUpdate,omitempty"`
 	Webhook                    *Webhook                               `yaml:"webhook,omitempty" json:"webhook,omitempty"`
+	FormTitle                  string                                 `yaml:"formTitle,omitempty" json:"formTitle,omitempty"`
+	FormSubtitle               string                                 `yaml:"formSubtitle,omitempty" json:"formSubtitle,omitempty"`
 	Form                       []*FormComponent                       `yaml:"form,omitempty" json:"form,omitempty"`
 	IdentitySpaces             []*IdentitySpace                       `yaml:"identitySpaces,omitempty" json:"identitySpaces,omitempty"`
 	Workflows                  []*AppConfigWorkflowDefinition         `yaml:"workflows,flow,omitempty" json:"workflows,omitempty"`
@@ -751,6 +768,8 @@ type App struct {
 	RedirectOnUpdate           bool                          `json:"redirectOnUpdate,omitempty"`
 	WebhookId                  string                        `json:"webhookID,omitempty"`
 	Readme                     string                        `json:"readme,omitempty"`
+	FormTitle                  string                        `json:"formTitle,omitempty"`
+	FormSubtitle               string                        `json:"formSubtitle,omitempty"`
 	Form                       []*FormComponent              `yaml:",flow"`
 	IdentitySpaces             []*IdentitySpace              `yaml:",flow" json:"identitySpaces,omitempty"`
 	Purposes                   []*Purpose                    `yaml:",flow" json:"purposes,omitempty"`
