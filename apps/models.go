@@ -1136,6 +1136,8 @@ func NewApp(p ManifestInputs) (*App, error) {
 		RequestUserAuth:            p.RequestUserAuth,
 		UserAuthCallbackUrl:        p.UserAuthCallbackUrl,
 		RedirectOnUpdate:           p.RedirectOnUpdate,
+		FormTitle:                  p.FormTitle,
+		FormSubtitle:               p.FormSubtitle,
 		Form:                       p.Form,
 		IdentitySpaces:             p.IdentitySpaces,
 		Purposes:                   purposes,
