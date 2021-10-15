@@ -1,9 +1,10 @@
-package apps
+package cli
 
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"go.ketch.com/cli/ketch-cli/flags"
+	"go.ketch.com/cli/ketch-cli/pkg/apps"
+	"go.ketch.com/cli/ketch-cli/pkg/flags"
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
 	"os"
@@ -51,7 +52,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 
 		b = []byte(os.ExpandEnv(string(b)))
 
-		var manifestInputs ManifestInputs
+		var manifestInputs apps.ManifestInputs
 		if err := yaml.Unmarshal(b, &manifestInputs); err != nil {
 			return err
 		}
