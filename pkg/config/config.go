@@ -9,6 +9,7 @@ import (
 
 type Config struct {
 	URL   string
+	Token string
 	TLS   orlop.TLSConfig
 	Vault orlop.VaultConfig
 }
@@ -25,6 +26,12 @@ func NewConfig(cmd *cobra.Command) (*Config, error) {
 		return nil, err
 	} else {
 		cfg.URL = s
+	}
+
+	if s, err := cmd.Flags().GetString(flags.Token); err != nil {
+		return nil, err
+	} else {
+		cfg.Token = s
 	}
 
 	if b, err := cmd.Flags().GetBool(flags.TLSInsecure); err != nil {

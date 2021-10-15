@@ -41,11 +41,6 @@ func Publish(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	token, err := cmd.Flags().GetString(flags.Token)
-	if err != nil {
-		return err
-	}
-
 	appConfig, err = filepath.Abs(appConfig)
 	if err != nil {
 		return err
@@ -103,7 +98,7 @@ func Publish(cmd *cobra.Command, args []string) error {
 			return errors.New("app version must be specified via cli --version or via manifest")
 		}
 
-		app, err = createApp(ctx, *cfg, token, app)
+		app, err = createApp(ctx, cfg, cfg.Token, app)
 		if err != nil {
 			return err
 		}
@@ -143,7 +138,7 @@ func Publish(cmd *cobra.Command, args []string) error {
 			marketplaceEntry.Previews = previews
 		}
 
-		published, err := publishApp(ctx, *cfg, token, app, marketplaceEntry, manifestInputs.Webhook)
+		published, err := publishApp(ctx, cfg, cfg.Token, app, marketplaceEntry, manifestInputs.Webhook)
 		if err != nil {
 			return err
 		}
@@ -164,7 +159,7 @@ func handleRestResponseError(resp *http.Response) (*apps.Error, error) {
 	return respErr.Error, nil
 }
 
-func callRest(ctx context.Context, cfg config.Config, method, urlPath, token string, body []byte) (*http.Response, error) {
+func callRest(ctx context.Context, cfg *config.Config, method, urlPath, token string, body []byte) (*http.Response, error) {
 	u, err := url.Parse(cfg.URL)
 	if err != nil {
 		return nil, err
@@ -194,7 +189,7 @@ func callRest(ctx context.Context, cfg config.Config, method, urlPath, token str
 	return cli.Do(req)
 }
 
-func createApp(ctx context.Context, cfg config.Config, token string, app *apps.App) (*apps.App, error) {
+func createApp(ctx context.Context, cfg *config.Config, token string, app *apps.App) (*apps.App, error) {
 	createAppURL := fmt.Sprintf("organizations/%s/apps", app.OrgCode)
 
 	body, err := json.Marshal(&apps.PutAppRequest{
@@ -241,7 +236,7 @@ func createApp(ctx context.Context, cfg config.Config, token string, app *apps.A
 	return appResp.App, nil
 }
 
-func publishApp(ctx context.Context, cfg config.Config, token string, app *apps.App, marketplaceEntry *apps.AppMarketplaceEntry, webhook *apps.Webhook) (*apps.AppMarketplaceEntry, error) {
+func publishApp(ctx context.Context, cfg *config.Config, token string, app *apps.App, marketplaceEntry *apps.AppMarketplaceEntry, webhook *apps.Webhook) (*apps.AppMarketplaceEntry, error) {
 	publishURL := fmt.Sprintf("organizations/%s/apps/%s/publish", app.OrgCode, app.ID)
 
 	body, err := json.Marshal(&apps.PublishAppRequest{
