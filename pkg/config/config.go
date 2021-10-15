@@ -8,14 +8,21 @@ import (
 )
 
 type Config struct {
-	URL   string
-	Token string
-	TLS   orlop.TLSConfig
-	Vault orlop.VaultConfig
+	Auth0Domain string
+	ClientID    string
+	Audience    string
+	URL         string
+	Token       string
+	TLS         orlop.TLSConfig
+	Vault       orlop.VaultConfig
 }
 
 func NewConfig(cmd *cobra.Command) (*Config, error) {
-	cfg := &Config{}
+	cfg := &Config{
+		Auth0Domain: "ketch.us.auth0.com",
+		ClientID:    "j9gemizsXis5IcUg931sBjGoyGSxbT1a",
+		Audience:    "https://global.ketchapi.com/rest",
+	}
 
 	err := orlop.Unmarshal(version.Name, cfg)
 	if err != nil {
@@ -24,13 +31,13 @@ func NewConfig(cmd *cobra.Command) (*Config, error) {
 
 	if s, err := cmd.Flags().GetString(flags.URL); err != nil {
 		return nil, err
-	} else {
+	} else if len(s) > 0 {
 		cfg.URL = s
 	}
 
 	if s, err := cmd.Flags().GetString(flags.Token); err != nil {
 		return nil, err
-	} else {
+	} else if len(s) > 0 {
 		cfg.Token = s
 	}
 
@@ -42,25 +49,25 @@ func NewConfig(cmd *cobra.Command) (*Config, error) {
 
 	if s, err := cmd.Flags().GetString(flags.TLSCert); err != nil {
 		return nil, err
-	} else {
+	} else if len(s) > 0 {
 		cfg.TLS.Cert.File = s
 	}
 
 	if s, err := cmd.Flags().GetString(flags.TLSKey); err != nil {
 		return nil, err
-	} else {
+	} else if len(s) > 0 {
 		cfg.TLS.Key.File = s
 	}
 
 	if s, err := cmd.Flags().GetString(flags.TLSCACert); err != nil {
 		return nil, err
-	} else {
+	} else if len(s) > 0 {
 		cfg.TLS.RootCA.File = s
 	}
 
 	if s, err := cmd.Flags().GetString(flags.TLSServerName); err != nil {
 		return nil, err
-	} else {
+	} else if len(s) > 0 {
 		cfg.TLS.Override = s
 	}
 

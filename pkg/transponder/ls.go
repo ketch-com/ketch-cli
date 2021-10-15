@@ -33,6 +33,9 @@ func List(cmd *cobra.Command, args []string) error {
 	}
 
 	req.Header.Add("Accept", "application/json")
+	if len(cfg.Token) > 0 {
+		req.Header.Add("Authorization", "Bearer "+cfg.Token)
+	}
 
 	resp, err := client.Do(req)
 	if err != nil {

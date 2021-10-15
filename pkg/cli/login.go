@@ -2,26 +2,18 @@ package cli
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/spf13/cobra"
 	"go.ketch.com/cli/ketch-cli/pkg/config"
-	"go.ketch.com/lib/orlop"
 	"go.ketch.com/lib/orlop/errors"
+	"io"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 )
-
-const ClientID = "TODO"
-
-type GetDeviceCodeRequest struct {
-	// The client identifier
-	ClientID string `json:"client_id,omitempty"`
-
-	// The scope of the access request
-	Scope string `json:"scope,omitempty"`
-}
 
 type DeviceCode struct {
 	// The device verification code.
@@ -53,31 +45,25 @@ type Token struct {
 	AccessToken  string `json:"access_token,omitempty"`
 	TokenType    string `json:"token_type,omitempty"`
 	ExpiresInSec int64  `json:"expires_in,omitempty"`
-	RefreshToken string `json:"refresh_token,omitempty"`
 }
 
 func Login(cmd *cobra.Command, args []string) error {
 	ctx := cmd.Context()
+
 	cfg, err := config.NewConfig(cmd)
 	if err != nil {
 		return err
 	}
 
 	codeRequest := make(url.Values)
-	codeRequest.Set("client_id", ClientID)
+	codeRequest.Set("client_id", cfg.ClientID)
+	codeRequest.Set("audience", cfg.Audience)
 
 	buf := bytes.NewReader([]byte(codeRequest.Encode()))
 
-	tp := http.DefaultTransport.(*http.Transport).Clone()
-	if tp.TLSClientConfig, err = orlop.NewClientTLSConfig(ctx, cfg.TLS, cfg.Vault); err != nil {
-		return err
-	}
+	cli := &http.Client{}
 
-	cli := http.Client{
-		Transport: tp,
-	}
-
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, cfg.URL+"/device/code", buf)
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, fmt.Sprintf("https://%s/oauth/device/code", cfg.Auth0Domain), buf)
 	if err != nil {
 		return err
 	}
@@ -88,9 +74,9 @@ func Login(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	if resp.StatusCode == 200 {
-		defer resp.Body.Close()
+	defer resp.Body.Close()
 
+	if resp.StatusCode == 200 {
 		var dc DeviceCode
 
 		err := json.NewDecoder(resp.Body).Decode(&dc)
@@ -111,41 +97,59 @@ func Login(cmd *cobra.Command, args []string) error {
 				return nil
 
 			case <-ticker.C:
-				tokenRequest := make(url.Values)
-				tokenRequest.Set("grant_type", "urn:ietf:params:oauth:grant-type:device_code")
-				tokenRequest.Set("client_id", ClientID)
-				tokenRequest.Set("device_code", dc.DeviceCode)
-
-				buf := bytes.NewReader([]byte(codeRequest.Encode()))
-
-				tp := http.DefaultTransport.(*http.Transport).Clone()
-				if tp.TLSClientConfig, err = orlop.NewClientTLSConfig(ctx, cfg.TLS, cfg.Vault); err != nil {
+				if tok, ok, err := check(ctx, cfg, dc); err != nil {
 					return err
+				} else if ok {
+					fmt.Println(tok)
+					return nil
 				}
-
-				cli := http.Client{
-					Transport: tp,
-				}
-
-				req, err := http.NewRequestWithContext(ctx, http.MethodPost, cfg.URL+"/token", buf)
-				if err != nil {
-					return err
-				}
-
-				req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-				resp, err := cli.Do(req)
-				if err != nil {
-					return err
-				}
-
-				fmt.Println(resp.Body)
-				continue
 
 			case <-timeout:
 				return errors.New("login: timed out")
 			}
 		}
 	} else {
+		io.Copy(os.Stderr, resp.Body)
 		return errors.Errorf("login: status %s", resp.Status)
 	}
+}
+
+func check(ctx context.Context, cfg *config.Config, dc DeviceCode) (string, bool, error) {
+	var err error
+
+	tokenRequest := make(url.Values)
+	tokenRequest.Set("grant_type", "urn:ietf:params:oauth:grant-type:device_code")
+	tokenRequest.Set("client_id", cfg.ClientID)
+	tokenRequest.Set("device_code", dc.DeviceCode)
+
+	buf := bytes.NewReader([]byte(tokenRequest.Encode()))
+
+	cli := http.Client{}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, fmt.Sprintf("https://%s/oauth/token", cfg.Auth0Domain), buf)
+	if err != nil {
+		return "", false, err
+	}
+
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+
+	resp, err := cli.Do(req)
+	if err != nil {
+		return "", false, err
+	}
+
+	defer resp.Body.Close()
+
+	var token Token
+
+	err = json.NewDecoder(resp.Body).Decode(&token)
+	if err != nil {
+		return "", false, err
+	}
+
+	if token.TokenType == "Bearer" {
+		return token.AccessToken, true, nil
+	}
+
+	return "", false, nil
 }
