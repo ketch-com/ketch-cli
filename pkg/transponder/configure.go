@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 	"go.ketch.com/cli/ketch-cli/pkg/config"
 	"go.ketch.com/cli/ketch-cli/pkg/flags"
-	"go.ketch.com/lib/orlop/errors"
+	"go.ketch.com/lib/orlop/v2/errors"
 	"net/http"
 	"net/url"
 )
@@ -50,6 +50,8 @@ func Configure(cmd *cobra.Command, args []string) error {
 	req.Header.Add("Accept", "application/json")
 	if len(cfg.Token) > 0 {
 		req.Header.Add("Authorization", "Bearer "+cfg.Token)
+	} else if len(cfg.ApiKey) > 0 {
+		req.Header.Add("Authorization", "Ketch-Api-Key "+cfg.ApiKey)
 	}
 
 	resp, err := client.Do(req)

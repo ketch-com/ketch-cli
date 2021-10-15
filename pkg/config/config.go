@@ -4,7 +4,7 @@ import (
 	"github.com/spf13/cobra"
 	"go.ketch.com/cli/ketch-cli/pkg/flags"
 	"go.ketch.com/cli/ketch-cli/version"
-	"go.ketch.com/lib/orlop"
+	"go.ketch.com/lib/orlop/v2"
 )
 
 type Config struct {
@@ -13,8 +13,7 @@ type Config struct {
 	Audience    string
 	URL         string
 	Token       string
-	TLS         orlop.TLSConfig
-	Vault       orlop.VaultConfig
+	ApiKey      string
 }
 
 func NewConfig(cmd *cobra.Command) (*Config, error) {
@@ -41,38 +40,10 @@ func NewConfig(cmd *cobra.Command) (*Config, error) {
 		cfg.Token = s
 	}
 
-	if b, err := cmd.Flags().GetBool(flags.TLSInsecure); err != nil {
-		return nil, err
-	} else {
-		cfg.TLS.Insecure = b
-	}
-
-	if s, err := cmd.Flags().GetString(flags.TLSCert); err != nil {
+	if s, err := cmd.Flags().GetString(flags.ApiKey); err != nil {
 		return nil, err
 	} else if len(s) > 0 {
-		cfg.TLS.Cert.File = s
-	}
-
-	if s, err := cmd.Flags().GetString(flags.TLSKey); err != nil {
-		return nil, err
-	} else if len(s) > 0 {
-		cfg.TLS.Key.File = s
-	}
-
-	if s, err := cmd.Flags().GetString(flags.TLSCACert); err != nil {
-		return nil, err
-	} else if len(s) > 0 {
-		cfg.TLS.RootCA.File = s
-	}
-
-	if s, err := cmd.Flags().GetString(flags.TLSServerName); err != nil {
-		return nil, err
-	} else if len(s) > 0 {
-		cfg.TLS.Override = s
-	}
-
-	if len(cfg.TLS.Cert.File) > 0 || cfg.TLS.Insecure {
-		cfg.TLS.Enabled = true
+		cfg.ApiKey = s
 	}
 
 	return cfg, nil

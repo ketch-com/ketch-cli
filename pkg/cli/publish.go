@@ -11,9 +11,8 @@ import (
 	"go.ketch.com/cli/ketch-cli/pkg/apps"
 	"go.ketch.com/cli/ketch-cli/pkg/config"
 	"go.ketch.com/cli/ketch-cli/pkg/flags"
-	"go.ketch.com/lib/orlop"
-	"go.ketch.com/lib/orlop/errors"
-	"go.ketch.com/lib/orlop/log"
+	"go.ketch.com/lib/orlop/v2/errors"
+	"go.ketch.com/lib/orlop/v2/log"
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
 	"net/http"
@@ -98,7 +97,7 @@ func Publish(cmd *cobra.Command, args []string) error {
 			return errors.New("app version must be specified via cli --version or via manifest")
 		}
 
-		app, err = createApp(ctx, cfg, cfg.Token, app)
+		app, err = createApp(ctx, cfg, app)
 		if err != nil {
 			return err
 		}
@@ -138,7 +137,7 @@ func Publish(cmd *cobra.Command, args []string) error {
 			marketplaceEntry.Previews = previews
 		}
 
-		published, err := publishApp(ctx, cfg, cfg.Token, app, marketplaceEntry, manifestInputs.Webhook)
+		published, err := publishApp(ctx, cfg, app, marketplaceEntry, manifestInputs.Webhook)
 		if err != nil {
 			return err
 		}
@@ -159,7 +158,7 @@ func handleRestResponseError(resp *http.Response) (*apps.Error, error) {
 	return respErr.Error, nil
 }
 
-func callRest(ctx context.Context, cfg *config.Config, method, urlPath, token string, body []byte) (*http.Response, error) {
+func callRest(ctx context.Context, cfg *config.Config, method, urlPath string, body []byte) (*http.Response, error) {
 	u, err := url.Parse(cfg.URL)
 	if err != nil {
 		return nil, err
@@ -172,24 +171,20 @@ func callRest(ctx context.Context, cfg *config.Config, method, urlPath, token st
 		return nil, err
 	}
 
-	req.Header.Add("Authorization", "Bearer "+token)
 	req.Header.Add("Accept", "application/json")
 	req.Header.Add("Content-Type", "application/json")
-
-	tp := http.DefaultTransport.(*http.Transport).Clone()
-	tp.TLSClientConfig, err = orlop.NewClientTLSConfig(ctx, cfg.TLS, cfg.Vault)
-	if err != nil {
-		return nil, err
+	if len(cfg.Token) > 0 {
+		req.Header.Add("Authorization", "Bearer "+cfg.Token)
+	} else if len(cfg.ApiKey) > 0 {
+		req.Header.Add("Authorization", "Ketch-Api-Key "+cfg.ApiKey)
 	}
 
-	cli := &http.Client{
-		Transport: tp,
-	}
+	cli := &http.Client{}
 
 	return cli.Do(req)
 }
 
-func createApp(ctx context.Context, cfg *config.Config, token string, app *apps.App) (*apps.App, error) {
+func createApp(ctx context.Context, cfg *config.Config, app *apps.App) (*apps.App, error) {
 	createAppURL := fmt.Sprintf("organizations/%s/apps", app.OrgCode)
 
 	body, err := json.Marshal(&apps.PutAppRequest{
@@ -199,7 +194,7 @@ func createApp(ctx context.Context, cfg *config.Config, token string, app *apps.
 		return nil, err
 	}
 
-	resp, err := callRest(ctx, cfg, http.MethodPost, createAppURL, token, body)
+	resp, err := callRest(ctx, cfg, http.MethodPost, createAppURL, body)
 	if err != nil {
 		return nil, err
 	}
@@ -236,7 +231,7 @@ func createApp(ctx context.Context, cfg *config.Config, token string, app *apps.
 	return appResp.App, nil
 }
 
-func publishApp(ctx context.Context, cfg *config.Config, token string, app *apps.App, marketplaceEntry *apps.AppMarketplaceEntry, webhook *apps.Webhook) (*apps.AppMarketplaceEntry, error) {
+func publishApp(ctx context.Context, cfg *config.Config, app *apps.App, marketplaceEntry *apps.AppMarketplaceEntry, webhook *apps.Webhook) (*apps.AppMarketplaceEntry, error) {
 	publishURL := fmt.Sprintf("organizations/%s/apps/%s/publish", app.OrgCode, app.ID)
 
 	body, err := json.Marshal(&apps.PublishAppRequest{
@@ -247,7 +242,7 @@ func publishApp(ctx context.Context, cfg *config.Config, token string, app *apps
 		return nil, err
 	}
 
-	resp, err := callRest(ctx, cfg, http.MethodPost, publishURL, token, body)
+	resp, err := callRest(ctx, cfg, http.MethodPost, publishURL, body)
 	if err != nil {
 		return nil, err
 	}
@@ -533,7 +528,6 @@ func remoteFileDataExists(link string) (bool, error) {
 }
 
 func localFilePathExists(link string) (bool, error) {
-
 	logoFileInfo, err :=  os.Stat(link)
 	if err != nil {
 		return false, err

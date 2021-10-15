@@ -9,7 +9,7 @@ import (
 	"go.ketch.com/cli/ketch-cli/pkg/flags"
 	"go.ketch.com/cli/ketch-cli/pkg/transponder"
 	"go.ketch.com/cli/ketch-cli/version"
-	"go.ketch.com/lib/orlop"
+	"go.ketch.com/lib/orlop/v2"
 	stdlog "log"
 	"os"
 	"path"
@@ -73,6 +73,7 @@ Simply type ` + rootCmd.Name() + ` help [path to command] for full details.`,
 	var runner = orlop.NewRunner(version.Name)
 
 	rootCmd.PersistentFlags().String(flags.Token, runner.Getenv("TOKEN"), "auth token")
+	rootCmd.PersistentFlags().String(flags.ApiKey, runner.Getenv("API_KEY"), "Ketch API Key")
 	rootCmd.PersistentFlags().String(flags.Config, ".ketchrc", "environment file")
 	rootCmd.PersistentFlags().String(flags.URL, runner.Getenv("URL"), "url to Ketch API")
 	rootCmd.PersistentFlags().Bool(flags.TLSInsecure, runner.Getenv("INSECURE") == "true", "set true to skip certificate verification")
