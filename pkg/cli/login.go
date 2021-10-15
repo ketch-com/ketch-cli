@@ -1,11 +1,11 @@
-package auth
+package cli
 
 import (
 	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/spf13/cobra"
-	"go.ketch.com/cli/ketch-cli/config"
+	"go.ketch.com/cli/ketch-cli/pkg/config"
 	"go.ketch.com/lib/orlop"
 	"go.ketch.com/lib/orlop/errors"
 	"net/http"
@@ -57,10 +57,11 @@ type Token struct {
 }
 
 func Login(cmd *cobra.Command, args []string) error {
-	var err error
-
 	ctx := cmd.Context()
-	cfg := config.GetFromContext(ctx)
+	cfg, err := config.NewConfig(cmd)
+	if err != nil {
+		return err
+	}
 
 	codeRequest := make(url.Values)
 	codeRequest.Set("client_id", ClientID)

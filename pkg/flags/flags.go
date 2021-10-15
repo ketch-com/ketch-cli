@@ -5,7 +5,6 @@ const (
 	Token         = "token"
 	Config        = "config"
 	Org           = "org"
-	AppID         = "app-id"
 	URL           = "url"
 	Version       = "version"
 	TLSInsecure   = "insecure"
@@ -13,9 +12,5 @@ const (
 	TLSKey        = "tls-key"
 	TLSCACert     = "tls-cacert"
 	TLSServerName = "servername"
-	QPS           = "qps"
-	Auth          = "auth"
-	Secret        = "secret"
-	EventType     = "event-type"
-	EventSource   = "event-source"
+	Parameter     = "parameter"
 )

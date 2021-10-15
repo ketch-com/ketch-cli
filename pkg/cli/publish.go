@@ -1,4 +1,4 @@
-package apps
+package cli
 
 import (
 	"bytes"
@@ -8,9 +8,9 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/xeipuuv/gojsonschema"
 	"go.ketch.com/cli/ketch-cli/assets"
-	"go.ketch.com/cli/ketch-cli/config"
-	"go.ketch.com/cli/ketch-cli/flags"
-	"go.ketch.com/cli/ketch-cli/version"
+	"go.ketch.com/cli/ketch-cli/pkg/apps"
+	"go.ketch.com/cli/ketch-cli/pkg/config"
+	"go.ketch.com/cli/ketch-cli/pkg/flags"
 	"go.ketch.com/lib/orlop"
 	"go.ketch.com/lib/orlop/errors"
 	"go.ketch.com/lib/orlop/log"
@@ -26,6 +26,10 @@ import (
 
 func Publish(cmd *cobra.Command, args []string) error {
 	ctx := cmd.Context()
+	cfg, err := config.NewConfig(cmd)
+	if err != nil {
+		return err
+	}
 
 	appConfig, err := cmd.Flags().GetString(flags.File)
 	if err != nil {
@@ -38,16 +42,6 @@ func Publish(cmd *cobra.Command, args []string) error {
 	}
 
 	token, err := cmd.Flags().GetString(flags.Token)
-	if err != nil {
-		return err
-	}
-
-	rootUrl, err := cmd.Flags().GetString(flags.URL)
-	if err != nil {
-		return err
-	}
-
-	t, err := config.GetTLSConfig(cmd)
 	if err != nil {
 		return err
 	}
@@ -87,7 +81,7 @@ func Publish(cmd *cobra.Command, args []string) error {
 
 		b = []byte(os.ExpandEnv(string(b)))
 
-		var manifestInputs ManifestInputs
+		var manifestInputs apps.ManifestInputs
 		if err := yaml.Unmarshal(b, &manifestInputs); err != nil {
 			return err
 		}
@@ -100,15 +94,7 @@ func Publish(cmd *cobra.Command, args []string) error {
 			return err
 		}
 
-		cfg := &config.Config{}
-		if err = orlop.Unmarshal(version.Name, cfg); err != nil {
-			return err
-		}
-
-		cfg.URL = rootUrl
-		cfg.TLS = *t
-
-		app, err := NewApp(manifestInputs)
+		app, err := apps.NewApp(manifestInputs)
 		if err != nil {
 			return err
 		}
@@ -117,16 +103,16 @@ func Publish(cmd *cobra.Command, args []string) error {
 			return errors.New("app version must be specified via cli --version or via manifest")
 		}
 
-		app, err = createApp(ctx, cfg, token, app)
+		app, err = createApp(ctx, *cfg, token, app)
 		if err != nil {
 			return err
 		}
 
-		marketplaceEntry := NewAppMarketplaceEntry(manifestInputs)
+		marketplaceEntry := apps.NewAppMarketplaceEntry(manifestInputs)
 		marketplaceEntry.AppID = app.ID
 
 		if manifestInputs.Logo != nil && len(manifestInputs.Logo.Link) > 0 {
-			marketplaceEntry.Logo = Image{
+			marketplaceEntry.Logo = apps.Image{
 				Title:  manifestInputs.Logo.Title,
 				Width:  manifestInputs.Logo.Width,
 				Height: manifestInputs.Logo.Height,
@@ -138,10 +124,10 @@ func Publish(cmd *cobra.Command, args []string) error {
 		}
 
 		if len(manifestInputs.Previews) > 0 {
-			var previews []*Image
+			var previews []*apps.Image
 
 			for _, preview := range manifestInputs.Previews {
-				previewImage := &Image{
+				previewImage := &apps.Image{
 					Title:  preview.Title,
 					Width:  preview.Width,
 					Height: preview.Height,
@@ -157,7 +143,7 @@ func Publish(cmd *cobra.Command, args []string) error {
 			marketplaceEntry.Previews = previews
 		}
 
-		published, err := publishApp(ctx, cfg, token, app, marketplaceEntry, manifestInputs.Webhook)
+		published, err := publishApp(ctx, *cfg, token, app, marketplaceEntry, manifestInputs.Webhook)
 		if err != nil {
 			return err
 		}
@@ -168,8 +154,8 @@ func Publish(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-func handleRestResponseError(resp *http.Response) (*Error, error) {
-	var respErr *ErrorResponse
+func handleRestResponseError(resp *http.Response) (*apps.Error, error) {
+	var respErr *apps.ErrorResponse
 	err := json.NewDecoder(resp.Body).Decode(&respErr)
 	if err != nil {
 		return nil, err
@@ -178,7 +164,7 @@ func handleRestResponseError(resp *http.Response) (*Error, error) {
 	return respErr.Error, nil
 }
 
-func callRest(ctx context.Context, cfg *config.Config, method, urlPath, token string, body []byte) (*http.Response, error) {
+func callRest(ctx context.Context, cfg config.Config, method, urlPath, token string, body []byte) (*http.Response, error) {
 	u, err := url.Parse(cfg.URL)
 	if err != nil {
 		return nil, err
@@ -208,10 +194,10 @@ func callRest(ctx context.Context, cfg *config.Config, method, urlPath, token st
 	return cli.Do(req)
 }
 
-func createApp(ctx context.Context, cfg *config.Config, token string, app *App) (*App, error) {
+func createApp(ctx context.Context, cfg config.Config, token string, app *apps.App) (*apps.App, error) {
 	createAppURL := fmt.Sprintf("organizations/%s/apps", app.OrgCode)
 
-	body, err := json.Marshal(&PutAppRequest{
+	body, err := json.Marshal(&apps.PutAppRequest{
 		App: app,
 	})
 	if err != nil {
@@ -239,7 +225,7 @@ func createApp(ctx context.Context, cfg *config.Config, token string, app *App) 
 		return nil, err
 	}
 
-	var appResp PutAppResponse
+	var appResp apps.PutAppResponse
 	err = json.Unmarshal(b, &appResp)
 	if err != nil {
 		log.WithField("resp", string(b)).Error(err)
@@ -255,10 +241,10 @@ func createApp(ctx context.Context, cfg *config.Config, token string, app *App) 
 	return appResp.App, nil
 }
 
-func publishApp(ctx context.Context, cfg *config.Config, token string, app *App, marketplaceEntry *AppMarketplaceEntry, webhook *Webhook) (*AppMarketplaceEntry, error) {
+func publishApp(ctx context.Context, cfg config.Config, token string, app *apps.App, marketplaceEntry *apps.AppMarketplaceEntry, webhook *apps.Webhook) (*apps.AppMarketplaceEntry, error) {
 	publishURL := fmt.Sprintf("organizations/%s/apps/%s/publish", app.OrgCode, app.ID)
 
-	body, err := json.Marshal(&PublishAppRequest{
+	body, err := json.Marshal(&apps.PublishAppRequest{
 		AppMarketplaceEntry: marketplaceEntry,
 		Webhook:             webhook,
 	})
@@ -287,7 +273,7 @@ func publishApp(ctx context.Context, cfg *config.Config, token string, app *App,
 		return nil, err
 	}
 
-	var a PublishAppResponse
+	var a apps.PublishAppResponse
 	err = json.Unmarshal(respBody, &a)
 	if err != nil {
 		log.WithField("resp", string(respBody)).Error(err)
@@ -301,7 +287,7 @@ func publishApp(ctx context.Context, cfg *config.Config, token string, app *App,
 	return a.AppMarketplaceEntry, nil
 }
 
-func validateAppConfig(publishAppConfig ManifestInputs) error {
+func validateAppConfig(publishAppConfig apps.ManifestInputs) error {
 	manifestSchema := assets.GetAsset("/schemas/manifest.json")
 	schemaLoader := gojsonschema.NewStringLoader(manifestSchema)
 
