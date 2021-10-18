@@ -1,11 +1,13 @@
 package transponder
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/spf13/cobra"
 	"go.ketch.com/cli/ketch-cli/pkg/config"
 	"go.ketch.com/lib/orlop/errors"
+	"io"
 	"net/http"
 	"net/url"
 )
@@ -47,8 +49,15 @@ func List(cmd *cobra.Command, args []string) error {
 	if resp.StatusCode != http.StatusOK {
 		out := &ErrorResponseBody{}
 
-		err = json.NewDecoder(resp.Body).Decode(&out)
+		b := bytes.NewBuffer(nil)
+		_, err = io.Copy(b, resp.Body)
 		if err != nil {
+			return err
+		}
+
+		err = json.Unmarshal(b.Bytes(), &out)
+		if err != nil {
+			fmt.Println(string(b.Bytes()))
 			return err
 		}
 
@@ -61,8 +70,15 @@ func List(cmd *cobra.Command, args []string) error {
 
 	out := &FindConnectionsResponseBody{}
 
-	err = json.NewDecoder(resp.Body).Decode(&out)
+	b := bytes.NewBuffer(nil)
+	_, err = io.Copy(b, resp.Body)
 	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(b.Bytes(), &out)
+	if err != nil {
+		fmt.Println(string(b.Bytes()))
 		return err
 	}
 
