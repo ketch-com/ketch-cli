@@ -8,6 +8,7 @@ import (
 	"go.ketch.com/cli/ketch-cli/pkg/config"
 	"go.ketch.com/cli/ketch-cli/pkg/flags"
 	"go.ketch.com/lib/orlop/errors"
+	"io"
 	"net/http"
 	"net/url"
 )
@@ -62,8 +63,15 @@ func Configure(cmd *cobra.Command, args []string) error {
 	if resp.StatusCode != http.StatusOK {
 		out := &ErrorResponseBody{}
 
-		err = json.NewDecoder(resp.Body).Decode(&out)
+		buf = bytes.NewBuffer(nil)
+		_, err = io.Copy(buf, resp.Body)
 		if err != nil {
+			return err
+		}
+
+		err = json.Unmarshal(buf.Bytes(), &out)
+		if err != nil {
+			fmt.Println(string(buf.Bytes()))
 			return err
 		}
 
@@ -74,13 +82,19 @@ func Configure(cmd *cobra.Command, args []string) error {
 		return errors.New("failed to list connections")
 	}
 
-	out := &FindConnectionsResponseBody{}
+	out := &PutConnectionResponseBody{}
 
-	err = json.NewDecoder(resp.Body).Decode(&out)
+	buf = bytes.NewBuffer(nil)
+	_, err = io.Copy(buf, resp.Body)
 	if err != nil {
 		return err
 	}
 
-	fmt.Println(out)
+	err = json.Unmarshal(buf.Bytes(), &out)
+	if err != nil {
+		fmt.Println(string(buf.Bytes()))
+		return err
+	}
+
 	return nil
 }

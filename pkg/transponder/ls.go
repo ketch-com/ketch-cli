@@ -82,6 +82,9 @@ func List(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	fmt.Println(out)
+	for _, conn := range out.Data {
+		fmt.Println(conn.Code, conn.Name, conn.Provider, conn.Technology, conn.Status)
+	}
+
 	return nil
 }
