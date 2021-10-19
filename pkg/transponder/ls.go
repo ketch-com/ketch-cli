@@ -1,13 +1,16 @@
 package transponder
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/spf13/cobra"
 	"go.ketch.com/cli/ketch-cli/pkg/config"
 	"go.ketch.com/lib/orlop/errors"
+	"io"
 	"net/http"
 	"net/url"
+	"strings"
 )
 
 func List(cmd *cobra.Command, args []string) error {
@@ -47,8 +50,15 @@ func List(cmd *cobra.Command, args []string) error {
 	if resp.StatusCode != http.StatusOK {
 		out := &ErrorResponseBody{}
 
-		err = json.NewDecoder(resp.Body).Decode(&out)
+		b := bytes.NewBuffer(nil)
+		_, err = io.Copy(b, resp.Body)
 		if err != nil {
+			return err
+		}
+
+		err = json.Unmarshal(b.Bytes(), &out)
+		if err != nil {
+			fmt.Println(string(b.Bytes()))
 			return err
 		}
 
@@ -61,11 +71,41 @@ func List(cmd *cobra.Command, args []string) error {
 
 	out := &FindConnectionsResponseBody{}
 
-	err = json.NewDecoder(resp.Body).Decode(&out)
+	b := bytes.NewBuffer(nil)
+	_, err = io.Copy(b, resp.Body)
 	if err != nil {
 		return err
 	}
 
-	fmt.Println(out)
+	err = json.Unmarshal(b.Bytes(), &out)
+	if err != nil {
+		fmt.Println(string(b.Bytes()))
+		return err
+	}
+
+	columns := []int{20, 40, 20, 20, 10}
+	fmt.Println(padLeft("code", columns[0]), padLeft("name", columns[1]), padLeft("provider", columns[2]), padLeft("technology", columns[3]), padLeft("status", columns[4]))
+	fmt.Println(strings.Repeat("=", columns[0]), strings.Repeat("=", columns[1]), strings.Repeat("=", columns[2]), strings.Repeat("=", columns[3]), strings.Repeat("=", columns[4]))
+
+	for _, conn := range out.Data {
+		fmt.Println(padLeft(conn.Code, columns[0]), padLeft(conn.Name, columns[1]), padLeft(conn.Provider, columns[2]), padLeft(conn.Technology, columns[3]), padLeft(string(conn.Status), columns[4]))
+	}
+
 	return nil
+}
+
+func padLeft(s string, n int) string {
+	if len(s) >= n {
+		return s[0:n]
+	}
+
+	return s + strings.Repeat(" ", n-len(s))
+}
+
+func padRight(s string, n int) string {
+	if len(s) >= n {
+		return s[0:n]
+	}
+
+	return strings.Repeat(" ", n-len(s)) + s
 }
