@@ -159,20 +159,20 @@ func handleRestResponseError(resp *http.Response) (*apps.Error, error) {
 	return respErr.Error, nil
 }
 
-func callRest(ctx context.Context, cfg *config.Config, method, urlPath, token string, body []byte) (*http.Response, error) {
+func callRest(ctx context.Context, cfg *config.Config, method, urlPath, apiKey string, body []byte) (*http.Response, error) {
 	u, err := url.Parse(cfg.URL)
 	if err != nil {
 		return nil, err
 	}
 
-	u.Path = path.Join(u.Path, "rest", "v1", urlPath)
+	u.Path = path.Join(u.Path, "rest", "v2", urlPath)
 
 	req, err := http.NewRequestWithContext(ctx, method, u.String(), bytes.NewReader(body))
 	if err != nil {
 		return nil, err
 	}
 
-	req.Header.Add("Authorization", "Bearer "+token)
+	req.Header.Add("Ketch-Api-Key", apiKey)
 	req.Header.Add("Accept", "application/json")
 	req.Header.Add("Content-Type", "application/json")
 
@@ -189,7 +189,7 @@ func callRest(ctx context.Context, cfg *config.Config, method, urlPath, token st
 	return cli.Do(req)
 }
 
-func createApp(ctx context.Context, cfg *config.Config, token string, app *apps.App) (*apps.App, error) {
+func createApp(ctx context.Context, cfg *config.Config, apiKey string, app *apps.App) (*apps.App, error) {
 	createAppURL := fmt.Sprintf("organizations/%s/apps", app.OrgCode)
 
 	body, err := json.Marshal(&apps.PutAppRequest{
@@ -199,7 +199,7 @@ func createApp(ctx context.Context, cfg *config.Config, token string, app *apps.
 		return nil, err
 	}
 
-	resp, err := callRest(ctx, cfg, http.MethodPost, createAppURL, token, body)
+	resp, err := callRest(ctx, cfg, http.MethodPost, createAppURL, apiKey, body)
 	if err != nil {
 		return nil, err
 	}
@@ -236,7 +236,7 @@ func createApp(ctx context.Context, cfg *config.Config, token string, app *apps.
 	return appResp.App, nil
 }
 
-func publishApp(ctx context.Context, cfg *config.Config, token string, app *apps.App, marketplaceEntry *apps.AppMarketplaceEntry, webhook *apps.Webhook) (*apps.AppMarketplaceEntry, error) {
+func publishApp(ctx context.Context, cfg *config.Config, apiKey string, app *apps.App, marketplaceEntry *apps.AppMarketplaceEntry, webhook *apps.Webhook) (*apps.AppMarketplaceEntry, error) {
 	publishURL := fmt.Sprintf("organizations/%s/apps/%s/publish", app.OrgCode, app.ID)
 
 	body, err := json.Marshal(&apps.PublishAppRequest{
@@ -247,7 +247,7 @@ func publishApp(ctx context.Context, cfg *config.Config, token string, app *apps
 		return nil, err
 	}
 
-	resp, err := callRest(ctx, cfg, http.MethodPost, publishURL, token, body)
+	resp, err := callRest(ctx, cfg, http.MethodPost, publishURL, apiKey, body)
 	if err != nil {
 		return nil, err
 	}
