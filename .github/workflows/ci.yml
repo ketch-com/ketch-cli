@@ -16,7 +16,7 @@ jobs:
       DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
       SNYK_AUTH_TOKEN: ${{ secrets.SNYK_AUTH_TOKEN }}
     steps:
-    - uses: actions/checkout@v2.3.5
+    - uses: actions/checkout@v2.4.0
       with:
         submodules: true
         token: ${{ secrets.GH_TOKEN }}
