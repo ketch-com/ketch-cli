@@ -388,7 +388,8 @@
               "consent.propagated",
               "tag.activate",
               "tag.deactivate",
-              "tag.requestList"
+              "tag.requestList",
+              "tag.batchUpdate"
             ]
           }
         },
