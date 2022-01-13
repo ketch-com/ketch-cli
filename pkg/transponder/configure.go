@@ -99,6 +99,7 @@ func Configure(cmd *cobra.Command, args []string) error {
 
 	err = json.Unmarshal(buf.Bytes(), &out)
 	if err != nil {
+		fmt.Println(string(buf.Bytes()))
 		return err
 	}
 
