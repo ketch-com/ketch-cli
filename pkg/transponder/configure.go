@@ -60,7 +60,7 @@ func Configure(cmd *cobra.Command, args []string) error {
 
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
+	if resp.StatusCode != http.StatusOK &&  resp.StatusCode != http.StatusNoContent  {
 		out := &ErrorResponseBody{}
 
 		buf = bytes.NewBuffer(nil)
@@ -80,6 +80,13 @@ func Configure(cmd *cobra.Command, args []string) error {
 		}
 
 		return errors.New("failed to list connections")
+	}
+
+	fmt.Println("Initiating database connection")
+	fmt.Println("Delivering blueberries and pancakes")
+
+	if resp.StatusCode == http.StatusNoContent {
+		return nil
 	}
 
 	out := &PutConnectionResponseBody{}
