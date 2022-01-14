@@ -82,7 +82,7 @@ func Configure(cmd *cobra.Command, args []string) error {
 		return errors.New("failed to list connections")
 	}
 
-	fmt.Println("Initiating data discovery")
+	fmt.Println("Initiating database connection")
 	fmt.Println("Delivering blueberries and pancakes")
 
 	if resp.StatusCode == http.StatusNoContent {
