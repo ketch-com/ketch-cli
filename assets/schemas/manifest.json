@@ -389,7 +389,8 @@
               "tag.activate",
               "tag.deactivate",
               "tag.requestList",
-              "tag.batchUpdate"
+              "tag.batchUpdate",
+              "tag.migrate"
             ]
           }
         },
