@@ -19,9 +19,9 @@ type Config struct {
 
 func NewConfig(cmd *cobra.Command) (*Config, error) {
 	cfg := &Config{
-		Auth0Domain: "ketch-staging.us.auth0.com",
-		ClientID:    "UERD5nrErbgvgKvqJdwzNaoWkYdxW8v9",
-		Audience:    "https://dev.ketchapi.com/rest",
+		Auth0Domain: "ketch.us.auth0.com",
+		ClientID:    "j9gemizsXis5IcUg931sBjGoyGSxbT1a",
+		Audience:    "https://global.ketchapi.com/rest",
 	}
 
 	err := orlop.Unmarshal(version.Name, cfg)
