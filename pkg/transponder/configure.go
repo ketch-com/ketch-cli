@@ -50,7 +50,6 @@ func Configure(cmd *cobra.Command, args []string) error {
 			if err != nil {
 			    return err
 			}
-			//fmt.Println(string(data))
 			in["privateKey"] = base64.URLEncoding.EncodeToString(data)
 		}
 	}
