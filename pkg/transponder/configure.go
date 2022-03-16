@@ -34,15 +34,13 @@ func Configure(cmd *cobra.Command, args []string) error {
 	client := http.Client{}
 
 	// if value starts with @, then read file, otherwise it's a string value
-	// if in doubt, look at cURL
 	in, err := cmd.Flags().GetStringToString(flags.Parameter)
 	if err != nil {
 		return err
 	}
 
 
-	if value, ok := in["privateKey"]; ok {
-		fmt.Println("privateKey: ", value)
+	for key, value := range in {
 		if strings.HasPrefix(value, "@") {
 			// load from file
 			fileName := strings.TrimPrefix(value, "@")
@@ -50,7 +48,7 @@ func Configure(cmd *cobra.Command, args []string) error {
 			if err != nil {
 			    return err
 			}
-			in["privateKey"] = base64.URLEncoding.EncodeToString(data)
+			in[key] = base64.URLEncoding.EncodeToString(data)
 		}
 	}
 
