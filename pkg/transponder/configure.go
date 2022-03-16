@@ -2,6 +2,7 @@ package transponder
 
 import (
 	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"github.com/spf13/cobra"
@@ -11,6 +12,8 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os"
+	"strings"
 )
 
 func Configure(cmd *cobra.Command, args []string) error {
@@ -30,9 +33,26 @@ func Configure(cmd *cobra.Command, args []string) error {
 
 	client := http.Client{}
 
+	// if value starts with @, then read file, otherwise it's a string value
+	// if in doubt, look at cURL
 	in, err := cmd.Flags().GetStringToString(flags.Parameter)
 	if err != nil {
 		return err
+	}
+
+
+	if value, ok := in["privateKey"]; ok {
+		fmt.Println("privateKey: ", value)
+		if strings.HasPrefix(value, "@") {
+			// load from file
+			fileName := strings.TrimPrefix(value, "@")
+			data, err := os.ReadFile(fileName)
+			if err != nil {
+			    return err
+			}
+			//fmt.Println(string(data))
+			in["privateKey"] = base64.URLEncoding.EncodeToString(data)
+		}
 	}
 
 	b, err := json.Marshal(in)
