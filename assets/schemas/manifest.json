@@ -1956,6 +1956,62 @@
             "type": "string"
           }
         }
+      },
+      "resourceTypes": {
+        "type": [
+          "array",
+          "null"
+        ],
+        "items": {
+          "type": "object",
+          "required": [
+            "code",
+            "name"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": ""
+            },
+            "name": {
+              "type": "string",
+              "description": ""
+            },
+            "contains": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": ""
+            },
+            "hasData": {
+              "type": "boolean",
+              "description": "",
+              "default": false
+            },
+            "isScopable": {
+              "type": "boolean",
+              "description": "",
+              "default": false
+            },
+            "isLabelable": {
+              "type": "boolean",
+              "description": "",
+              "default": false
+            },
+            "isDisplayedInNavigation": {
+              "type": "boolean",
+              "description": "",
+              "default": false
+            },
+            "isDisplayedInSummary": {
+              "type": "boolean",
+              "description": "",
+              "default": false
+            }
+          }
+        }
       }
     }
   }

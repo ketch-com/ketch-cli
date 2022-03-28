@@ -738,6 +738,7 @@ type ManifestInputs struct {
 	PolicyScopes               []*AppConfigPolicyScope                `yaml:"policyScopes,flow,omitempty" json:"policyScopes,omitempty"`
 	LegalBases                 []*AppConfigLegalBasis                 `yaml:"legalBases,flow,omitempty" json:"legalBases,omitempty"`
 	Themes                     []*Theme                               `yaml:"themes,flow,omitempty" json:"themes,omitempty"`
+	ResourceTypes              []*ResourceType                        `yaml:"resourceTypes,flow,omitempty" json:"resourceTypes,omitempty"`
 }
 
 type App struct {
@@ -787,6 +788,7 @@ type App struct {
 	Tcf                        *Tcf                          `json:"tcf,omitempty"`
 	EventTypes                 []string                      `json:"eventTypes,omitempty"`
 	Cookies                    []*Cookie                     `yaml:"cookies,flow,omitempty" json:"cookies,omitempty"`
+	TransponderAppDetailsJSON  []byte                        `json:"transponderAppDetailsJSON,omitempty"`
 }
 
 type AppMarketplaceEntry struct {
@@ -1110,6 +1112,13 @@ func NewApp(p ManifestInputs) (*App, error) {
 		})
 	}
 
+	transponderAppDetailsJSON, err := json.Marshal(&TransponderAppDetails{
+		ResourceTypes: p.ResourceTypes,
+	})
+	if err != nil {
+		return nil, err
+	}
+
 	return &App{
 		ID:                         p.ID,
 		Code:                       p.Code,
@@ -1155,6 +1164,7 @@ func NewApp(p ManifestInputs) (*App, error) {
 		Themes:                     p.Themes,
 		EventTypes:                 eventTypes,
 		Cookies:                    cookies,
+		TransponderAppDetailsJSON:  transponderAppDetailsJSON,
 	}, nil
 }
 
@@ -1194,4 +1204,18 @@ func NewAppMarketplaceEntry(p ManifestInputs) *AppMarketplaceEntry {
 		IntroDescription:    p.ShortDescription,
 		DetailedDescription: p.DetailedDescription,
 	}
+}
+
+type TransponderAppDetails struct {
+	ResourceTypes []*ResourceType `json:"resourceTypes,omitempty"`
+}
+
+type ResourceType struct {
+	Code                    string `yaml:"code,omitempty" json:"code,omitempty"`
+	Name                    string `yaml:"name,omitempty" json:"name,omitempty"`
+	IsScopable              bool   `yaml:"isScopable,omitempty" json:"isScopable,omitempty"`
+	HasData                 bool   `yaml:"hasData,omitempty" json:"hasData,omitempty"`
+	CanBeLabeled            bool   `yaml:"canBeLabeled,omitempty" json:"canBeLabeled,omitempty"`
+	IsDisplayedInNavigation bool   `yaml:"isDisplayedInNavigation,omitempty" json:"isDisplayedInNavigation,omitempty"`
+	IsDisplayedInSummary    bool   `yaml:"isDisplayedInSummary,omitempty" json:"isDisplayedInSummary,omitempty"`
 }
