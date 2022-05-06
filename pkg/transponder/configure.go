@@ -39,14 +39,13 @@ func Configure(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-
 	for key, value := range in {
 		if strings.HasPrefix(value, "@") {
 			// load from file
 			fileName := strings.TrimPrefix(value, "@")
 			data, err := os.ReadFile(fileName)
 			if err != nil {
-			    return err
+				return err
 			}
 			in[key] = base64.URLEncoding.EncodeToString(data)
 		}
@@ -70,6 +69,7 @@ func Configure(cmd *cobra.Command, args []string) error {
 		req.Header.Add("Authorization", "Bearer "+cfg.Token)
 	}
 
+	fmt.Println("Initiating database connection")
 	resp, err := client.Do(req)
 	if err != nil {
 		return err
@@ -77,7 +77,7 @@ func Configure(cmd *cobra.Command, args []string) error {
 
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK &&  resp.StatusCode != http.StatusNoContent  {
+	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusNoContent {
 		out := &ErrorResponseBody{}
 
 		buf = bytes.NewBuffer(nil)
@@ -99,10 +99,10 @@ func Configure(cmd *cobra.Command, args []string) error {
 		return errors.New("failed to list connections")
 	}
 
-	fmt.Println("Initiating database connection")
-	fmt.Println("Delivering blueberries and pancakes")
+	successMsg := "Successfully configured the connection. Please run the transponder list command to verify that the connection is active"
 
 	if resp.StatusCode == http.StatusNoContent {
+		fmt.Println(successMsg)
 		return nil
 	}
 
@@ -119,6 +119,8 @@ func Configure(cmd *cobra.Command, args []string) error {
 		fmt.Println(string(buf.Bytes()))
 		return err
 	}
+
+	fmt.Println(successMsg)
 
 	return nil
 }
