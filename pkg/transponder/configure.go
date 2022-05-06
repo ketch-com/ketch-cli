@@ -39,14 +39,13 @@ func Configure(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-
 	for key, value := range in {
 		if strings.HasPrefix(value, "@") {
 			// load from file
 			fileName := strings.TrimPrefix(value, "@")
 			data, err := os.ReadFile(fileName)
 			if err != nil {
-			    return err
+				return err
 			}
 			in[key] = base64.URLEncoding.EncodeToString(data)
 		}
@@ -77,7 +76,7 @@ func Configure(cmd *cobra.Command, args []string) error {
 
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK &&  resp.StatusCode != http.StatusNoContent  {
+	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusNoContent {
 		out := &ErrorResponseBody{}
 
 		buf = bytes.NewBuffer(nil)
@@ -100,7 +99,6 @@ func Configure(cmd *cobra.Command, args []string) error {
 	}
 
 	fmt.Println("Initiating database connection")
-	fmt.Println("Delivering blueberries and pancakes")
 
 	if resp.StatusCode == http.StatusNoContent {
 		return nil
@@ -119,6 +117,8 @@ func Configure(cmd *cobra.Command, args []string) error {
 		fmt.Println(string(buf.Bytes()))
 		return err
 	}
+
+	fmt.Println("Successfully sent database connection request")
 
 	return nil
 }
