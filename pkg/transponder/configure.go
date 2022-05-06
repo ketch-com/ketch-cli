@@ -101,6 +101,7 @@ func Configure(cmd *cobra.Command, args []string) error {
 	fmt.Println("Initiating database connection")
 
 	if resp.StatusCode == http.StatusNoContent {
+		fmt.Println("Successfully sent database connection request")
 		return nil
 	}
 
