@@ -69,6 +69,7 @@ func Configure(cmd *cobra.Command, args []string) error {
 		req.Header.Add("Authorization", "Bearer "+cfg.Token)
 	}
 
+	fmt.Println("Initiating database connection")
 	resp, err := client.Do(req)
 	if err != nil {
 		return err
@@ -98,10 +99,10 @@ func Configure(cmd *cobra.Command, args []string) error {
 		return errors.New("failed to list connections")
 	}
 
-	fmt.Println("Initiating database connection")
+	successMsg := "Successfully configured the connection. Please run the transponder list command to verify that the connection is active"
 
 	if resp.StatusCode == http.StatusNoContent {
-		fmt.Println("Successfully sent database connection request")
+		fmt.Println(successMsg)
 		return nil
 	}
 
@@ -119,7 +120,7 @@ func Configure(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	fmt.Println("Successfully sent database connection request")
+	fmt.Println(successMsg)
 
 	return nil
 }
