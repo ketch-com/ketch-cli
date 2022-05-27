@@ -20,7 +20,7 @@ build:
 
     export GOOS=windows
     mkdir -p bin/$GOOS-$GOARCH
-    go build -o bin/$GOOS-$GOARCH/ketch ./cmd/ketch/main.go
+    go build -o bin/$GOOS-$GOARCH/ketch.exe ./cmd/ketch/main.go
 release:
   branches:
     only: main
