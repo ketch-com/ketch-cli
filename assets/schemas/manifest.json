@@ -163,7 +163,8 @@
           "delete",
           "access",
           "correction",
-          "portability"
+          "portability",
+          "get"
         ]
       }
     },
