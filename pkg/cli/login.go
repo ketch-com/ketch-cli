@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"go.ketch.com/cli/ketch-cli/pkg/config"
-	"go.ketch.com/lib/orlop/errors"
+	"go.ketch.com/lib/orlop/v2/errors"
 	"io"
 	"net/http"
 	"net/url"

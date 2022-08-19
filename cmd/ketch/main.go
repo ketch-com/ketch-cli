@@ -9,7 +9,7 @@ import (
 	"go.ketch.com/cli/ketch-cli/pkg/flags"
 	"go.ketch.com/cli/ketch-cli/pkg/transponder"
 	"go.ketch.com/cli/ketch-cli/version"
-	"go.ketch.com/lib/orlop"
+	"go.ketch.com/lib/orlop/v2/cmd"
 	stdlog "log"
 	"os"
 	"path"
@@ -70,7 +70,7 @@ Simply type ` + rootCmd.Name() + ` help [path to command] for full details.`,
 		},
 	})
 
-	var runner = orlop.NewRunner(version.Name)
+	var runner = cmd.NewRunner(version.Name)
 
 	rootCmd.PersistentFlags().String(flags.Token, runner.Getenv("TOKEN"), "auth token")
 	rootCmd.PersistentFlags().String(flags.Config, ".ketchrc", "environment file")
@@ -94,31 +94,6 @@ Simply type ` + rootCmd.Name() + ` help [path to command] for full details.`,
 	}
 
 	rootCmd.AddCommand(loginCmd)
-
-	//
-	// Apps
-	//
-
-	var publishCmd = &cobra.Command{
-		Use:   "publish",
-		Short: "publish an app",
-		RunE:  cli.Publish,
-	}
-
-	rootCmd.AddCommand(publishCmd)
-
-	publishCmd.Flags().StringP(flags.File, "f", "ketch-manifest.yml", "app manifest filename")
-	publishCmd.Flags().String(flags.Version, runner.Getenv("VERSION"), "app version")
-
-	var validateCmd = &cobra.Command{
-		Use:   "validate",
-		Short: "validate an app manifest file",
-		RunE:  cli.Validate,
-	}
-
-	rootCmd.AddCommand(validateCmd)
-
-	validateCmd.Flags().StringP(flags.File, "f", "ketch-manifest.yml", "app config name")
 
 	//
 	// Transponder
