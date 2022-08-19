@@ -44,7 +44,7 @@ if [ -d "./cmd" ]; then
       ;;
 
     "darwin")
-      arches="${shipbuilder_go_darwin_arch:-amd64}"
+      arches="${shipbuilder_go_darwin_arch:-amd64 arm64}"
       ;;
 
     *)
