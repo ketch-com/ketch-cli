@@ -1,15 +1,15 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="ketch-cli" type="GoApplicationRunConfiguration" factoryName="Go Application">
-    <module name="ketch-cli" />
+  <configuration default="false" name="ketch" type="GoApplicationRunConfiguration" factoryName="Go Application">
+    <module name="ketch" />
     <working_directory value="$PROJECT_DIR$" />
     <EXTENSION ID="com.fapiko.jetbrains.plugins.better_direnv.runconfigs.GolandRunConfigurationExtension">
       <option name="DIRENV_ENABLED" value="false" />
       <option name="DIRENV_TRUSTED" value="false" />
     </EXTENSION>
     <kind value="PACKAGE" />
-    <package value="go.ketch.com/cli/ketch-cli/cmd/ketch-cli" />
+    <package value="go.ketch.com/cli/ketch-cli/cmd/ketch" />
     <directory value="$PROJECT_DIR$" />
-    <filePath value="$PROJECT_DIR$/cmd/ketch-cli/main.go" />
+    <filePath value="$PROJECT_DIR$/cmd/ketch/main.go" />
     <method v="2" />
   </configuration>
 </component>
