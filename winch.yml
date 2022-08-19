@@ -1,31 +1,16 @@
 name: ketch
-description: Ketch CLI is the command-line interface to ketch
+description: Ketch CLI is the command-line interface to Ketch
 repository: https://github.com/ketch-com/ketch-cli
-assets:
-  - filename: assets/assets_gen.go
-    directory: assets
-    package: assets
-    variable: Assets
-    except:
-      - "/*.go"
 build:
-  command: |
-    export GOOS=linux
-    mkdir -p bin/$GOOS-$GOARCH
-    go build -o bin/$GOOS-$GOARCH/ketch ./cmd/ketch/main.go
-
-    export GOOS=darwin
-    mkdir -p bin/$GOOS-$GOARCH
-    go build -o bin/$GOOS-$GOARCH/ketch ./cmd/ketch/main.go
-
-    export GOOS=windows
-    mkdir -p bin/$GOOS-$GOARCH
-    go build -o bin/$GOOS-$GOARCH/ketch.exe ./cmd/ketch/main.go
+  command: sh ./scripts/build.sh darwin linux windows
+test:
+  enabled: false
 release:
   branches:
     only: main
   artifacts:
     - ./bin/darwin-amd64/
+    - ./bin/darwin-arm64/
     - ./bin/linux-amd64/
     - ./bin/windows-amd64/
 dockers:
@@ -35,22 +20,8 @@ dockers:
     repository: ketch-cli
     username: ketch-com
     password: ${GITHUB_TOKEN}
+    platforms:
+      - linux/amd64
+      - linux/arm64
     branches:
       only: main
-#homebrew:
-#  enabled: true
-#  organization: ketch-com
-#  repository: homebrew-ketch-cli
-#  asset: darwin-amd64.tgz
-#  install: |
-#    bin.install "winch"
-#  test: |
-#    system "#{bin}/winch --version"
-#  branches:
-#    only: main
-environment:
-  GO111MODULE: on
-  CGO_ENABLED: "0"
-  GOOS: linux
-  GOARCH: amd64
-  GOPRIVATE: "go.ketch.com"

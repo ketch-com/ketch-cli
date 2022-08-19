@@ -38,7 +38,6 @@ type ErrorResponseBody struct {
 	Meta map[string]interface{} `json:"meta,omitempty" yaml:"meta,omitempty"`
 }
 
-
 type Error struct {
 	// Code an application specific error code expressed as a string value
 	Code string `json:"code,omitempty" yaml:"code,omitempty"`
