@@ -14,7 +14,7 @@ release:
     - ./bin/linux-amd64/
     - ./bin/windows-amd64/
 dockers:
-  - dockerfile: Dockerfile
+  - dockerfile: docker/ketch/Dockerfile
     server: ghcr.io
     organization: ketch-com
     repository: ketch-cli

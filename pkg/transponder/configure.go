@@ -30,7 +30,7 @@ func Configure(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	u.Path = path.Join(u.Path, "/captain/connections", args[0])
+	u.Path = path.Join(u.Path, "captain", "connections", args[0])
 
 	client := http.Client{}
 
