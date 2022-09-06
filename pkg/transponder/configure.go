@@ -13,6 +13,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path"
 	"strings"
 )
 
@@ -29,7 +30,7 @@ func Configure(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	u.Path = fmt.Sprintf("/captain/connections/%s", args[0])
+	u.Path = path.Join(u.Path, "/captain/connections", args[0])
 
 	client := http.Client{}
 
