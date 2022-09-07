@@ -53,6 +53,9 @@ jobs:
         platforms: |
           linux/amd64
           linux/arm64
+          darwin/amd64
+          darwin/arm64
+          windows/amd64
     - uses: actions/upload-artifact@v3
       with:
         name: docker
@@ -70,7 +73,7 @@ jobs:
     steps:
     - uses: conventional-actions/docker-build@v1
       with:
-        name: ketch
+        name: ketch-cli
         snyk-token: ${{ secrets.SNYK_AUTH_TOKEN }}
         version-major: ${{ needs.build.outputs.version-major }}
         version-minor: ${{ needs.build.outputs.version-minor }}
