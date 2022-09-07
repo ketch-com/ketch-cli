@@ -9,10 +9,10 @@ release:
   branches:
     only: main
   artifacts:
-    - ./bin/darwin-amd64/
-    - ./bin/darwin-arm64/
-    - ./bin/linux-amd64/
-    - ./bin/windows-amd64/
+    - ./.build/darwin-amd64/
+    - ./.build/darwin-arm64/
+    - ./.build/linux-amd64/
+    - ./.build/windows-amd64/
 dockers:
   - dockerfile: docker/ketch/Dockerfile
     server: ghcr.io
