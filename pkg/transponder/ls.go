@@ -27,7 +27,7 @@ func List(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	u.Path = path.Join(u.Path, "/captain/connections")
+	u.Path = path.Join(u.Path, "/captain", "connections")
 
 	client := http.Client{}
 
