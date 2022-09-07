@@ -48,6 +48,7 @@ jobs:
     - name: Build Go code
       uses: conventional-actions/go-build@v1
       with:
+        ldflags: '-s -w'
         package: |
           ./cmd/ketch
         platforms: |
