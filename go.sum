@@ -78,8 +78,8 @@ github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stretchr/testify v1.8.0 h1:pSgiaMZlXftHpm5L7V1+rVB+AZJydKsMxsQBIJw4PKk=
 github.com/yuin/goldmark v1.3.5/go.mod h1:mwnBkeHKe2W/ZEtQ+71ViKU8L12m81fl3OWwC1Zlc8k=
-go.ketch.com/lib/orlop/v2 v2.19.3 h1:zmQUZB3tdAwM4TDeNRfSJt3bnjkUMxB9w4ZRFfPud+s=
-go.ketch.com/lib/orlop/v2 v2.19.3/go.mod h1:IFXSrA0U2Wv+HKahFd8epb22ykpLLbW4xLOOymqhz2I=
+go.ketch.com/lib/orlop/v2 v2.19.4 h1:adjTWQ5hxVUMgpQ8vufWj3TjdHuoJxMcpMFu9zi3ozs=
+go.ketch.com/lib/orlop/v2 v2.19.4/go.mod h1:8w7rF4lbtcbMxHWcIw0JE6c6yO3KfR3BCJfjuqtHM1c=
 go.opentelemetry.io/proto/otlp v0.7.0/go.mod h1:PqfVotwruBrMGOCsRd/89rSnXhoiJIqeYNgFYFoEGnI=
 go.uber.org/atomic v1.7.0/go.mod h1:fEN4uk6kAWBTFdckzkM89CLk9XfWZrxpCo0nPH17wJc=
 go.uber.org/atomic v1.9.0 h1:ECmE8Bn/WFTYwEW/bpKD3M8VtR/zQVbavAoalC1PYyE=
