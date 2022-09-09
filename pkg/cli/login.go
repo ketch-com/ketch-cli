@@ -84,8 +84,7 @@ func Login(cmd *cobra.Command, args []string) error {
 			return err
 		}
 
-		fmt.Printf("Now, go to %s and enter the following code:\n", dc.VerificationUri)
-		fmt.Printf("%s\n", dc.UserCode)
+		fmt.Fprintf(os.Stderr, "Now, go to %s and confirm the following code:\n\n         +-----------+\n         | %s |\n         +-----------+\n\n", dc.VerificationUriComplete, dc.UserCode)
 
 		timeout := time.After(time.Duration(dc.ExpiresInSec) * time.Second)
 		ticker := time.NewTicker(time.Duration(dc.IntervalInSec) * time.Second)
@@ -100,6 +99,7 @@ func Login(cmd *cobra.Command, args []string) error {
 				if tok, ok, err := check(ctx, cfg, dc); err != nil {
 					return err
 				} else if ok {
+					fmt.Fprintf(os.Stderr, "The following is your KETCH_TOKEN:\n")
 					fmt.Println(tok)
 					return nil
 				}
