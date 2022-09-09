@@ -102,23 +102,6 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ env.GITHUB_TOKEN }}
-    - name: Build ketch-cli container
-      id: build
-      uses: docker/build-push-action@v3
-      with:
-        context: .
-        push: false
-        load: true
-        file: docker/ketch-cli/Dockerfile
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
-        allow: network.host
-    - name: Scan ketch-cli container
-      uses: conventional-actions/docker-scan@v1
-      with:
-        file: docker/ketch-cli/Dockerfile
-        image: ${{ steps.build.outputs.imageid }}
-        token: ${{ secrets.SNYK_AUTH_TOKEN }}
     - name: Metadata for ketch-cli
       id: meta
       uses: docker/metadata-action@v4
