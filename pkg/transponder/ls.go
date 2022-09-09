@@ -59,8 +59,8 @@ func List(cmd *cobra.Command, args []string) error {
 
 		err = json.Unmarshal(b.Bytes(), &out)
 		if err != nil {
-			fmt.Println(string(b.Bytes()))
-			return err
+			fmt.Printf("received error response %d with body:\n%s\n", resp.StatusCode, string(b.Bytes()))
+			return errors.WithStatusCode(nil, resp.StatusCode)
 		}
 
 		if len(out.Errors) > 0 {
@@ -80,7 +80,7 @@ func List(cmd *cobra.Command, args []string) error {
 
 	err = json.Unmarshal(b.Bytes(), &out)
 	if err != nil {
-		fmt.Println(string(b.Bytes()))
+		fmt.Printf("failed to parse response body as JSON:\n%s\n%s\n%s\n", strings.Repeat("=", 80), string(b.Bytes()), strings.Repeat("=", 80))
 		return err
 	}
 
