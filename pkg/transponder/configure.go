@@ -44,10 +44,12 @@ func Configure(cmd *cobra.Command, args []string) error {
 		if strings.HasPrefix(value, "@") {
 			// load from file
 			fileName := strings.TrimPrefix(value, "@")
+
 			data, err := os.ReadFile(fileName)
 			if err != nil {
 				return err
 			}
+
 			in[key] = base64.URLEncoding.EncodeToString(data)
 		}
 	}
