@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/joho/godotenv v1.4.0
 	github.com/sirupsen/logrus v1.9.0
-	github.com/spf13/cobra v1.5.0
+	github.com/spf13/cobra v1.6.0
 	go.ketch.com/lib/orlop/v2 v2.19.3
 )
 
