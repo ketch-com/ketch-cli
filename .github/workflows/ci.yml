@@ -114,7 +114,7 @@ jobs:
           type=raw,value=${{ needs.build.outputs.version-patch }}
     - name: Push ketch-cli container
       if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
-      uses: docker/build-push-action@v3
+      uses: docker/build-push-action@v4
       with:
         context: .
         file: docker/ketch-cli/Dockerfile
