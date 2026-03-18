@@ -28,7 +28,7 @@ jobs:
         fetch-depth: 0
     - name: Generate next version
       id: version
-      uses: conventional-actions/next-version@v1
+      uses: conventional-actions/next-version@1b3e4803a0bdf7435ba7bb5ace077445ed54e82a # v1.1.8
     - name: Setup .netrc
       uses: conventional-actions/setup-netrc@v1
     - name: Setup Go
@@ -137,7 +137,7 @@ jobs:
       contents: write
     steps:
     - name: Create Release
-      uses: conventional-actions/create-release@v1
+      uses: conventional-actions/create-release@c025b7306d14a25901b72486f97f3ebe7662a8ed # v1.0.31
       with:
         tag_name: ${{ needs.build.outputs.version }}
         artifacts: '*'
