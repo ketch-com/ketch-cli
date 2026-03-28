@@ -9,8 +9,7 @@ import (
 	"go.ketch.com/cli/ketch-cli/pkg/flags"
 	"go.ketch.com/cli/ketch-cli/pkg/transponder"
 	"go.ketch.com/cli/ketch-cli/version"
-	"go.ketch.com/lib/orlop/v2/cmd"
-	stdlog "log"
+	"log"
 	"os"
 	"path"
 )
@@ -23,7 +22,7 @@ func main() {
 		PadLevelText:           true,
 	})
 
-	stdlog.SetOutput(logrus.New().Writer())
+	log.SetOutput(logrus.New().Writer())
 
 	var rootCmd = &cobra.Command{
 		Use:              version.Name,
@@ -70,16 +69,9 @@ Simply type ` + rootCmd.Name() + ` help [path to command] for full details.`,
 		},
 	})
 
-	var runner = cmd.NewRunner(version.Name)
-
-	rootCmd.PersistentFlags().String(flags.Token, runner.Getenv("TOKEN"), "auth token")
 	rootCmd.PersistentFlags().String(flags.Config, ".ketchrc", "environment file")
-	rootCmd.PersistentFlags().String(flags.URL, runner.Getenv("URL"), "url to Ketch API")
-	rootCmd.PersistentFlags().Bool(flags.TLSInsecure, runner.Getenv("INSECURE") == "true", "set true to skip certificate verification")
-	rootCmd.PersistentFlags().String(flags.TLSCert, runner.Getenv("TLS_CERT_FILE"), "TLS client certificate")
-	rootCmd.PersistentFlags().String(flags.TLSKey, runner.Getenv("TLS_KEY_FILE"), "TLS private key")
-	rootCmd.PersistentFlags().String(flags.TLSCACert, runner.Getenv("TLS_ROOTCA_FILE"), "TLS root CA certificate")
-	rootCmd.PersistentFlags().String(flags.TLSServerName, runner.Getenv("TLS_OVERRIDE"), "override the TLS server name")
+	rootCmd.PersistentFlags().String(flags.Token, "", "Ketch API authorization token")
+	rootCmd.PersistentFlags().String(flags.URL, "", "url to Ketch API")
 	rootCmd.SilenceUsage = true
 
 	//
@@ -107,24 +99,34 @@ Simply type ` + rootCmd.Name() + ` help [path to command] for full details.`,
 
 	rootCmd.AddCommand(transponderCmd)
 
-	var transponderListCmd = &cobra.Command{
-		Use:   "ls",
-		Short: "list connections",
-		RunE:  transponder.List,
+	var transponderRotateCmd = &cobra.Command{
+		Use:   "rotate",
+		Short: "rotate API key",
+		RunE:  transponder.Rotate,
 	}
 
-	transponderCmd.AddCommand(transponderListCmd)
+	transponderCmd.AddCommand(transponderRotateCmd)
 
-	var transponderConfigureCmd = &cobra.Command{
-		Use:   "configure",
-		Short: "configure a connection",
-		RunE:  transponder.Configure,
-		Args:  cobra.ExactArgs(1),
+	var transponderConnListCmd = &cobra.Command{
+		Use:     "ls",
+		Short:   "list connections",
+		RunE:    transponder.List,
+		Aliases: []string{"list"},
 	}
 
-	transponderConfigureCmd.Flags().StringToStringP(flags.Parameter, "P", nil, "parameter key/value")
+	transponderCmd.AddCommand(transponderConnListCmd)
 
-	transponderCmd.AddCommand(transponderConfigureCmd)
+	var transponderConnConfigureCmd = &cobra.Command{
+		Use:     "configure",
+		Short:   "configure a connection",
+		RunE:    transponder.Configure,
+		Args:    cobra.ExactArgs(1),
+		Aliases: []string{"conf", "config"},
+	}
+
+	transponderConnConfigureCmd.Flags().StringToStringP(flags.Parameter, "P", nil, "parameter key/value")
+
+	transponderCmd.AddCommand(transponderConnConfigureCmd)
 
 	if err := rootCmd.ExecuteContext(context.Background()); err != nil {
 		os.Exit(1)
