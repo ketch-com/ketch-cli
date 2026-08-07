@@ -30,7 +30,7 @@ jobs:
       id: version
       uses: conventional-actions/next-version@1b3e4803a0bdf7435ba7bb5ace077445ed54e82a # v1.1.8
     - name: Setup .netrc
-      uses: conventional-actions/setup-netrc@v1
+      uses: conventional-actions/setup-netrc@v2
     - name: Setup Go
       uses: actions/setup-go@v3
       with:
